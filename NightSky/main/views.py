@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from .models import Post, todayemotion, Comment, search
+from .models import Post, todayemotion, Comment, search, Follow
 from .forms import PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -12,6 +12,8 @@ from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from datetime import datetime
 from django.template.loader import render_to_string
+from django.db.models import Count
+from datetime import datetime, timedelta
 
 # Create your views here.
 writer="nothing"
@@ -211,7 +213,15 @@ def user_update(request):
     user=get_object_or_404(User, username=request.user.username)
     posts=Post.objects.filter(author=request.user)
     comments=Comment.objects.filter(author=request.user)
-    return render(request, 'main/user_update.html', {'user':user, 'posts':posts, 'comments':comments,})
+    myf=Follow.objects.filter(author=request.user)
+    one_week_ago = datetime.today() - timedelta(days=7)
+    try:
+        flag=1
+        M=Post.objects.filter(author=request.user, pub_date__range=[one_week_ago, datetime.today()]).values_list('emotion').annotate(count=Count('emotion')).order_by('-count')[0][0]
+    except IndexError:
+        flag=0
+        M="최근 1주일간 감정이 기록되지 않았습니다."
+    return render(request, 'main/user_update.html', {'user':user, 'posts':posts, 'comments':comments, 'max':M, 'myf':myf, 'flag':flag})
 def change_Email(request):
         if request.method=="POST":
                 newemail=request.POST['NEWEMAIL']
@@ -347,3 +357,19 @@ def otherdetail(request):
         post=get_object_or_404(Post, pk=pk)
         context={'body': post.body, 'date': post.pub_date, 'pk':pk}
         return JsonResponse(context)
+def subscribe(request):
+    if request.method=="POST":
+        pk=request.POST['pk']
+        post=get_object_or_404(Post, pk=pk)
+        follow=post.author
+        if not Follow.objects.filter(author=request.user, name=follow).exists():
+            Follow.objects.create(author=request.user, name=follow)
+            return HttpResponse()
+
+def followsky(request, index):
+    me=request.user
+    fpk=index
+    follow=get_object_or_404(Follow, pk=fpk)
+    author=get_object_or_404(User, username=follow.name)
+    posts=Post.objects.filter(author=author)
+    return render(request, 'main/followsky.html',{'posts':posts, 'author':author, 'me':me})

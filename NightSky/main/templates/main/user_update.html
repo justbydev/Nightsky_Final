@@ -84,7 +84,6 @@
               }
     
               .password{
-                position: absolute;
                 left: 210px;
                 margin-top: 10px;
               }
@@ -170,21 +169,21 @@
     {% endif %}
     <div class="tabs-content" id="back">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#나의글" role="tab" aria-controls="writing" aria-selected="true"><h3>나의 글</h3></a>
-          </li>
-        <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#나의공감" role="tab" aria-controls="gonggam" aria-selected="false"><h3>나의 공감</h3></a>
-          </li>
       <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#ID수정" role="tab" aria-controls="home" aria-selected="false"><h3>ID 수정</h3></a>
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#나의글" role="tab" aria-controls="writing" aria-selected="true"><h3>나의 글</h3></a>
+      </li>
+    <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#나의공감" role="tab" aria-controls="gonggam" aria-selected="false"><h3>나의 공감</h3></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#이메일수정" role="tab" aria-controls="profile" aria-selected="false"><h3>이메일 수정</h3></a>
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#나의감정" role="tab" aria-controls="emotion" aria-selected="false"><h3>나의 감정</h3></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#비밀번호변경" role="tab" aria-controls="profile" aria-selected="false"><h3>비밀번호 변경</h3></a>
-      </li>
+    <li class="nav-item">
+      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#개인정보변경" role="tab" aria-controls="privacy" aria-selected="false"><h3>개인정보변경</h3></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#구독목록" role="tab" aria-controls="subscribe" aria-selected="false"><h3>구독목록</h3></a>
+    </li>
     </ul>
     
     <div class="tab-content" id="myTabContent" name="{{user.username}}">
@@ -207,45 +206,55 @@
           </div> <span style="color: rgb(172, 172, 172); margin-left: 10px; font-size: 20px;">{{comment.created_at}}</span><br>
         {% endfor %}
     </div>
-      
-    <div class="tab-pane fade" id="ID수정" role="tabpanel" aria-labelledby="profile-tab">
-        <form method="POST" action="{% url 'change_ID' %}">{% csrf_token %}
-            <span style="font-size: 40px; border-bottom: 1px white dashed;">현재 ID: {{user.username}}</span><br><br>
-            <h3>바꿀 ID: <input type="text" placeholder="" name="NEWID" required></h2><br>
-            <h2>현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required style="left:180px; width: 128px;"></h2><br>
-            {% if message %}
+    <div class="tab-pane fade" id="나의감정" role="tabpanel" aria-labelledby="home-tab">
+      {% if flag == 1 %}
+        {{user.username}}님이 최근에 가장 많이 느낀 감정은 '{{max}}'
+      {% else %}
+        {{max}}
+      {% endif %}  
+          
+  </div>
+  <div class="tab-pane fade" id="개인정보변경" role="tabpanel" aria-labelledby="profile-tab">
+    <h2>ID 변경</h2>
+      <form method="POST" action="{% url 'change_ID' %}">{% csrf_token %}
+          <span style="font-size: 35px; border-bottom: 1px white dashed;">현재 ID: {{user.username}}</span><br><br>
+          <h3>바꿀 ID: <input type="text" placeholder="" name="NEWID" required></h2><br>
+          <h2>현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required style="left:180px; width: 128px;"></h2><br>
+          {% if message %}
+            <h2 style="color: red;">{{message}}</h2><br>
+          {% endif %}
+  
+          {% if message4 %}
+              <h2 style="color: red;">{{message4}}</h2><br>
+          {% endif %}
+          <button type="submit" class="Button">수정하기</button>            
+      </form>
+      <h2>EMAIL 변경</h2>
+      <span style="font-size: 35px; border-bottom: 1px white dashed;">현재 Email: {{user.email}}</span><br><br>
+      <form method="POST" action="{% url 'change_Email' %}">{% csrf_token %}
+          <h2>바꿀 Email: <input type="text" name="NEWEMAIL" placeholder= ""  required></h2><br>
+          <button type="submit" class="Button">수정하기</button>
+      </form>
+      <h2>비밀번호 변경</h2>
+      <form method="POST" action="{% url 'change_pw'%}">{% csrf_token %}
+          
+          <h2>현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required ></h2><br>
+          {% if message %}
               <h2 style="color: red;">{{message}}</h2><br>
-            {% endif %}
-    
-            {% if message4 %}
-                <h2 style="color: red;">{{message4}}</h2><br>
-            {% endif %}
-            <button type="submit" class="Button">수정하기</button>
-            
-        </form>
-      </div>
-      <div class="tab-pane fade" id="이메일수정" role="tabpanel" aria-labelledby="profile-tab">
-        <span style="font-size: 40px; border-bottom: 1px white dashed;">현재 Email: {{user.email}}</span><br><br>
-        <form method="POST" action="{% url 'change_Email' %}">{% csrf_token %}
-            <h2>바꿀 Email: <input type="text" name="NEWEMAIL" placeholder= ""  required></h2><br>
-            <button type="submit" class="Button">수정하기</button>
-        </form>
-      </div>
-      <div class="tab-pane fade" id="비밀번호변경" role="tabpanel" aria-labelledby="profile-tab">
-        <form method="POST" action="{% url 'change_pw'%}">{% csrf_token %}
-            
-            <h2>현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required ></h2><br>
-            {% if message %}
-                <h2 style="color: red;">{{message}}</h2><br>
-            {% endif %}
-            <h2>새 비밀번호: <input class="password" type="password" name="password1" placeholder="" required></h2><br>
-            <h2>새 비밀번호 확인: <input class="password" type="password" name="password2" placeholder="" required></h2><br>
-            {% if message2 %}
-                <h2 style="color: red;">{{message2}}</h2><br>
-            {% endif %}
-            <button type="submit" class="Button">수정하기</button>
-        </form>
-      </div>
+          {% endif %}
+          <h2>새 비밀번호: <input class="password" type="password" name="password1" placeholder="" required></h2><br>
+          <h2>새 비밀번호 확인: <input class="password" type="password" name="password2" placeholder="" required></h2><br>
+          {% if message2 %}
+              <h2 style="color: red;">{{message2}}</h2><br>
+          {% endif %}
+          <button type="submit" class="Button">수정하기</button>
+      </form>
+    </div>
+    <div class="tab-pane fade" id="구독목록" role="tabpanel" aria-labelledby="profile-tab">
+      {% for follow in myf %}
+        <div class ="follow" name="{{follow.pk}}">{{follow.name}}</div>
+      {%endfor%}
+  </div>
     </div>
     </div>
     
@@ -294,7 +303,7 @@
       </div>
     </div>
   </div>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
@@ -328,7 +337,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <script>
+    <script>
+        $(".follow").click(function(){
+        fpk=$(this).attr('name');
+        var url="{% url 'followsky' 123 %}".replace('123', fpk);
+        location.href=url;
+    });
         function modalfunc()
       {
         var back1 = document.getElementById('back');

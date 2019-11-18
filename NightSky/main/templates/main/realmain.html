@@ -130,6 +130,7 @@ var wr;
         <div class = "modalbody">
             <div class="left">
                 <div id="other" class="textwriter"></div>
+                <button type="button" class="subscribe"></button>
                 <textarea rows="17" id="textbody" value="" readonly="readonly"></textarea>
                 <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea><br>
                 <input type="button" id="ctsave" value="댓글저장"> 
@@ -183,6 +184,7 @@ $(".update").click(function(){
             $(".textwriter").append(msg['writer']);
            
             $(".textwriter").append("님");
+            $(".subscribe").text("구독하기");
             //$("#textpk").val(msg['pk']);
             //$("#textdate").val(msg['date']);
             $(document).on('click', '#other', function(){
@@ -195,9 +197,21 @@ $(".update").click(function(){
             $("#textbody").html("오류발생");
         }
     });
-    
-    
+        
 });
+$(".subscribe").click(function(){
+        $.ajax({
+            type:"POST",
+            url: "subscribe/",
+            data: {'pk': pk, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+            success: function(){
+                alert("successsub");
+            },
+            error: function(response){
+                alert('fail');
+            }
+        });     
+    });
 
 
 

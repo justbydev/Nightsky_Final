@@ -40,6 +40,7 @@ urlpatterns = [
     path('mysky/post_edit/', main.views.post_edit, name="post_edit"),
     path('mysky/post_delete/', main.views.post_delete, name="post_delete"),
     path('realmain/post_total/', main.views.post_total, name="post_total"),
+    path('realmain/subscribe/', main.views.subscribe, name="subscribe"),
     path('realmain/postdetail/', main.views.postdetail, name="postdetail"),
     path('othersky/<int:index>/', main.views.othersky, name="othersky"),
     path('otherdetail/', main.views.otherdetail, name="otherdetail"),
@@ -50,4 +51,5 @@ urlpatterns = [
     path('mysky/user_update/post_delete/', main.views.post_delete, name="post_delete"),
     path('mysky/comment_update/', main.views.comment_update, name="comment_update"),
     path('mysky/comment_delete/', main.views.comment_delete, name="comment_delete"),
+    path('followsky/<int:index>/', main.views.followsky, name="followsky"),
 ]

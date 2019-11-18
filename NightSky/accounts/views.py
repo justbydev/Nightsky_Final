@@ -12,9 +12,10 @@ def register(request):
             if User.objects.filter(username=username).exists():
                 return render(request, 'register.html', {'message2':'※이미 사용중인 ID입니다.', 'username':request.POST['username'], 'email':request.POST['email']})
             else:
+                nickname=request.POST['nickname']
                 password=request.POST['password1']
                 email=request.POST['email']
-                User.objects.create_user(username, email, password)
+                User.objects.create_user(username=username,email= email, password=password, first_name=nickname)
                 return render(request, 'main/home.html')
     elif request.method=="GET":
         return render(request, 'register.html')

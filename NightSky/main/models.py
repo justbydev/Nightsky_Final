@@ -37,6 +37,10 @@ class search(models.Model):
     word=models.TextField(default='')
     author=models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
+class Follow(models.Model):
+    author=models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    name=models.TextField(default='')
+    
 class CommentUpdate(UpdateView):
     model = Comment
     fields = [ 'text']
