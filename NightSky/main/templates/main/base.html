@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    @keyframes menu-shine{
+        0%{
+            box-shadow: 0 0 5px #fffde6;
+        }
+        100%{
+            box-shadow: 0 0 10px #fffde6;
+        }
+    }
+
+    #bground{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        padding: 0px;
+        margin: 0px;
+        transition: all 1200ms ease-in-out;
+        z-index: -1;
+    }
+
+    #bground.shade{
+        background-color: #b5b5b5;
+        opacity: 0.6;
+        z-index: 10;
+    }
+
+    .container{
+        display: inline-block;
+        position: absolute;
+        height: 180px;
+        width: 200px;
+        top: 2vh;
+        right: 2vh;
+        z-index: 11;
+    }
+
+    .container.on{
+        z-index: 13;
+    }
+
+    .menu-moon{
+        display: inline-block;
+        position: absolute;
+        top: 15px;
+        right: 10px;
+        margin: 5px;
+        height: 12vh;
+        width: 12vh;
+        background: linear-gradient( #fffef5, #f2f1e9, #e3e2da);
+        border: none;
+        border-radius: 100%;
+        z-index: 11;
+        font-family: 'UhBeemysen';
+        animation: menu-shine 1s ease-in-out infinite alternate;
+
+        font-size: 40px;
+        color: #757573;
+    }
+
+    .menu-moon:hover{
+        cursor: pointer;
+    }
+
+
+    .container li{
+        position: absolute;
+        display: inline-block;
+        list-style: none;
+        width: 12rem;
+        transition: transform 1200ms ease-in-out;
+        transition: top, left 1000ms step;
+    }
+
+    /***************메뉴 목록:::회전 이전***************/
+    .container li:nth-child(1){
+        top: -100px;
+    }
+    .container li:nth-child(2){
+        top: -100px;
+    }
+    .container li:nth-child(3){
+        top: -100px;
+    }
+    .container li:nth-child(4){
+        top: -100px;
+    }
+ 
+    /***************메뉴 목록:::회전 이후***************/
+    .container li.rotate:nth-child(1){
+        transform: rotate(5deg);
+        top: 5px;
+        right: 80px;
+    }
+    .container li.rotate:nth-child(2){
+        transform: rotate(-5deg);
+        top: 35px;
+        right: 80px;
+    }
+    .container li.rotate:nth-child(3){
+        transform: rotate(-10deg);
+        top: 75px;
+        right: 80px;
+    }
+    .container li.rotate:nth-child(4){
+        transform: rotate(-15deg);
+        top: 110px;
+        right: 75px;
+    }
+
+    /***************메뉴 글자***************/
+    .container li span{
+        margin-left: 10px;
+        opacity: 0;
+        transition: opacity 1200ms, color 500ms, ease-in-out;
+        text-shadow: 0 0 10px rgb(254, 255, 182);
+        color: rgb(44, 44, 44);
+        font-size: 3rem;
+
+    }
+    .container li span.fade-in{
+        opacity: 1;
+    }
+    .container li span:hover{
+        color: rgb(255, 251, 231);
+    }
+
+    #dialog{
+    box-sizing: border-box;
+    z-index:9999999999; 
+    position:absolute;
+    font-size:30px;
+    background-color: rgb(255, 255, 255);
+    color:black;
+    width:100% !important;
+    text-align: center;
+    top: -100px; 
+    padding: 30px;
+    border-radius: 1rem;           
+}
+.dialogbtn{
+    margin: auto;
+}
+.yes, .no{
+    font-size: 15px;
+    font-family: 'UhBeemysen';
+    border:none;
+    cursor: pointer;
+    margin:10px;
+    border-radius: 0.5rem;
+    background-color: #4e4e87;
+    color: white;
+    width: 50px;
+}
+  </style>
+</head>
+<body>
+    <div id="bground"></div>
+    <div class="container">
+        <button class="menu-moon">메뉴</button> 
+        <div class="menu-list">
+            <ul>
+                <li><a href="{% url 'user_update' %}"><span>마이페이지</span></a></li>
+                <li><a href="{% url 'realmain' %}"><span>홈으로</span></a></li>
+                <li><a href="{% url 'mysky' %}"><span>내 밤하늘로</span></a></li>
+                <li><a href="{% url 'logout' %}"><span>로그아웃</span></a></li>
+            </ul>
+        </div>
+    </div>
+    {% block content %}
+    {% endblock %}
+    <script>
+        var button = document.querySelector('.menu-moon');
+        var bgr = document.querySelector('#bground');
+        var li = document.querySelectorAll('.container li');
+        var char = document.querySelectorAll('.container li span');
+        var container = document.querySelector('.container');
+        var open = false;
+
+        button.addEventListener('click', function(){
+            if(!open){
+                button.innerHTML = "닫기";
+                open = true;
+            }
+            else{
+                button.innerHTML = "메뉴";
+                open = false;
+            }
+            li.forEach(function(element){
+                element.classList.toggle('rotate');
+            })
+            char.forEach(function(element){
+                element.classList.toggle('fade-in');
+            })
+            bgr.classList.toggle('shade');
+            container.classList.toggle('on');
+        });
+    </script>
+</body>
+</html>

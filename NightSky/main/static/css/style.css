@@ -1,0 +1,314 @@
+@font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+*:focus { outline:none; }
+
+
+
+body{
+    background-image: url(https://cdn.pixabay.com/photo/2017/08/10/08/26/stars-2619979_1280.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    overflow: hidden;
+    font-family: 'UhBeemysen';
+    }
+    
+body, html {
+    background-image: "{% static 'images/stars.jpg' %}";
+    height:100%;
+}
+
+
+a{
+  text-decoration: none;
+}
+
+#moon{
+  position: absolute;
+  display: inline-block;
+  top: 25%;
+  left: 45%;
+
+  height: 250px;
+  width: 230px;
+}
+
+#moon-img{
+  height: 250px;
+  width: 230px;
+}
+
+#reselect{
+  display: inline-block;
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  font-size: 40px;
+  text-shadow: 0 0 5px #888;
+}
+
+#reselect:hover{
+  top: 28px;
+}
+
+#reselect a{
+  color: white;
+}
+
+textarea{
+  resize:none;
+  font-family: 'UhBeemysen';
+  border-radius: 1rem;
+  border: 0px;
+  padding: 20px;
+  font-size: 25px;
+  overflow: scroll;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: absolute; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  height: 75vh;
+  width: 55vw;
+ 
+}
+/* Modal Content/Box */
+
+.modal-content {
+  background-color: rgba(255,255,255,0.2);
+  padding: 20px;
+  border: 0;
+  width: 95%; /* Could be more or less, depending on screen size */
+  height: 95%;
+  border-radius:30pt;
+  overflow-x: hidden;
+}
+
+/****read post********/
+#postmodal{
+  height: 72vh;
+  width: 65vw;
+  top: 18%;
+  left: 20%;
+}
+
+.modalbody{
+  display: grid;
+  grid-template: 1fr / 1fr 1fr;
+  padding: 30px;
+  grid-gap: 20px;
+}
+
+.right{
+  margin-left: 20px;
+}
+
+#textbody{
+  height: 25vh;
+  width: 90%;
+}
+
+#ctcont{
+  height: 10vh;
+  width: 93%;
+  padding: 15px;
+  font-size: 18px;
+}
+
+#commentarea{
+  overflow: scroll;
+  color: black;
+  height: 40vh;
+  width: 95%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 1rem;
+  font-size: 18px;
+  word-break:break-all;
+  white-space:pre-wrap;
+}
+
+#ct-title{
+  color: white;
+  font-size: 35px;
+  font-family:'UhBeemysen';
+  line-height: 50px;
+  border-top: 1px white dashed;
+  margin-left: 10px;
+}
+.bt{
+  margin-top: 0.5rem;
+}
+
+#ctsave{
+  background: transparent;
+  border: 1px solid white;
+  font-size: 12px;
+  color: white;
+  font-family: 'Noto Serif KR', serif;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  height: 30px;
+}
+
+#ctsave:hover{
+  background-color: #2A2649;
+}
+
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.star{
+  display: inline-block;
+  position: absolute;
+}
+
+.star:hover{
+  cursor: pointer;
+}
+
+.cloud{
+  display: inline-block;
+  position:absolute;
+}
+.cloud:hover{
+    cursor:pointer;
+}
+/*?????*/
+.title{ 
+  display: inline-block;
+  position: absolute;
+  left: 50px;
+  top: 30px;
+  color: white;
+  font-size: 60px;
+  font-family: 'UhBeemysen';
+}
+
+
+.new{
+  display: inline-block;
+  position: absolute;
+  top: 18vh;
+  right: 4vh;
+  z-index: 11;
+}
+
+#myBtn{
+  border: none;
+  background: transparent;
+  color: white;
+  font-family: 'UhBeemysen';
+  font-size: 40px;
+  text-shadow: 0 0 5px rgb(255, 237, 188);
+  transition: all 1000ms step;
+}
+
+.new:hover{
+  top: 17vh;
+}
+#myBtn:hover{
+  cursor: pointer;
+}
+
+/**********野꺜??筌?*********/
+.option{
+  box-sizing: content-box;
+  display: inline-block;
+  position: absolute;
+  left: 45px;
+  top: 85px;
+}
+
+#search{
+  width: 8rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
+  font-size: 15px;
+  -webkit-appearance: textfield;
+}
+
+#search::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+
+#search-btn{
+  display: inline-block;
+  position: relative;
+  top: 8px;
+  left: 5px;
+  border: none;
+  height: 27px;
+  width: 40px;
+  border-radius: 1rem;
+  font-family: 'UhBeemysen';
+  font-size: 20px;
+}
+
+#search-btn:hover{
+  cursor: pointer;
+}
+
+.mypostlist{
+  font-size: 30px;
+  width: 200px;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  word-wrap:normal;
+  width:50px;
+  overflow:hidden;
+  }
+
+  .mycommentlist{
+    font-size: 25px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    word-wrap:normal;
+    width:150px;
+    overflow:hidden;
+  }
+
+  #delete{
+    color: rgb(185,185,185);
+    text-decoration: underline;
+  }
+
+  #commentmodal{
+    height: 72vh;
+    width: 65vw;
+    top: 18%;
+    left: 20%;
+  }
+  #textbody2{
+    height: 25vh;
+    width: 90%;
+    margin-bottom: 15%;
+  }
+  
+  #commentarea2{
+    overflow: scroll;
+    color: black;
+    height: 40vh;
+    background-color: white;
+    padding: 20px;
+    border-radius: 1rem;
+    font-size: 18px;
+  }

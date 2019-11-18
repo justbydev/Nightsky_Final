@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+*:focus { outline:none; }
+@font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff');} 
+        
+ body{ 
+                background-image: url(https://cdn.pixabay.com/photo/2017/08/10/08/26/stars-2619979_1280.jpg);
+                background-repeat: no-repeat;
+                background-size: cover;
+                color: white;
+                font-family: 'UhBeemysen';
+                }
+.register{
+        position: relative;
+        top: -50px;
+        text-align:center;
+        
+}
+input{
+  font-family: 'Noto Serif KR', serif;
+  position: absolute;
+  left: 700px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
+  font-size: 20px;
+  height: 20px;
+  width: 200px;
+}
+button{
+        background: transparent;
+        height: 40px;
+        width: 90px;
+        border: 1px solid white;
+        margin: 20px;
+        font-size: 18px;
+        color: white;
+        font-family: 'Noto Serif KR', serif;
+        cursor: pointer;
+}
+button:hover{
+        background-color: #2A2649;
+}
+span{
+        margin-top: 5px;
+        position: absolute;
+        left: 520px;
+        font-size: 20px;
+        font-family: 'Noto Serif KR', serif;
+}
+</style>
+</head>
+<body>
+<h2 style="text-align:center; font-size:80pt;">회원 가입</h2>
+
+<div class="register">
+<form action="{% url 'register' %}" method="POST">{% csrf_token %}
+        <span>아이디: </span><input name="username" placeholder='' type="text" value='{{username}}'  required>
+        <br><br>
+        {% if message2 %}
+                {{message2}}<br><br>
+        {% endif %}
+        <span>이메일: </span> <input name="email" placeholder='' type="text" value='{{email}}' required>
+        <br><br>
+        <span>비밀번호: </span> <input name="password1" id="pw" placeholder='' type="password" required>
+        <br><br>
+        <span>비밀번호 확인: </span> <input name="password2" id="checkpw" placeholder='' type="password" required>
+        <br><br>
+        {% if message1 %}
+                {{message1}}<br><br>
+        {% endif %}
+        
+        <br>
+        <!--{{form.as_p}}-->
+        <button type="submit">가입하기</button>
+        <button type="button" onClick="location.href='{% url 'home' %}'" style="color:rgb(114, 114, 114)">뒤로가기</button>
+        
+        
+</form>
+</div>
+</body>
+</html>

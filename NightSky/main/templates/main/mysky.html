@@ -1,0 +1,763 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    @font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff'); font-weight: normal; font-style: normal; }
+.ima{color: white;}
+
+/*Custom checkbox and radio button*/
+/* The container */
+.rc-container {
+    display: inline !important;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight: normal;
+    font-size:20px;
+    color:white;
+    margin-right: 3rem;
+    padding-top: .3rem;
+}
+
+/* Hide the browser's default checkbox */
+.rc-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: #fff;
+    border: #4e4e87 2px solid;
+}
+
+/*set round corner for radio button*/
+.checkmark.r {
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.rc-container:hover input ~ .checkmark {
+    background-color: #fff;
+}
+
+/* When the checkbox is checked, add a blue background */
+.rc-container input:checked ~ .checkmark {
+    background-color: #4e4e87;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.rc-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.rc-container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 .15rem .15rem 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+ 
+ 
+.emotion{
+     cursor: pointer;
+ }
+ .emotion input{
+     display: none;
+ }
+ .emotion span{
+     position:relative;
+     display: inline-block;
+     color: white;
+     font-size: 30px;
+     width:80px;
+     height:45px;
+ }
+ .emotion input:checked~span{
+     border-radius: 1rem;
+     background:  #2A2649;
+     color:white;
+ }
+ .happy:hover{
+     background: #2A2649;
+     border-radius: 1rem;
+ }
+ .funny:hover{
+    background: #2A2649;
+    border-radius: 1rem;
+ }
+ .sad:hover{
+    background: #2A2649;
+    border-radius: 1rem;
+ }
+ .angry:hover{
+    background: #2A2649;
+    border-radius: 1rem;
+ }
+ .stress:hover{
+    background: #2A2649;
+    border-radius: 1rem;
+ }
+ .guitar:hover{
+    background: #2A2649;
+    border-radius: 1rem;
+ }
+ 
+
+.edit{
+    display: flex;
+
+}
+
+
+label input{
+    color: white;
+}
+
+#here{
+    background-color: white;
+    border-radius: 1rem;
+    height: 40px;
+    width: 60px;
+    color: black;
+    font-size: 30px;
+    font-family: 'UhBeemysen';
+    border: 0;
+    cursor: pointer;
+}
+
+/****new post modal******/
+#myModal{
+  height: 70vh;
+  top: 15%;
+  left: 25%;
+}
+
+
+#new_emo{
+    height: 28vh;
+    width: 35vw;
+}
+
+
+.bt{
+    background: transparent;
+    border: 1px solid white;
+    font-size: 12px;
+    color: white;
+    font-family: 'Noto Serif KR', serif;
+    cursor: pointer;
+    margin: 5px;
+    height: 30px;
+}
+
+.bt{
+    margin-bottom: 20px;
+}
+.bt:hover{
+    background-color: #2A2649;
+}
+
+#new{
+    text-align: center;
+}
+.ui-dialog-titlebar{
+    display: none;
+}
+      
+
+</style>
+<script>
+var te=new Array();
+var pk;
+</script>
+
+<div class="title">{{user.username}}님의 밤하늘</div>
+<div class="new">
+    <input id = "myBtn" type = "button" onclick="get()" value="글 추가">
+</div>
+
+<div id ="star" style = "width: 100%; height:100%;">
+    {% for post in posts %}
+    {% if post.image == "star" %}        
+    <div class="star" id="1">
+        <div class="update" name="{{post.id}}" >
+            {% if post.comments.count > 10 %}
+                <img src="{% static 'img/white.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+            {% elif post.comments.count > 5 %}
+                <img src="{% static 'img/blue.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+            {% elif post.comments.count >= 0 %}
+                <img src="{% static 'img/star.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+            {% endif %}
+        </div>
+    </div>
+{% else %}
+    <div class="cloud" id="1">
+        <div class="update" name="{{post.id}}" >
+            {% if post.comments.count > 10 %}
+                <img src="{% static 'img/white.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+            {% elif post.comments.count > 5 %}
+                <img src="{% static "img/cloud.png" %}" style="width:180px; height:100px; opacity: 0.6;" onclick = "modalfunc();">
+            {% elif post.comments.count >= 0 %}
+                <img src="{% static "img/cloud.png" %}" style="width:180px; height:100px;" onclick = "modalfunc();">
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+        <script>
+        var id={{post.pk}};
+        var b="{{post.body}}";
+        te[id]=b;
+        if(document.getElementById("1")){
+            test();
+        }
+        function test(a){
+            var str1=Number({{post.lat}})-60;
+            var str2=Number({{post.lng}})-60;
+            var c=document.getElementById("1");
+            c.style.top=str1+'px';
+            c.style.left=str2+'px';
+            document.getElementById("1").setAttribute("id", "2");
+            //document.getElementById("1").setAttribute("class", "star");
+        
+        }
+        </script>
+    {% endfor %}
+
+</div>
+
+<div id="postmodal" class="modal">
+    <div class="modal-content">
+            <span id="postclose" class="close">&times;</span>
+            <!--<form method="POST">{% csrf_token %}-->
+            <div class = "modalbody">
+                <div class="left">
+                    <textarea rows="17" id="textbody" value="" required></textarea>
+                    <div class="edit">
+                            <div class="change">
+                                <input type="button" class="bt" id="editbtn" value="수정하기">
+                            </div>
+                            <div class="delete" id="opener">
+                                <input type="button" class="bt" value="삭제하기">
+                            </div>
+                    </div>
+                    <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea>
+                    <input type="button" id="ctsave" value="공감하기">
+                </div>
+                <div class="right">
+                    <span id="ct-title">공감의 말들</span>
+                    <div id="commentarea"></div>                    
+                </div>
+            </div>
+            <!--</form>-->
+    </div>
+</div>
+
+
+<div id="myModal" class="modal">
+
+  <div class="modal-content" id="new">
+    <span id="close" class="close">&times;</span>
+    <form method="POST" action="{% url 'mysky' %}" id="newText">
+            {% csrf_token %}
+            <br>
+            
+            <textarea rows="17" id="new_emo"name="body" placeholder="오늘의 감정은 무엇인가요?" required></textarea><br><br>
+            <label class="rc-container">
+                    별
+                    <input type="radio" name="im" checked="checked" class="ima" value="star" required>
+                    <span style="font-size:30px" class="checkmark r"></span>
+                  </label>
+                  
+              <label class="rc-container">
+                    구름
+                    <input type="radio" name="im" class="ima" value="cloud" required>
+                    <span class="checkmark r"style="font-size:30px"></span>
+                  </label><br /><br>
+            <label class="emotion">
+                <input type="radio"  name="emo" value="행복" required>
+                <span class="happy">  행복</span>
+            </label>
+            <label class="emotion">
+                <input type="radio" name="emo" value="즐거움" required>
+                <span class="funny">즐거움</span>
+            </label>
+            <label class="emotion">
+                <input type="radio" name="emo" value="슬픔" required>
+                <span class="sad">슬픔</span>
+            </label>
+            <label class="emotion">
+                <input type="radio" name="emo" value="화남" required>
+                <span class="angry">화남</span>
+            </label>
+            <label class="emotion">
+                <input type="radio" name="emo" value="스트레스" required>
+                <span class="stress">스트레스</span>
+            </label>
+            <label class="emotion">
+                <input type="radio" name="emo" value="기타" required>
+                <span class="guitar">기타</span>
+            </label>
+            <br><br>
+            <input type="hidden" id="x" name="x" value="">
+            <input type="hidden" id="y" name="y" value="">
+            <input type="submit" id="here" value="저장">
+    </form> 
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$( function() {           
+    $("#dialog").dialog({
+            autoOpen: false,
+            modal: true,
+            height:100, 
+            show: {
+              effect: "blind",
+              duration: 100
+            },
+            hide: {
+              effect: "fade",
+              duration: 100
+            }
+    });                 
+});</script>
+
+<div id="dialog">
+    <div id="dialog-ctn">
+        이 글을 정말 삭제하시겠습니까?
+        <div class="dialogbtn">
+            <button type="button" class="yes"><b>네</b></button>
+            <button type="button" class="no"><b>아니오</b></button>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+/*글쓰기 위한 modal*/
+  var modal = document.getElementById('myModal');
+  var btn = document.getElementById("myBtn");
+  //var sp = document.getElementsByClassName("close")[0];
+  var ssp=document.getElementById("close");
+  var w=false;
+  var pp1;
+  var pp2;
+  var postmodal;
+  btn.onclick=function get(){
+      alert('화면에 띄울 별이나 구름의 위치를 클릭해주세요');
+      w=document.getElementById("star");
+      w.onclick=function(e){
+          if(w){
+              pp1=e.pageX;
+              pp2=e.pageY;
+              modal.style.display="block";
+              w=false;
+          }
+      };
+  };
+  ssp.onclick=function(){
+      modal.style.display="none";
+  };
+  window.onclick=function(event){
+      if(event.target==modal){
+          modal.style.display="none";
+      }
+  };
+  $("#here").click(function(){
+      pp1=parseInt(pp1);
+      pp2=parseInt(pp2);
+      $("#x").val(pp1);
+      $("#y").val(pp2);
+  });
+  /*글 수정 위한 modal*/
+  function modalfunc(num)
+{
+    postmodal = document.getElementById('postmodal'); 
+    postmodal.style.display="block";
+    
+    var span = document.getElementsByClassName("close")[0];
+   
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            postmodal.style.display = "none";
+        }
+    };
+}
+
+var postclose=document.getElementById("postclose");
+postclose.onclick=function(){
+    postmodal.style.display="none";
+};
+/*글 갖고오기 위한 ajax*/
+$(".update").click(function(){
+    pk=$(this).attr('name');
+    $.ajax({
+        type:"GET",
+        url: "post_edit/",
+        data: {'pk': pk},
+        dataType: "json",
+        contentType: "json",
+        success: function(msg){
+            
+            $("#textbody").val(msg['body']);
+            //$("#textpk").val(msg['pk']);
+            //$("#textdate").val(msg['date']);
+        },
+        error: function(response){
+            alert('fail');
+            $("#textbody").html("오류발생");
+        }
+    })
+});
+/*댓글 가져오기 ajax*/
+$(".update").click(function(){
+    pk=$(this).attr('name');
+    $.ajax({
+            type:"GET",
+            url: "postdetail/",
+            data: {'pk': pk},
+            dataType: "json",
+            contentType: "json",
+            success: function(comments){
+                $("#commentarea").text("");
+                var list=comments;
+                //console.log(list);
+                //console.log(comments.length);
+                for(var i=0; i < list.comments.length;i++){
+                    //console.log(i);
+                    //var j=i;
+                    var commentct=list.comments[i];
+                    var time=list.comments[++i];
+                    var writer=list.comments[++i];
+                    //var update=list.comments[++i];
+                    //var delete=list.comments[++i];                    
+                    //console.log(comment);
+                    $("#commentarea").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
+                    $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
+                    $("#commentarea").append("<div button type='button class='btn_comment_update>update<div>");
+                    $("#commentarea").append("<div button type='button class='btn_comment_deletee>delete<div>");
+                        
+                
+
+                }
+                
+            },
+            error: function(response){
+                alert('failget');
+                $("#commentarea").html("오류발생");
+            }
+        })
+});
+/*댓글쓰기*/
+    $("#ctsave").click(function(){  
+        var ctcont=$('#ctcont').val();
+        //alert(ctcont);
+        $.ajax({
+            type:"POST",
+            url:"postdetail/",
+            data:{'postpk':pk, 'content': ctcont, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success:function(response){
+                
+                //var postmod = document.getElementById('postmodal'); 
+                //postmod.style.display="none";
+                //location.href="{% url 'mysky' %}"
+                
+                $.ajax({
+                        type:"GET",
+                        url: "postdetail/",
+                        data: {'pk': pk},
+                        dataType: "json",
+                        contentType: "json",
+                        success: function(comments){
+                            $("#commentarea").text("");
+                            var list=comments;
+                            console.log(list);
+                            //console.log(comments.length);
+                            for(var i=0; i < list.comments.length;i++){                            
+                                var commentct=list.comments[i];
+                                var writer=list.comments[++i];
+                                var time=list.comments[++i];                    
+                                //console.log(comment);
+                                $("#commentarea").append("<div class='info'>"+"<b>"+time+"</b>"+"  ========  "+writer+"</div>");
+                                $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
+                            }
+                            $("#ctcont").val("");
+                            
+                        },
+                        error: function(response){
+                            alert('failgetget');
+                            $("#commentarea").html("오류발생");
+                        }
+                    });
+            },
+            error:function(response){
+                alert('failss');
+            }
+        })
+    });
+
+
+/*$(function() {
+    $('#comment_form').submit(function(e) {
+        // alert('댓글쓰기 완료');
+        // 댓글 남기기
+        $('input[name="is_ajax"]').val("1");
+        url = $(this).attr('action');
+        params = $(this).serialize();
+        $.ajax({
+            url:url,
+            method:"POST",
+            data:params
+        }).done(function(data) {
+            // 댓글 입력창 내용 비우기
+            $('#id_text').val("");
+            $('#comment_list tbody').prepend(data.html); // tbody 시작 지점에 요소 끼워넣기
+            // is_ajax 값 초기화
+            $('input[name="is_ajax"]').val("");
+        });
+        return false;
+    });
+});*/
+
+/*댓글 수정 ajax*/
+$('.btn_comment_update').click(function(e) {
+    e.preventDefault();
+    url = $(this).attr('href')+'?is_ajax=1';
+    comment = $(this).parent().siblings('.comment_text'); // 원래 댓글을 찾음
+    input = "<input type='text' class='update_text' value='"+comment.text()+"'>";
+    comment.html(input);
+    $('.update_text').keypress(function(e){
+        if (e.keyCode==13) {
+            text = $(this).val();
+            $.ajax({
+                url:url,
+                data:{
+                    text:text
+                }
+            }).done(function(data) {
+                if(data.works) {
+                    comment.text(text);
+                }
+            });
+        }
+    });
+    return false;
+    text = prompt('수정될 댓글 내용을 입력하세요.', comment.text()); // 원래 댓글을 프롬프트로 보여줌
+    if (text==null) return false; // 입력 취소면 함수 종료
+    $.ajax({
+        url:url,
+        data:{
+            text:text
+        }
+    }).done(function(data) {
+        if(data.works) {
+            comment.text(text);
+        }
+    });
+});
+
+
+/*댓글 삭제 ajax*/
+/*$(".btn_comment_delete").click(function() {
+    $("#star").css({"background-color":"black", "opacity":"0.5"});
+    $("#postmodal").css({"opacity":"0.5"});
+    $("#dialog").dialog("open");
+});
+$(".yes").click(function() {
+    $.ajax({
+        type:"GET",
+        url:"post_delete/",
+        data:{'pk':comment_id},
+        success:function(response){
+            alert('댓글 삭제가 완료되었습니다.');
+            location.href="{% url 'mysky' %}"
+        },
+        error:function(response){
+            alert('fail4');
+        }
+    })
+});
+$(".no").click(function(){
+    $("#star").css({"background-color":"", "opacity":""});
+    $("#postmodal").css({"opacity":""});
+    $("#dialog").dialog("close");
+});*/
+    /*e.preventDefault();
+    var input = confirm('댓글을 삭제하시겠습니까?');
+    if (input==true) {
+        alert('댓글을 삭제하였습니다.');
+        comment = $(this).parents('tr'); // 버튼을 감싸고 있는 tr 찾기
+        url = $(this).attr('href')+"?is_ajax=1"; // ajax 호출임을 구분할 수 있게 값 추가
+        $.ajax({
+            //type:"POST"
+            url:url
+        }).done(function(data) {
+            if (data.works) {
+                comment.remove(); // 해당 객체 지우기
+            }
+        });
+    }
+});*/
+
+/*글 수정 위한 ajax*/
+$(".change").click(function(){
+    var content=$('#textbody').val();
+    $.ajax({
+        type:"POST",
+        url:"post_edit/",
+        data:{'pk':pk, 'content': content, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        success:function(response){
+            alert('글 수정이 완료되었습니다.');
+            var postmod = document.getElementById('postmodal'); 
+            postmod.style.display="none";
+        },
+        error:function(response){
+            alert('fail2');
+        }
+    })
+});
+/*글 삭제 위한 ajax*/
+$( function() {           
+    $("#dialog").dialog({
+            autoOpen: false,
+            //modal: true,
+            height:100, 
+            show: {
+              effect: "blind",
+              duration: 100
+            },
+            hide: {
+              effect: "fade",
+              duration: 100
+            }
+    });                 
+});
+$(".delete").click(function(){
+    $("#star").css({"background-color":"black", "opacity":"0.5"});
+    $("#postmodal").css({"opacity":"0.5"});
+    $("#dialog").dialog("open");
+});
+$(".yes").click(function() {
+    $.ajax({
+        type:"GET",
+        url:"post_delete/",
+        data:{'pk':pk},
+        success:function(response){
+            alert('글 삭제가 완료되었습니다.');
+            location.href="{% url 'mysky' %}"
+        },
+        error:function(response){
+            alert('fail3');
+        }
+    })
+});
+$(".no").click(function(){
+    $("#star").css({"background-color":"", "opacity":""});
+    $("#postmodal").css({"opacity":""});
+    $("#dialog").dialog("close");
+});
+  /*별 반짝임과 별똥별 효과*/
+  class Star{
+      constructor(targetStar){
+          this.targetStar = targetStar;
+          this.repeat;
+      }
+      
+      shine(){  /*별 반짝임 함수*/
+          var $element = this.targetStar;
+          var time = Math.random()*(3000)+2000;
+          this.repeat = setInterval(function () {
+              $element.fadeIn(1000, function () {
+                  $element.fadeOut(1500, function () {
+                  $element.fadeIn(1000)
+                  });
+              });
+          }, time); 
+      }
+      shootingStar(){  /*별똥별 효과*/
+          clearInterval(this.repeat);  /*반짝임 멈춤*/
+          this.targetStar.fadeIn(1000, this.tail());  /*꼬리*/
+          var t = parseInt(this.targetStar.css('top'),10);
+          var l = parseInt(this.targetStar.css('left'),10);
+          var max_t = (700-t)/50-2;
+          var max_l = (document.body.clientWidth-l)/50-2;
+          var max = max_t<max_l?max_t:max_l;
+          for(var j=0; j<max; j++){  /*떨어지는 효과*/
+              this.fall();
+          }
+          this.targetStar.fadeOut(2000, function(){
+              $('#tailSky').remove();
+              $(this).remove();
+          })
+      }
+      fall(){  /*떨어지는 모션*/
+          $(this.targetStar).animate({
+          left: '+=50',
+          top: '+=50'
+          }, 400, 'linear', function(){
+              ;
+          });
+      }
+      tail(){  /*꼬리 추가*/
+          this.targetStar.append('<div id="tailSky"></div>');
+          $("#tailSky").append('<div id="tail"></div>');
+      }
+  
+  }
+  /*star div 마다 Star 객체 만들어서 반짝임&별똥별 효과 줌*/
+  var len = $('.star').length;
+  var starObjs = new Array();
+  for(var i=0; i<len; i++){
+      starObjs[i] = new Star($('.star').eq(i));
+      starObjs[i].shine();
+  }
+
+  $('.cloud').each(function(){
+    var ran_time = Math.random()*(3000)+1000;
+        
+    $(this).animate({
+    top: '-=5'
+    }, 1000, 'linear', function(){
+        $(this).animate({
+                top: '+=5'
+            }, 1000, 'linear')
+    });
+    
+  });
+
+</script>
+{% endblock %}

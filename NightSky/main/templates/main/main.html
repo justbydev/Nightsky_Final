@@ -1,0 +1,333 @@
+ <head>
+
+            <meta charset="utf-8">
+            <link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo&display=swap&subset=korean" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Nanum+Gothic+Coding|Noto+Serif+KR:400,500,600,700,900&display=swap&subset=korean" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Noto+Serif+KR:400,500,600,700,900&display=swap&subset=korean" rel="stylesheet">
+            <style>
+                @font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff'); font-weight: normal; font-style: normal; }
+                body{ 
+                background-image: url(https://cdn.pixabay.com/photo/2017/08/10/08/26/stars-2619979_1280.jpg);
+                background-repeat: no-repeat;
+                background-size: cover;
+            
+                }
+                #envelope {
+  background-color: #eee;
+  /*box-shadow: 0 0 5px rgba(0,0,0,0.75);*/
+  height: 175px;
+  margin: 200px auto;
+  perspective: 900px;
+  perspective-origin: 50%;
+  position: relative;
+  transform-style: preserve-3d;
+  width: 300px;
+  
+}
+.checkbox1{  
+    height: 18px;
+  width: 18px;
+  background-color: transparent;
+  border: 3px solid #fff;
+  border-radius: 18px;
+  position: relative;
+  display: inline-block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-transition: border-color ease 0.2s;
+  -o-transition: border-color ease 0.2s;
+  -webkit-transition: border-color ease 0.2s;
+  transition: border-color ease 0.2s;
+  cursor: pointer;}
+.content{font-family: 'UhBeemysen';  font-size:20pt; font-weight: bold;}
+.emotion{text-align: center; color:white; font-family: 'UhBeemysen'; font-size:40pt;}
+.close11{position: relative; left:230px; 
+         background: transparent;
+        height:25px;
+        width:40px;
+        border: 2px soild rgb(17, 55, 112);
+        font-size: 12pt;
+        color: black;
+        font-family: 'UhBeemysen'; font-weight: bold;
+        cursor: pointer;}
+.fold{
+  
+  background-color: transparent;
+  border: 3px solid #fff;
+  border-radius: 5px;
+  position: relative;
+  display: inline-block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-transition: border-color ease 0.2s;
+  -o-transition: border-color ease 0.2s;
+  -webkit-transition: border-color ease 0.2s;
+  transition: border-color ease 0.2s;
+  cursor: pointer;}
+#paper {
+  /*border: 1px solid red;*/
+  bottom: 0;
+  /*min-height: 300px;*/
+  perspective: 900px;
+  perspective-origin: 50%;
+  position: absolute;
+  transform: translateZ(1px) translate(0, 200px);
+  width: 100%;
+}
+.opened #paper {
+  /* cubic-bezier(0.36, 0.06, 0.70, 0.95) */
+  animation: paperMovements 3s;
+  transform: translateZ(10px) translate(0, 50px);
+}
+/*#content { width: 100%; }*/
+#paper .fold {
+    z-index: 11;
+  /* SubtlePatterns.com rules :) */
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.05) 0%,
+      rgba(140, 140, 140, 0) 50%,
+      rgba(255, 255, 255, 0.25) 100%
+    ),
+    url("https://subtlepatterns.com/patterns/lined_paper.png");
+  display: block;
+  opacity: 0;
+  padding: 15px 10px;
+  transform-origin: 50% 0;
+  transform: rotateX(-90deg);
+  transition: transform 1s, opacity 0.1s;
+}
+#paper .fold.unfolded,
+#paper .fold:nth-child(1) {
+  opacity: 1;
+  transform: rotateX(0);
+}
+#closeLetter {
+  cursor: pointer;
+  font-family: "Patrick Hand SC", Verdana, sans-serif;
+}
+#flap {
+  border-color: #f0f0f0 transparent transparent;
+  border-style: solid;
+  border-width: 110px 150px 87px 150px;
+  height: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: transform 0.8s;
+  transform: rotateX(0) translateZ(7px);
+  transform-origin: 50% 0;
+  width: 0;
+}
+.opened #flap {
+  transform: rotateX(180deg) translateZ(5px);
+}
+#front {
+  border-color: transparent #dde #e7e7e7 #d5e0e0;
+  border-style: solid;
+  border-width: 87px 150px;
+  bottom: 0;
+  height: 0;
+  left: 0;
+  position: absolute;
+  transform: translateZ(5px);
+  width: 0;
+}
+@keyframes paperMovements {
+  0% {
+    transform: translateZ(1px) translate(0, 200px);
+  }
+  50% {
+    transform: translateZ(10px) translate(0, 25px);
+  }
+  100% {
+    transform: translateZ(10px) translate(0, 50px);
+  }
+} /*
+@keyframes unfold {
+  0% { transform: rotateX(-180deg); }
+  30% { transform: rotateX(-180deg); }
+  66% { transform: rotateX(0); }
+  100% { transform: rotateX(0); }
+}
+@keyframes showContent {
+  0% {  }
+  100% {  }
+}*/
+                
+                /*button{
+                    height: 40px;
+                    width: 90px;
+                    margin: 15px;
+                    border-radius: 2rem;
+                    background: transparent;
+                    font-size: 18px;
+                    color: white;
+                    font-family: 'Noto Serif KR', serif;
+                    cursor: pointer;
+                }
+                button:hover{  
+                    border: 1px solid dodgerblue;
+                    color: dodgerblue;
+                }
+                
+                .content{font-family: 'East Sea Dokdo', cursive;
+                font-family: 'Noto Serif KR', serif; 
+                border-radius: 5rem;}
+                .content label{
+                    cursor: pointer;
+                }
+                .content label input{/*remove radio check*/
+                /*    display: none;
+                }
+                .content label span{
+                    position: relative;
+                    display: inline-block;
+                    margin: 10px 10px;
+                    padding-top: 20px;
+                    width: 100px;
+                    height:50px;
+                    border-radius: 20pt;
+                    text-align:center;
+                    color: dodgerblue;
+                }
+                .content label input:checked~span{
+                    background: dodgerblue;
+                    color: white;
+                }
+                .happy:hover{
+                    background: dodgerblue;
+                    color: white;
+                }
+                .funny:hover{
+                    background: dodgerblue;
+                    color: white;
+                }
+                .sad:hover{
+                    background: dodgerblue;
+                    color: white;
+                }
+                .angry:hover{
+                    background: dodgerblue;
+                    color: white;
+                }
+                .stress:hover{
+                    background: dodgerblue;
+                    color: white;
+                }
+                .guitar:hover{
+                    background: dodgerblue;
+                    color: white;
+                }
+                .content {
+                    padding: 20px;
+                    margin: auto;
+                    border: 1px solid dodgerblue;
+                    width: 80%;
+                    text-align:center;
+                    border-radius:80pt;
+                    color: white;
+                }
+                .modal {
+                            display: none; /* Hidden by default */
+                  /*          position: fixed; /* Stay in place */
+                    /*        z-index: 1; /* Sit on top */
+                      /*      left: 0;
+                            top: 0;
+                            
+                            border-radius: 14px;
+                            width: 100%; /* Full width */
+                        /*    height: 100%; /* Full height */
+                          /*  overflow: auto; /* Enable scroll if needed */
+                            /*background-color: rgb(0,0,0); /* Fallback color */
+                            /*background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                        }
+                        
+            </style>
+<script src="https://code.jquery.com/jquery-latest.js"></script> 
+</head>
+<body>
+
+<div id="myModal" class="modal">
+<h1>밤하늘</h1>
+<div id="mycontent" class="content">
+<h1 class="emotion">오늘의 감정을 선택하세요</h1>
+       <!-- <form method="POST" action="{% url 'realmain'%}">-->
+            
+<div id="mycontent" class="content">
+    <div id="envelope">
+      <div id="flap"></div>
+        <form method="POST" action="{% url 'realmain' %}" id="paper" class="paper">{% csrf_token %}
+          <label class="fold"> <input type="radio"  class="checkbox1" name="emo" value="행복" required>
+                    <span class="happy">  행복</span></label>
+          <label class="fold">                <input type="radio" class="checkbox1" name="emo" value="즐거움" required>
+                    <span class="funny">즐거움</span></label>
+          <label class="fold">                <input type="radio" class="checkbox1" name="emo" value="슬픔" required>
+                    <span class="sad">슬픔</span></label>
+          <label class="fold">                <input type="radio" class="checkbox1" name="emo" value="화남" required>
+                    <span class="angry">화남</span></label>
+          <label class="fold">                <input type="radio" class="checkbox1" name="emo" value="스트레스" required>
+                    <span class="stress">스트레스</span>
+                    <br>
+                    <!--<span id="closeLetter" class="fold1"> 선택 완료</span></label>-->
+                    <button type="submit" class="close11" onClick="close_pop();">확인</button></label>
+   
+        
+  
+        </form>
+      <div id="front"></div>
+    </div><!-- End #envelope -->
+  </div>
+
+
+<script type="text/javascript">
+      
+      
+            
+      jQuery(document).ready(function() {
+               $('#myModal').show();
+        });
+        //팝업 Close 기능
+      
+        
+        function close_pop(flag) {
+             $('#myModal').hide();
+        };
+        
+        $('#envelope').click(function(){
+  $(this).addClass('opened');
+  
+  var folds = $('.fold', '#paper'); console.log(folds);
+  setTimeout(function(){
+    unfoldQ(folds,0);
+  }, 350);
+});
+$('#closeLetter').click(function(e){
+  $('#envelope').removeClass('opened');
+  $('.unfolded').removeClass('unfolded');
+  e.stopPropagation();
+});
+function unfoldQ(elem,inx){
+  if(inx != elem.length){
+console.log(elem[inx]);
+    $(elem[inx]).addClass('unfolded');
+console.log('index: ' + inx);
+    inx = parseInt(inx)+1;
+console.log('index: ' + inx);
+  
+    setTimeout(function(){
+      unfoldQ(elem,inx);
+    }, 500);
+  }
+}
+ 
+      </script>
+
+
+
+
+
+</body>
+</html>

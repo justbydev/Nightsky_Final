@@ -1,0 +1,357 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="option">
+    <form action="{% url 'mysearch' %}" method="POST">{% csrf_token %}
+        <input name="word" type="search" placeholder="글내용/감정/글쓴이" id="search">
+        <button type="submit" id="search-btn">검색</button>
+    </form>
+</div>
+
+<style>
+.hi{position: relative; top:450px;  text-align:center;}
+.tomysky{ position: relative;  vertical-align: middle;
+}
+
+#other:hover{
+    cursor:pointer;
+}
+
+#textbody{
+    height: 23vh;
+}
+
+#ctcont{
+    margin-top: 3vh;
+}
+
+#other{
+    font-size: 35px;
+    margin-bottom: 8px;
+}
+
+#commentarea{
+    height: 41vh;
+}
+#toother:hover{
+    cursor:pointer;
+}
+</style>
+<script>
+var pk;
+var wr;
+</script>
+<div id="pagenate">
+<a style="color:white;" href="?page=1">처음 밤하늘로</a>
+{% if pages.has_previous %}
+    <a style="color:white;" href="?page={{pages.previous_page_number}}">이전 밤하늘로</a>
+{% endif %}
+<span>{{pages.number}}</span>
+<span>of</span>
+<span>{{pages.paginator.num_pages}}</span>
+{% if pages.has_next %}
+    <a style="color:white;" href="?page={{pages.next_page_number}}">다음 밤하늘로</a>
+{% endif %}
+<a style="color:white;" href="?page={{pages.paginator.num_pages}}">마지막 밤하늘로</a>
+</div>
+
+
+<div id="reselect"><a href="{% url 'main'%}">감정 다시선택하기</a></div>
+
+<!--<div class=hi>
+<h3>반갑습니다, {{user.username}}님!</h3>
+</div>-->
+<div id="moon"><a href="{% url 'mysky' %}"><img src="{% static 'img/moon.png' %}" id="moon-img"></a></div>
+{% for post in pages %}
+    {% if post.image == "star" %}
+   
+    <div class="star" id="1">
+            <div class="update" name="{{post.id}}" >
+                {% if post.comments.count > 10 %}
+                    <img src="{% static 'img/white.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+                {% elif post.comments.count > 5 %}
+                    <img src="{% static 'img/blue.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+                {% elif post.comments.count >= 0 %}
+                    <img src="{% static 'img/star.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="cloud" id="1">
+            <div class="update" name="{{post.id}}" >
+                {% if post.comments.count > 10 %}
+                    <img src="{% static 'img/white.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+                {% elif post.comments.count > 5 %}
+                    <img src="{% static "img/cloud.png" %}" style="width:180px; height:100px; opacity: 0.6;" onclick = "modalfunc();">
+                {% elif post.comments.count >= 0 %}
+                    <img src="{% static "img/cloud.png" %}" style="width:180px; height:100px;" onclick = "modalfunc();">
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    <script>
+    
+        if(document.getElementById("1")){
+            test();
+        }
+        function test(){
+            var str1 = Math.round(Math.random()*800);
+            var str2 = Math.round(Math.random()*1800);
+            var width=screen.availWidth;
+            var height=screen.availHeight;
+            while(1){
+                if(str2>width-200){
+                    str2=Math.round(Math.random()*1800);
+                }
+                else{
+                    break;
+                }
+            }
+            while(1){
+                if(str1>height-200||str1<100){
+                    str1=Math.round(Math.random()*800);
+                }
+                else{
+                    break;
+                }
+            }
+            document.getElementById("1").style.top = str1+'px';
+            document.getElementById("1").style.left = str2+'px';
+            document.getElementById("1").setAttribute("id", "2");
+        }
+        
+    </script>
+        
+{% endfor %}
+
+<div id="postmodal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class = "modalbody">
+            <div class="left">
+                <div id="other" class="textwriter"></div>
+                <textarea rows="17" id="textbody" value="" readonly="readonly"></textarea>
+                <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea><br>
+                <input type="button" id="ctsave" value="댓글저장"> 
+            </div>
+            <div class="right">
+                <span id="ct-title">공감의 말들</span>
+                <div id="commentarea"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    var postmodal=document.getElementById('postmodal');
+    postmodal.style.display="none";
+});
+
+  function modalfunc()
+{
+    var postmodal = document.getElementById('postmodal'); 
+    postmodal.style.display="block";
+    
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+                postmodal.style.display = "none";
+    };
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            postmodal.style.display = "none";
+        }
+    };
+};
+
+$(".update").click(function(){
+    pk=$(this).attr('name');
+
+    $.ajax({
+        type:"GET",
+        url: "post_total/",
+        data: {'pk': pk},
+        dataType: "json",
+        contentType: "json",
+        success: function(msg){
+            wr=msg['writer'];
+            $(".textwriter").text("");
+            $("#textbody").val(msg['body']);
+    
+            $(".textwriter").append(msg['writer']);
+           
+            $(".textwriter").append("님");
+            //$("#textpk").val(msg['pk']);
+            //$("#textdate").val(msg['date']);
+            $(document).on('click', '#other', function(){
+                var url="{% url 'othersky' 123 %}".replace('123', pk);
+                location.href=url
+            });
+        },
+        error: function(response){
+            alert('fail');
+            $("#textbody").html("오류발생");
+        }
+    });
+    
+    
+});
+
+
+
+/*댓글 가져오기 ajax*/
+$(".update").click(function(){
+    pk=$(this).attr('name');
+   $.ajax({
+       type:"GET",
+        url: "postdetail/",
+        data: {'pk': pk},
+        dataType: "json",
+        contentType: "json",
+        success: function(comments){
+            $("#commentarea").text("");
+            var list=comments;
+            //console.log(list);
+            //console.log(comments.length);
+            for(var i=0; i < list.comments.length;i++){
+                //console.log(i);
+                //var j=i;
+                var commentct=list.comments[i];
+                var time=list.comments[++i];
+                var writer=list.comments[++i];                    
+                //console.log(comment);
+                $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+writer+"</b>"+"  </span>");
+                $("#commentarea").append("<span class='time'> ========"+time+"</span>");
+                $("#commentarea").append("<div class='comment'>"+commentct+"</div>");
+                
+                $(document).on('click', '.write', function(){
+                    var url="{% url 'commentothersky' 123 %}".replace('123', writer);
+                    location.href=url
+                });
+            }
+            $("#ctcont").val("");        
+        },
+        error: function(response){
+            alert('failget');
+            $("#commentarea").html("오류발생");
+        }
+    });
+});
+/*댓글쓰기*/
+    $("#ctsave").click(function(){  
+        var ctcont=$('#ctcont').val();
+        //alert(ctcont);
+        $.ajax({
+            type:"POST",
+            url:"postdetail/",
+            data:{'postpk':pk, 'content': ctcont, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success:function(response){
+                
+                //var postmod = document.getElementById('postmodal'); 
+                //postmod.style.display="none";
+                //location.href="{% url 'realmain' %}"
+                $.ajax({
+                        type:"GET",
+                        url: "postdetail/",
+                        data: {'pk': pk},
+                        dataType: "json",
+                        contentType: "json",
+                        success: function(comments){
+                            $("#commentarea").text("");
+                            var list=comments;
+                            console.log(list);
+                            //console.log(comments.length);
+                            for(var i=0; i < list.comments.length;i++){
+                                console.log(i);
+                                //var j=i;
+                                var commentct=list.comments[i];
+                                var time=list.comments[++i];
+                                var writer=list.comments[++i];                    
+                                //console.log(comment);
+                                $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+writer+"</b>"+"  </span>");
+                                $("#commentarea").append("<span class='time'> ========"+time+"</span>");
+                                $("#commentarea").append("<div class='comment'>"+commentct+"</div>");
+                                
+                                $(document).on('click', '.write', function(){
+                                    var url="{% url 'commentothersky' 123 %}".replace('123', writer);
+                                    location.href=url
+                                }); 
+                              
+                            }
+                            $("#ctcont").val("");
+                            
+                        },
+                        error: function(response){
+                            alert('failgetget');
+                            $("#commentarea").html("오류발생");
+                        }
+                    });
+            },
+            error:function(response){
+                alert('failss');
+            }
+        })
+    });
+
+    /*별 반짝임과 별똥별 효과*/
+  class Star{
+      constructor(targetStar){
+          this.targetStar = targetStar;
+          this.repeat;
+      }
+      
+      shine(){  /*별 반짝임 함수*/
+          var $element = this.targetStar;
+          var time = Math.random()*(3000)+2000;
+          this.repeat = setInterval(function () {
+              $element.fadeIn(1000, function () {
+                  $element.fadeOut(1500, function () {
+                  $element.fadeIn(1000)
+                  });
+              });
+          }, time); 
+      }
+      shootingStar(){  /*별똥별 효과*/
+          clearInterval(this.repeat);  /*반짝임 멈춤*/
+          this.targetStar.fadeIn(1000, this.tail());  /*꼬리*/
+          var t = parseInt(this.targetStar.css('top'),10);
+          var l = parseInt(this.targetStar.css('left'),10);
+          var max_t = (700-t)/50-2;
+          var max_l = (document.body.clientWidth-l)/50-2;
+          var max = max_t<max_l?max_t:max_l;
+          for(var j=0; j<max; j++){  /*떨어지는 효과*/
+              this.fall();
+          }
+          this.targetStar.fadeOut(2000, function(){
+              $('#tailSky').remove();
+              $(this).remove();
+          })
+      }
+      fall(){  /*떨어지는 모션*/
+          $(this.targetStar).animate({
+          left: '+=50',
+          top: '+=50'
+          }, 400, 'linear', function(){
+              ;
+          });
+      }
+      tail(){  /*꼬리 추가*/
+          this.targetStar.append('<div id="tailSky"></div>');
+          $("#tailSky").append('<div id="tail"></div>');
+      }
+  
+  }
+  /*star div 마다 Star 객체 만들어서 반짝임&별똥별 효과 줌*/
+  var len = $('.star').length;
+  var starObjs = new Array();
+  for(var i=0; i<len; i++){
+      starObjs[i] = new Star($('.star').eq(i));
+      starObjs[i].shine();
+  }
+    
+ 
+</script>
+
+{% endblock %}

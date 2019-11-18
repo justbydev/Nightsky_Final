@@ -1,0 +1,395 @@
+ {% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    @font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff'); font-weight: normal; font-style: normal; }
+ 
+.ima{color: white;}
+
+/*Custom checkbox and radio button*/
+/* The container */
+.rc-container {
+    display: inline !important;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight: normal;
+    font-size:20px;
+    color:white;
+    margin-right: 3rem;
+    padding-top: .3rem;
+}
+
+/* Hide the browser's default checkbox */
+.rc-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: #fff;
+    border: #4e4e87 2px solid;
+}
+
+/*set round corner for radio button*/
+.checkmark.r {
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.rc-container:hover input ~ .checkmark {
+    background-color: #fff;
+}
+
+/* When the checkbox is checked, add a blue background */
+.rc-container input:checked ~ .checkmark {
+    background-color: #4e4e87;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.rc-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.rc-container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 .15rem .15rem 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+ 
+
+.edit{
+    display: flex;
+}
+
+
+label input{
+    color: white;
+}
+
+#here{
+    background-color: white;
+    border-radius: 1rem;
+    height: 40px;
+    width: 60px;
+    color: black;
+    font-size: 30px;
+    font-family: 'UhBeemysen';
+    border: 0;
+    cursor: pointer;
+}
+
+#textbody{
+    height: 30vh;
+}
+
+#ctcont{
+    margin-top: 3vh;
+}
+
+#other{
+    font-size: 35px;
+    margin-bottom: 8px;
+}
+
+#commentarea{
+    height: 40.5vh;
+}
+
+</style>
+<script>
+var te=new Array();
+var pk;
+</script>
+
+<div class="title">{{author}}님의 밤하늘</div>
+
+
+<div id ="star" style = "width: 100%; height:100%;">
+    {% for post in posts %}
+    {% if post.image == "star" %}        
+    <div class="star" id="1">
+        <div class="bring" name="{{post.id}}" >
+            {% if post.comments.count > 10 %}
+                <img src="{% static 'img/white.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+            {% elif post.comments.count > 5 %}
+                <img src="{% static 'img/blue.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+            {% elif post.comments.count >= 0 %}
+                <img src="{% static 'img/star.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+            {% endif %}
+        </div>
+    </div>
+{% else %}
+    <div class="cloud" id="1">
+        <div class="bring" name="{{post.id}}" >
+            {% if post.comments.count > 10 %}
+                <img src="{% static 'img/white.png' %}" style="width:110px; height:110px;" onclick="modalfunc();">
+            {% elif post.comments.count > 5 %}
+                <img src="{% static "img/cloud.png" %}" style="width:120px; height:80px; opacity: 0.6;" onclick = "modalfunc();">
+            {% elif post.comments.count >= 0 %}
+                <img src="{% static "img/cloud.png" %}" style="width:120px; height:80px;" onclick = "modalfunc();">
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+        <script>
+        var id={{post.pk}};
+        var b="{{post.body}}";
+        te[id]=b;
+        if(document.getElementById("1")){
+            test();
+        }
+        function test(a){
+            var str1=Number({{post.lat}})-60;
+            var str2=Number({{post.lng}})-60;
+            var c=document.getElementById("1");
+            c.style.top=str1+'px';
+            c.style.left=str2+'px';
+            document.getElementById("1").setAttribute("id", "2");
+            //document.getElementById("1").setAttribute("class", "star");
+        
+        }
+        </script>
+    {% endfor %}
+
+</div>
+
+<div id="postmodal" class="modal">
+    <div class="modal-content">
+            <span id="postclose" class="close">&times;</span>
+            <!--<form method="POST">{% csrf_token %}-->
+            <div class = "modalbody">
+                <div class="left">
+                <textarea rows="17" id="textbody" value="" readonly="readonly" required></textarea>
+                
+                <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea><br>
+                <input type="button" id="ctsave" value="댓글 저장">
+            </div>
+            <div class="right">
+                <span id="ct-title">공감의 말들</span>
+                <div id="commentarea">                               
+                </div>
+            </div>
+            </div>
+            <!--</form>-->
+    </div>
+</div>
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+  /*글 수정 위한 modal*/
+  function modalfunc(num)
+{
+    postmodal = document.getElementById('postmodal'); 
+    postmodal.style.display="block";
+    
+    var span = document.getElementsByClassName("close")[0];
+   
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            postmodal.style.display = "none";
+        }
+    };
+}
+
+var postclose=document.getElementById("postclose");
+postclose.onclick=function(){
+    postmodal.style.display="none";
+};
+/*글 갖고오기 위한 ajax*/
+$(".bring").click(function(){
+    pk=$(this).attr('name');
+    $.ajax({
+        type:"GET",
+        url: "/otherdetail/",
+        data: {'pk': pk},
+        dataType: "json",
+        contentType: "json",
+        success: function(msg){
+            
+            $("#textbody").val(msg['body']);
+            //$("#textpk").val(msg['pk']);
+            //$("#textdate").val(msg['date']);
+        },
+        error: function(response){
+            alert('fail');
+            $("#textbody").html("오류발생");
+        }
+    })
+});
+/*댓글 가져오기 ajax*/
+$(".bring").click(function(){
+    pk=$(this).attr('name');
+    $.ajax({
+            type:"GET",
+            url: "/postdetail/",
+            data: {'pk': pk},
+            dataType: "json",
+            contentType: "json",
+            success: function(comments){
+                $("#commentarea").text("");
+                var list=comments;
+                console.log(list);
+                //console.log(comments.length);
+                for(var i=0; i < list.comments.length;i++){
+                    console.log(i);
+                    //var j=i;
+                    var commentct=list.comments[i];
+                    var time=list.comments[++i];
+                    var writer=list.comments[++i];                    
+                    //console.log(comment);
+                    $("#commentarea").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
+                    $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
+                }
+                
+            },
+            error: function(response){
+                alert('failget');
+                $("#commentarea").html("오류발생");
+            }
+        })
+});
+/*댓글쓰기*/
+    $("#ctsave").click(function(){  
+        var ctcont=$('#ctcont').val();
+        //alert(ctcont);
+        $.ajax({
+            type:"POST",
+            url:"/postdetail/",
+            data:{'postpk':pk, 'content': ctcont, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success:function(response){
+                
+                //var postmod = document.getElementById('postmodal'); 
+                //postmod.style.display="none";
+                //location.href="{% url 'mysky' %}"
+                
+                $.ajax({
+                        type:"GET",
+                        url: "/postdetail/",
+                        data: {'pk': pk},
+                        dataType: "json",
+                        contentType: "json",
+                        success: function(comments){
+                            $("#commentarea").text("");
+                            var list=comments;
+                            console.log(list);
+                            //console.log(comments.length);
+                            for(var i=0; i < list.comments.length;i++){
+                                console.log(i);
+                                //var j=i;
+                                var commentct=list.comments[i];
+                                var writer=list.comments[++i];
+                                var time=list.comments[++i];                    
+                                //console.log(comment);
+                                $("#commentarea").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
+                                $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
+                            }
+                            $("#ctcont").val("");
+                            
+                        },
+                        error: function(response){
+                            alert('failgetget');
+                            $("#commentarea").html("오류발생");
+                        }
+                    });
+            },
+            error:function(response){
+                alert('failss');
+            }
+        })
+    });
+
+
+  /*별 반짝임과 별똥별 효과*/
+  class Star{
+      constructor(targetStar){
+          this.targetStar = targetStar;
+          this.repeat;
+      }
+      
+      shine(){  /*별 반짝임 함수*/
+          var $element = this.targetStar;
+          var time = Math.random()*(3000)+2000;
+          this.repeat = setInterval(function () {
+              $element.fadeIn(1000, function () {
+                  $element.fadeOut(1500, function () {
+                  $element.fadeIn(1000)
+                  });
+              });
+          }, time); 
+      }
+      shootingStar(){  /*별똥별 효과*/
+          clearInterval(this.repeat);  /*반짝임 멈춤*/
+          this.targetStar.fadeIn(1000, this.tail());  /*꼬리*/
+          var t = parseInt(this.targetStar.css('top'),10);
+          var l = parseInt(this.targetStar.css('left'),10);
+          var max_t = (700-t)/50-2;
+          var max_l = (document.body.clientWidth-l)/50-2;
+          var max = max_t<max_l?max_t:max_l;
+          for(var j=0; j<max; j++){  /*떨어지는 효과*/
+              this.fall();
+          }
+          this.targetStar.fadeOut(2000, function(){
+              $('#tailSky').remove();
+              $(this).remove();
+          })
+      }
+      fall(){  /*떨어지는 모션*/
+          $(this.targetStar).animate({
+          left: '+=50',
+          top: '+=50'
+          }, 400, 'linear', function(){
+              ;
+          });
+      }
+      tail(){  /*꼬리 추가*/
+          this.targetStar.append('<div id="tailSky"></div>');
+          $("#tailSky").append('<div id="tail"></div>');
+      }
+  
+  }
+  /*star div 마다 Star 객체 만들어서 반짝임&별똥별 효과 줌*/
+  var len = $('.star').length;
+  var starObjs = new Array();
+  for(var i=0; i<len; i++){
+      starObjs[i] = new Star($('.star').eq(i));
+      starObjs[i].shine();
+  }
+  
+</script>
+{% endblock %}

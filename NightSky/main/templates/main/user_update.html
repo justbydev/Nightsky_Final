@@ -1,0 +1,589 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    {% extends 'main/base.html' %}
+    {% load static %}
+    {% block content %}
+    <style>
+  
+        @font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff'); font-weight: normal; font-style: normal; }
+      body{ 
+                      background-image: url(https://cdn.pixabay.com/photo/2017/08/10/08/26/stars-2619979_1280.jpg);
+                      background-repeat: no-repeat;
+                      background-size: cover;
+                      color: white;
+                      font-family: 'UhBeemysen';
+                      }
+      
+                      .title{color: white;
+                      font-family: 'UhBeemysen'; font-size: 50pt; position:relative; left:750px; }
+      
+                      .tab-content,.nav-item{color: white; font-family: 'UhBeemysen';}
+      
+                      
+            .mypostlist{
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          word-wrap:normal;
+          width:550px;
+          overflow:hidden;
+          }
+
+          .mycommentlist{
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            word-wrap:normal;
+            width:150px;
+            overflow:hidden;
+          }
+
+      button:hover:not(.yes , .no){
+            background-color: #2A2649;
+        }
+      
+              input{
+                background: transparent;
+                border: none;
+                border-bottom: 1px solid white;
+                color: white;
+                font-size: 25px;
+                margin-left: 10px;
+                font-family: 'UhBeemysen';
+              }
+    
+              .tabs-content{
+                position: absolute;
+                top: 15%;
+                left: 20%;
+                height: 90%;
+                width: 60%;
+               
+    
+                padding: 20px;
+              }
+    
+              .title{
+                position: absolute;
+                font-size: 60px;
+                left: 44%;
+                top: 5%;
+              }
+    
+              .tab-content{
+                padding: 40px;
+              }
+              
+              .nav-link{
+                color: white;
+              }
+              .nav-link:hover{
+                color: white;
+              }
+    
+              .password{
+                position: absolute;
+                left: 210px;
+                margin-top: 10px;
+              }
+    
+              a:hover{
+                text-decoration: none;
+              }
+    
+              button:focus{
+                outline: none;
+              }
+
+.ui-dialog-titlebar{
+    display: none;
+}
+
+.mypostlist, .mycommentlist{
+  cursor: pointer;
+}
+    
+.Button{
+  background: transparent;
+  border: 1px solid white;
+  font-size: 12px;
+  color: white;
+  font-family: 'Noto Serif KR', serif;
+  cursor: pointer;
+  height: 30px;
+}
+
+.change, .delete{
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+.Button:hover{
+  background-color: #2A2649;
+}
+
+#textbody{
+  height: 40vh;
+  width: 25vw;
+}
+
+#textbody2{
+  height: 25vh;
+  width: 25vw;
+  margin-bottom: 20px;
+}
+
+#ctcont{
+  width: 25vw;
+}
+
+#ctsave{
+  margin-top: 1rem;
+}
+
+.tab-pane{
+  height: 50vh;
+  width: 100wh;
+  overflow: scroll;
+}
+
+      </style>
+    </head>
+    <body>
+      <div id="star" style="width:100%; height:100%;">
+      <div class="title">
+      마이페이지
+    </div>
+    {% if message %}
+      <h2 style="color: red;">{{message}}</h2><br>
+    {% endif %}
+    {% if message2 %}
+      <h2 style="color: red;">{{message2}}</h2><br>
+    {% endif %}
+    {% if message3 %}
+      <h2 style="color: red;">{{message3}}</h2><br>
+    {% endif %}
+    {% if message4 %}
+      <h2 style="color: red;">{{message4}}</h2><br>
+    {% endif %}
+    <div class="tabs-content" id="back">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#나의글" role="tab" aria-controls="writing" aria-selected="true"><h3>나의 글</h3></a>
+          </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#나의공감" role="tab" aria-controls="gonggam" aria-selected="false"><h3>나의 공감</h3></a>
+          </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#ID수정" role="tab" aria-controls="home" aria-selected="false"><h3>ID 수정</h3></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#이메일수정" role="tab" aria-controls="profile" aria-selected="false"><h3>이메일 수정</h3></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#비밀번호변경" role="tab" aria-controls="profile" aria-selected="false"><h3>비밀번호 변경</h3></a>
+      </li>
+    </ul>
+    
+    <div class="tab-content" id="myTabContent" name="{{user.username}}">
+      <div class="tab-pane fade show active" id="나의글" role="tabpanel" aria-labelledby="home-tab">
+ 
+        {% for post in posts %}
+          
+          <div class="mypostlist" name="{{post.id}}" onclick="modalfunc();" style="display: inline-block;">
+               {{post.body}} 
+          </div> <span style="color: rgb(172, 172, 172); margin-left: 10px; font-size: 20px;">{{post.pub_date}}</span><br>
+        {% endfor %}
+      
+    </div>
+    <div class="tab-pane fade" id="나의공감" role="tabpanel" aria-labelledby="profile-tab">
+     
+        {% for comment in comments %}
+
+          <div class="mycommentlist" name="{{comment.post.id}}" onclick="modalfunc2();" style="display: inline-block;"> 
+                {{comment.content}}
+          </div> <span style="color: rgb(172, 172, 172); margin-left: 10px; font-size: 20px;">{{comment.created_at}}</span><br>
+        {% endfor %}
+    </div>
+      
+    <div class="tab-pane fade" id="ID수정" role="tabpanel" aria-labelledby="profile-tab">
+        <form method="POST" action="{% url 'change_ID' %}">{% csrf_token %}
+            <span style="font-size: 40px; border-bottom: 1px white dashed;">현재 ID: {{user.username}}</span><br><br>
+            <h3>바꿀 ID: <input type="text" placeholder="" name="NEWID" required></h2><br>
+            <h2>현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required style="left:180px; width: 128px;"></h2><br>
+            {% if message %}
+              <h2 style="color: red;">{{message}}</h2><br>
+            {% endif %}
+    
+            {% if message4 %}
+                <h2 style="color: red;">{{message4}}</h2><br>
+            {% endif %}
+            <button type="submit" class="Button">수정하기</button>
+            
+        </form>
+      </div>
+      <div class="tab-pane fade" id="이메일수정" role="tabpanel" aria-labelledby="profile-tab">
+        <span style="font-size: 40px; border-bottom: 1px white dashed;">현재 Email: {{user.email}}</span><br><br>
+        <form method="POST" action="{% url 'change_Email' %}">{% csrf_token %}
+            <h2>바꿀 Email: <input type="text" name="NEWEMAIL" placeholder= ""  required></h2><br>
+            <button type="submit" class="Button">수정하기</button>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="비밀번호변경" role="tabpanel" aria-labelledby="profile-tab">
+        <form method="POST" action="{% url 'change_pw'%}">{% csrf_token %}
+            
+            <h2>현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required ></h2><br>
+            {% if message %}
+                <h2 style="color: red;">{{message}}</h2><br>
+            {% endif %}
+            <h2>새 비밀번호: <input class="password" type="password" name="password1" placeholder="" required></h2><br>
+            <h2>새 비밀번호 확인: <input class="password" type="password" name="password2" placeholder="" required></h2><br>
+            {% if message2 %}
+                <h2 style="color: red;">{{message2}}</h2><br>
+            {% endif %}
+            <button type="submit" class="Button">수정하기</button>
+        </form>
+      </div>
+    </div>
+    </div>
+    
+    <div id="postmodal" class="modal">
+      <div class="modal-content" >
+              <span id="postclose" class="close" style="text-align: right;">&times;</span>
+              <!--<form method="POST">{% csrf_token %}-->
+              <div class = "modalbody">
+                  <div class="left">
+                      <textarea rows="17" id="textbody" value="" required></textarea>
+                      <div class="edit">
+                              <div class="change">
+                                  <input type="button" class="Button" id="editbtn" value="수정하기">
+                              </div>
+                              <div class="delete">
+                                  <input type="button" class="Button" value="삭제하기">
+                              </div>
+                      </div>
+                  </div>
+                  <div class="right">
+                      <span id="ct-title">공감의 말들</span>
+                      <div id="commentarea"></div>                           
+                  </div>
+              </div>
+              <!--</form>-->
+      </div>
+    </div>
+    
+    
+    <div id="commentmodal" class="modal">
+      <div class="modal-content" >
+              <span id="commentclose" class="close" style="text-align: right;">&times;</span>
+              <!--<form method="POST">{% csrf_token %}-->
+              <div class = "modalbody">
+                  <div class="left">
+                      <textarea rows="17" id="textbody2" value="" readonly="readonly"></textarea>
+                      <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea>
+                      <input type="button" id="ctsave" value="공감하기">
+                  </div>
+                  <div class="right">
+                      <span id="ct-title">공감의 말들</span>
+                      <div id="commentarea2"></div>                           
+                  </div>
+              </div>
+              <!--</form>-->
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {           
+      $("#dialog").dialog({
+              autoOpen: false,
+              //modal: true,
+              height:100, 
+              show: {
+                effect: "blind",
+                duration: 100
+              },
+              hide: {
+                effect: "fade",
+                duration: 100
+              }
+      });                 
+  });</script>
+  
+  <div id="dialog">
+      <div id="dialog-ctn">
+          이 글을 정말 삭제하시겠습니까?
+          <div class="dialogbtn">
+              <button type="button" class="yes"><b>네</b></button>
+              <button type="button" class="no"><b>아니오</b></button>
+          </div>
+      </div>
+  </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script>
+        function modalfunc()
+      {
+        var back1 = document.getElementById('back');
+        back1.style.display = "none";
+        var postmodal = document.getElementById('postmodal'); 
+        postmodal.style.display = "block";    
+      }
+      function modalfunc2()
+      {
+        var back1 = document.getElementById('back');
+        back1.style.display = "none";
+        var commentmodal = document.getElementById('commentmodal'); 
+        commentmodal.style.display = "block";    
+      }
+      
+      var postclose=document.getElementById("postclose");
+      var commentclose=document.getElementById("commentclose");
+      var back1 = document.getElementById('back');
+    
+      postclose.onclick=function(){
+          postmodal.style.display="none";
+          back1.style.display = "block";
+      };
+    
+      commentclose.onclick=function(){
+          commentmodal.style.display="none";
+          back1.style.display = "block";
+      };
+    
+    /**postmodal**/
+    /*글 가져오기*/
+    $(".mypostlist").click(function(){
+        pk=$(this).attr('name');
+        $.ajax({
+            type:"GET",
+            url: "post_edit/",
+            data: {'pk': pk},
+            dataType: "json",
+            contentType: "json",
+            success: function(msg){
+                
+                $("#textbody").val(msg['body']);
+                //$("#textpk").val(msg['pk']);
+                //$("#textdate").val(msg['date']);
+            },
+            error: function(response){
+                alert('fail');
+                $("#textbody").html("오류발생");
+            }
+        })
+    });
+    $(".change").click(function(){
+        var content=$('#textbody').val();
+        $.ajax({
+            type:"POST",
+            url:"post_edit/",
+            data:{'pk':pk, 'content': content, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success:function(response){
+                alert('글 수정이 완료되었습니다.');
+                var postmod = document.getElementById('postmodal'); 
+                postmod.style.display="none";
+            },
+            error:function(response){
+                alert('fail2');
+            }
+        })
+    });
+    /*글 삭제 위한 ajax*/
+    $( function() {           
+    $("#dialog").dialog({
+            autoOpen: false,
+            //modal: true,
+            height:100, 
+            show: {
+              effect: "blind",
+              duration: 100
+            },
+            hide: {
+              effect: "fade",
+              duration: 100
+            }
+    });                 
+});
+$(".delete").click(function(){
+    $("#star").css({"background-color":"black", "opacity":"0.5"});
+    $("#postmodal").css({"opacity":"0.5"});
+    $("#dialog").dialog("open");
+});
+$(".yes").click(function() {
+    $.ajax({
+        type:"GET",
+        url:"post_delete/",
+        data:{'pk':pk},
+        success:function(response){
+            alert('글 삭제가 완료되었습니다.');
+            location.href="{% url 'user_update' %}"
+        },
+        error:function(response){
+            alert('fail3');
+        }
+    })
+});
+$(".no").click(function(){
+    $("#star").css({"background-color":"", "opacity":""});
+    $("#postmodal").css({"opacity":""});
+    $("#dialog").dialog("close");
+});
+    
+    /*댓글 가져오기 ajax*/
+    $(".mypostlist").click(function(){
+        pk=$(this).attr('name');
+        $.ajax({
+                type:"GET",
+                url: "postdetail/",
+                data: {'pk': pk},
+                dataType: "json",
+                contentType: "json",
+                success: function(comments){
+                    $("#commentarea").text("");
+                    var list=comments;
+                    //console.log(list);
+                    //console.log(comments.length);
+                    for(var i=0; i < list.comments.length;i++){
+                        //console.log(i);
+                        //var j=i;
+                        var commentct=list.comments[i];
+                        var time=list.comments[++i];
+                        var writer=list.comments[++i];                    
+                        //console.log(comment);
+                        $("#commentarea").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
+                        $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
+                    }
+                    
+                },
+                error: function(response){
+                    alert('failget');
+                    $("#commentarea").html("오류발생");
+                }
+            })
+    });
+    
+    
+    /**commenttmodal**/
+    /*글 가져오기*/
+    $(".mycommentlist").click(function(){
+        pk=$(this).attr('name');
+        $.ajax({
+            type:"GET",
+            url: "post_edit/",
+            data: {'pk': pk},
+            dataType: "json",
+            contentType: "json",
+            success: function(msg){
+                
+                $("#textbody2").val(msg['body']);
+                //$("#textpk").val(msg['pk']);
+                //$("#textdate").val(msg['date']);
+            },
+            error: function(response){
+                alert('fail');
+                $("#textbody2").html("오류발생");
+            }
+        })
+    });
+    /*댓글 가져오기 ajax*/
+    $(".mycommentlist").click(function(){
+        pk=$(this).attr('name');
+        me=$("#myTabContent").attr('name');
+        //alert(me);
+        $.ajax({
+                type:"GET",
+                url: "postdetail/",
+                data: {'pk': pk},
+                dataType: "json",
+                contentType: "json",
+                success: function(comments){
+                    $("#commentarea2").text("");
+                    var list=comments;
+                    console.log(list);
+                    //console.log(comments.length);
+                    for(var i=0; i < list.comments.length;i++){
+                        //console.log(i);
+                        //var j=i;
+                        var commentct=list.comments[i];
+                        var time=list.comments[++i];
+                        var writer=list.comments[++i]; 
+                        $("#commentarea2").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
+                        if (writer == me){
+                          $("#commentarea2").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b><div><span class='edit'><a>수정</a></span> | <span class='delete'><a>삭제</a></span></div><hr>"+"</div>");
+                        }
+                        else
+                          $("#commentarea2").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
+                    }
+                    
+                },
+                error: function(response){
+                    alert('failget');
+                    $("#commentarea2").html("오류발생");
+                }
+            })
+    });
+    /*댓글쓰기*/
+    $("#ctsave").click(function(){  
+            var ctcont=$('#ctcont').val();
+            me=$("#myTabContent").attr('name');
+            //alert(me);
+            $.ajax({
+                type:"POST",
+                url:"postdetail/",
+                data:{'postpk':pk, 'content': ctcont, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success:function(response){
+                    
+                    //var postmod = document.getElementById('postmodal'); 
+                    //postmod.style.display="none";
+                    //location.href="{% url 'mysky' %}"
+                    
+                    $.ajax({
+                            type:"GET",
+                            url: "postdetail/",
+                            data: {'pk': pk},
+                            dataType: "json",
+                            contentType: "json",
+                            success: function(comments){
+                                $("#commentarea2").text("");
+                                var list=comments;
+                                //console.log(list);
+                                //console.log(comments.length);
+                                for(var i=0; i < list.comments.length;i++){                            
+                                    var commentct=list.comments[i];
+                                    var time=list.comments[++i];
+                                    var writer=list.comments[++i];                    
+                                    //console.log(comment);
+                                    $("#commentarea2").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
+                                    if (writer == me){
+                                      $("#commentarea2").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b><div><span class='edit'><a>수정</a></span> | <span class='delete'><a>삭제</a></span></div><hr>"+"</div>");
+                                    }
+                                    else
+                                      $("#commentarea2").append("<div class='comment'><b>"+commentct+"</b><hr>"+"</div>");
+                                }
+                                $("#ctcont").val("");                            
+                            },
+                            error: function(response){
+                                alert('failgetget');
+                                $("#commentarea2").html("오류발생");
+                            }
+                        });
+                },
+                error:function(response){
+                    alert('failss');
+                }
+            })
+        });
+    
+    
+    </script>
+    
+    </body>
+    {% endblock %}
