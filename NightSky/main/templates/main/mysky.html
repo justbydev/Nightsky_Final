@@ -220,6 +220,10 @@
         top: 18%;
         left: 20%;
     }
+    #star{
+        width: 100%; 
+        height:100%;
+    }
     </style>
 
     <script>
@@ -317,7 +321,6 @@
 
 
     <div id="myModal" class="modal">
-
     <div class="modal-content" id="new">
         <span id="close" class="close">&times;</span>
         <form method="POST" action="{% url 'mysky' %}" id="newText">
@@ -449,11 +452,11 @@
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
     /*글쓰기 위한 modal*/
     var modal = document.getElementById('myModal');
     var btn = document.getElementById("myBtn");
@@ -466,6 +469,7 @@
     btn.onclick=function get(){
         alert('화면에 띄울 별이나 구름의 위치를 클릭해주세요');
         w=document.getElementById("star");
+        alert("dd");
         w.onclick=function(e){
             if(w){
                 pp1=e.pageX;
@@ -533,37 +537,34 @@
         pk=$(this).attr('name');
         me=$("#myuser").attr('name');
         $.ajax({
-                type:"GET",
-                url: "postdetail/",
-                data: {'pk': pk},
-                dataType: "json",
-                contentType: "json",
-                success: function(comments){
-                    $("#commentarea").text("");
-                    var list=comments;
-                    //console.log(list);
-                    //console.log(comments.length);
-                    for(var i=0; i < list.comments.length;i++){
-                        //console.log(i);
-                        //var j=i;
-                        var commentct=list.comments[i];
-                        var time=list.comments[++i];
-                        var writer=list.comments[++i];
-                        var commentpk=list.comments[++i];
-                        //var update=list.comments[++i];
-                        //var delete=list.comments[++i];                    
-                        //console.log(comment);
-                        $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
-                        $("#commentarea").append("<span class='time'> ========"+time+"</span>");
-                        if (writer == me){
-                            $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn' name="+commentpk+"><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete' name="+commentpk+">삭제</span><hr></div>");
-                        }
-                        else
-                            $("#commentarea").append("<div class='comment' style='color:#5870BC;'>"+commentct+"<hr>"+"</div>");                        
-                    
+            type:"GET",
+            url: "postdetail/",
+            data: {'pk': pk},
+            dataType: "json",
+            contentType: "json",
+            success: function(comments){
+                $("#commentarea").text("");
+                var list=comments;
+                //console.log(list);
+                //console.log(comments.length);
+                for(var i=0; i < list.comments.length;i++){
+                    //console.log(i);
+                    //var j=i;
+                    var commentct=list.comments[i];
+                    var time=list.comments[++i];
+                    var writer=list.comments[++i];
+                    var commentpk=list.comments[++i];
+                    $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
+                    $("#commentarea").append("<span class='time'> ========"+time+"</span>");
+                    if (writer == me){
+                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn' name="+commentpk+"><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete' name="+commentpk+">삭제</span><hr></div>");
                     }
-                    
-                },
+                    else
+                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'>"+commentct+"<hr>"+"</div>");                        
+                
+                }
+                
+            },
                 error: function(response){
                     alert('failget');
                     $("#commentarea").html("오류발생");
@@ -594,15 +595,13 @@
                             success: function(comments){
                                 $("#commentarea").text("");
                                 var list=comments;
-                                console.log(list);
-                                //console.log(comments.length);
                                 for(var i=0; i < list.comments.length;i++){                            
                                     var commentct=list.comments[i];
                                     var time=list.comments[++i];
                                     var writer=list.comments[++i];   
                                     var commentpk=list.comments[++i];                 
                                     //console.log(comment);
-                                    $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
+                                    $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a style='color:black;' href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
                                     $("#commentarea").append("<span class='time'> ========"+time+"</span>");
                                     if (writer == me){
                                         $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");
@@ -624,63 +623,8 @@
                 }
             })
         });
-    /*$(function() {
-        $('#comment_form').submit(function(e) {
-            // alert('댓글쓰기 완료');
-            // 댓글 남기기
-            $('input[name="is_ajax"]').val("1");
-            url = $(this).attr('action');
-            params = $(this).serialize();
-            $.ajax({
-                url:url,
-                method:"POST",
-                data:params
-            }).done(function(data) {
-                // 댓글 입력창 내용 비우기
-                $('#id_text').val("");
-                $('#comment_list tbody').prepend(data.html); // tbody 시작 지점에 요소 끼워넣기
-                // is_ajax 값 초기화
-                $('input[name="is_ajax"]').val("");
-            });
-            return false;
-        });
-    });*/
-    /*댓글 수정 ajax*/
-    $('.btn_comment_update').click(function(e) {
-        e.preventDefault();
-        url = $(this).attr('href')+'?is_ajax=1';
-        comment = $(this).parent().siblings('.comment_text'); // 원래 댓글을 찾음
-        input = "<input type='text' class='update_text' value='"+comment.text()+"'>";
-        comment.html(input);
-        $('.update_text').keypress(function(e){
-            if (e.keyCode==13) {
-                text = $(this).val();
-                $.ajax({
-                    url:url,
-                    data:{
-                        text:text
-                    }
-                }).done(function(data) {
-                    if(data.works) {
-                        comment.text(text);
-                    }
-                });
-            }
-        });
-        return false;
-        text = prompt('수정될 댓글 내용을 입력하세요.', comment.text()); // 원래 댓글을 프롬프트로 보여줌
-        if (text==null) return false; // 입력 취소면 함수 종료
-        $.ajax({
-            url:url,
-            data:{
-                text:text
-            }
-        }).done(function(data) {
-            if(data.works) {
-                comment.text(text);
-            }
-        });
-    });
+    
+    
     /*댓글 삭제 ajax*/
     $( function() {         
         $("#ctdialog").dialog({
@@ -913,6 +857,6 @@
         cloudObjs[i].upDown();
     }
 
-    </script>
+</script>
 </body>
 </html>

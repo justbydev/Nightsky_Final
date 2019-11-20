@@ -218,6 +218,7 @@
             <div class = "modalbody">
                 <div class="left">
                     <div id="other" class="textwriter"></div>
+                    <button type="button" class="subscribe"></button>
                     <textarea rows="17" id="textbody" value="" readonly="readonly"></textarea>
                     <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea><br>
                     <input type="button" id="ctsave" value="댓글저장"> 
@@ -306,7 +307,7 @@
                     postmodal.style.display = "none";
         };
         window.onclick = function(event) {
-            if (event.target == modal) {
+            if (event.target == postmodal) {
                 postmodal.style.display = "none";
             }
         };
@@ -329,6 +330,7 @@
                 $(".textwriter").append(msg['writer']);
             
                 $(".textwriter").append("님");
+                $(".subscribe").text("구독하기");
                 //$("#textpk").val(msg['pk']);
                 //$("#textdate").val(msg['date']);
                 $(document).on('click', '#other', function(){
@@ -343,6 +345,20 @@
         });
         
         
+    });
+
+    $(".subscribe").click(function(){
+        $.ajax({
+            type:"POST",
+            url: "subscribe/",
+            data: {'pk': pk, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+            success: function(){
+                alert("successsub");
+            },
+            error: function(response){
+                alert('fail');
+            }
+        });     
     });
 
 
@@ -363,17 +379,16 @@
                 //console.log(list);
                 //console.log(comments.length);
                 for(var i=0; i < list.comments.length;i++){
-                    //console.log(i);
-                    //var j=i;
                     var commentct=list.comments[i];
                     var time=list.comments[++i];
                     var writer=list.comments[++i];
-                    var commentpk=list.comments[++i];    
-                    //console.log(comment);
-                    $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
+                    var commentpk=list.comments[++i];   
+                    console.log(comments); 
+                    $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a style='color:black;' href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
                     $("#commentarea").append("<span class='time'> ========"+time+"</span>");
                     if (writer == me){
                         $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");
+                        
                     }
                     else
                         $("#commentarea").append("<div class='comment' style='color:#5870BC;'>"+commentct+"<hr>"+"</div>");                        
@@ -420,7 +435,7 @@
                                     var writer=list.comments[++i];  
                                     var commentpk=list.comments[++i];                  
                                     //console.log(comment);
-                                    $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
+                                    $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a style='color:black;' href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
                                     $("#commentarea").append("<span class='time'> ========"+time+"</span>");
                                     if (writer == me){
                                         $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");

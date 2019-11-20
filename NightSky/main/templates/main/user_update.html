@@ -335,7 +335,7 @@
     </div>
   </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
@@ -352,7 +352,37 @@ $( function() {
               effect: "fade",
               duration: 100
             }
-    });                 
+    });
+    $( function() {           
+      $("#ctdialog").dialog({
+              autoOpen: false,
+              modal: true,
+              height:100, 
+              show: {
+                effect: "blind",
+                duration: 100
+              },
+              hide: {
+                effect: "fade",
+                duration: 100
+              }
+      });                 
+  });
+   $( function() {           
+      $("#cteditdialog").dialog({
+              autoOpen: false,
+              modal: true,
+              height:100, 
+              show: {
+                effect: "blind",
+                duration: 100
+              },
+              hide: {
+                effect: "fade",
+                duration: 100
+              }
+      });                 
+  });                 
 });</script>
 
 <div id="dialog">
@@ -363,6 +393,25 @@ $( function() {
             <button type="button" class="no"><b>아니오</b></button>
         </div>
     </div>
+</div>
+<div id="ctdialog">
+  <div id="dialog-ctn">
+      이 댓글을 정말 삭제하시겠습니까?
+      <div class="dialogbtn">
+          <button type="button" class="ctyes"><b>네</b></button>
+          <button type="button" class="ctno"><b>아니오</b></button>
+      </div>
+  </div>
+</div>
+<div id="cteditdialog">
+<div id="dialog-ctn">
+    <div class="dialogbtn">
+        <textarea id="commentbody" value=""></textarea><br>
+        수정하시겠습니까?<br>
+        <button type="button" class="edityes"><b>네</b></button>
+        <button type="button" class="editno"><b>아니오</b></button>
+    </div>
+  </div>
 </div>
   
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -487,27 +536,29 @@ $(".no").click(function(){
   $(".mypostlist").click(function(){
       pk=$(this).attr('name');
       $.ajax({
-              type:"GET",
-              url: "postdetail/",
-              data: {'pk': pk},
-              dataType: "json",
-              contentType: "json",
-              success: function(comments){
-                  $("#commentarea").text("");
-                  var list=comments;
-                  //console.log(list);
-                  //console.log(comments.length);
-                  for(var i=0; i < list.comments.length;i++){
-                      //console.log(i);
-                      //var j=i;
-                      var commentct=list.comments[i];
-                      var time=list.comments[++i];
-                      var writer=list.comments[++i];                    
-                      //console.log(comment);
-                      $("#commentarea").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
-                      $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
-                  }
-                  
+        type:"GET",
+        url: "postdetail/",
+        data: {'pk': pk},
+        dataType: "json",
+        contentType: "json",
+        success: function(comments){
+        $("#commentarea").text("");
+        var list=comments;
+                    
+        for(var i=0; i < list.comments.length;i++){
+                        
+          var commentct=list.comments[i];
+          var time=list.comments[++i];
+          var writer=list.comments[++i];      
+          var commentpk=list.comments[++i];   
+          $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
+          $("#commentarea").append("<span class='time'> ========"+time+"</span>");
+          if (writer == me){
+            $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");
+            }
+          else
+            $("#commentarea").append("<div class='comment' readonly='readonly'>"+commentct+"<hr>"+"</div>");
+        }  
               },
               error: function(response){
                   alert('failget');
@@ -545,36 +596,38 @@ $(".no").click(function(){
       me=$("#myTabContent").attr('name');
       //alert(me);
       $.ajax({
-              type:"GET",
-              url: "postdetail/",
-              data: {'pk': pk},
-              dataType: "json",
-              contentType: "json",
-              success: function(comments){
-                  $("#commentarea2").text("");
-                  var list=comments;
-                  console.log(list);
-                  //console.log(comments.length);
-                  for(var i=0; i < list.comments.length;i++){
-                      //console.log(i);
-                      //var j=i;
-                      var commentct=list.comments[i];
-                      var time=list.comments[++i];
-                      var writer=list.comments[++i]; 
-                      $("#commentarea2").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
-                      if (writer == me){
-                        $("#commentarea2").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b><div><span class='edit'><a>수정</a></span> | <span class='delete'><a>삭제</a></span></div><hr>"+"</div>");
-                      }
-                      else
-                        $("#commentarea2").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
-                  }
-                  
-              },
-              error: function(response){
-                  alert('failget');
-                  $("#commentarea2").html("오류발생");
-              }
-          })
+        type:"GET",
+                url: "postdetail/",
+                data: {'pk': pk},
+                dataType: "json",
+                contentType: "json",
+                success: function(comments){
+                    $("#commentarea2").text("");
+                    var list=comments;
+                    console.log(list);
+                    //console.log(comments.length);
+                    for(var i=0; i < list.comments.length;i++){
+                        //console.log(i);
+                        //var j=i;
+                        var commentct=list.comments[i];
+                        var time=list.comments[++i];
+                        var writer=list.comments[++i]; 
+                        var commentpk=list.comments[++i];
+                        $("#commentarea2").append("<span id='toother' class='write'>"+"<b>"+"<a href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
+                        $("#commentarea2").append("<span class='time'> ========"+time+"</span>");
+                        if (writer == me){
+                          $("#commentarea2").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete' name="+commentpk+">삭제</span><hr></div>");
+                        }
+                        else
+                          $("#commentarea2").append("<div class='comment' readonly='readonly'>"+commentct+"<hr>"+"</div>");
+                    }
+                    
+                },
+                error: function(response){
+                    alert('failget');
+                    $("#commentarea2").html("오류발생");
+                }
+            })
   });
   /*댓글쓰기*/
   $("#ctsave").click(function(){  
@@ -592,41 +645,126 @@ $(".no").click(function(){
                   //location.href="{% url 'mysky' %}"
                   
                   $.ajax({
-                          type:"GET",
-                          url: "postdetail/",
-                          data: {'pk': pk},
-                          dataType: "json",
-                          contentType: "json",
-                          success: function(comments){
-                              $("#commentarea2").text("");
-                              var list=comments;
-                              //console.log(list);
-                              //console.log(comments.length);
-                              for(var i=0; i < list.comments.length;i++){                            
-                                  var commentct=list.comments[i];
-                                  var time=list.comments[++i];
-                                  var writer=list.comments[++i];                    
-                                  //console.log(comment);
-                                  $("#commentarea2").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
-                                  if (writer == me){
-                                    $("#commentarea2").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b><div><span class='edit'><a>수정</a></span> | <span class='delete'><a>삭제</a></span></div><hr>"+"</div>");
-                                  }
-                                  else
-                                    $("#commentarea2").append("<div class='comment'><b>"+commentct+"</b><hr>"+"</div>");
-                              }
-                              $("#ctcont").val("");                            
-                          },
-                          error: function(response){
-                              alert('failgetget');
-                              $("#commentarea2").html("오류발생");
-                          }
-                      });
-              },
+                    type:"GET",
+                            url: "postdetail/",
+                            data: {'pk': pk},
+                            dataType: "json",
+                            contentType: "json",
+                            success: function(comments){
+                                $("#commentarea2").text("");
+                                var list=comments;
+                                //console.log(list);
+                                //console.log(comments.length);
+                                for(var i=0; i < list.comments.length;i++){                            
+                                    var commentct=list.comments[i];
+                                    var time=list.comments[++i];
+                                    var writer=list.comments[++i];    
+                                    var commentpk=list.comments[++i];                
+                                    //console.log(comment);
+                                    $("#commentarea2").append("<span id='toother' class='write'>"+"<b>"+"<a href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
+                                    $("#commentarea2").append("<span class='time'> ========"+time+"</span>");
+                                    if (writer == me){
+                                      $("#commentarea2").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete' name="+commentpk+">삭제</span><hr></div>");
+                                    }
+                                    else
+                                      $("#commentarea2").append("<div class='comment'><b>"+commentct+"</b><hr>"+"</div>");
+                                }
+                                $("#ctcont").val("");                            
+                            },
+                            error: function(response){
+                                alert('failgetget');
+                                $("#commentarea2").html("오류발생");
+                            }
+                        });
+                },
               error:function(response){
                   alert('failss');
               }
           })
       });
+      $( function() {         
+    $("#ctdialog").dialog({
+            autoOpen: false,
+            //modal: true,
+            height:100, 
+            show: {
+              effect: "blind",
+              duration: 100
+            },
+            hide: {
+              effect: "fade",
+              duration: 100
+            }
+    });                   
+});
+var cpk;
+$(document).on('click','.ctdelete', function(){
+    cpk=$(this).attr('name');
+    //alert('Clicked'+cpk);
+    $("#star").css({"background-color":"black", "opacity":"0.5"});
+    $("#postmodal").css({"opacity":"0.5"});
+    $("#ctdialog").dialog("open");
+});
+$(document).on('click', '.ctedit', function(){
+  cpk=$(this).attr('name');
+  $("#star").css({"background-color":"black", "opacity":"0.5"});
+  $("#postmodal").css({"opacity":"0.5"});
+  $("#commentmodal").css({"opacity":"0.5"});
+  $("#cteditdialog").dialog("open");
+  $.ajax({
+    type:"GET",
+    url:"mycommentedit/",
+    data:{'pk':cpk},
+    success:function(response){
+      $("#commentbody").val(response['body']);
+    },
+    error:function(resposne){
+      alert("제발 안되겠니");
+    }
+  });
+  
+});
+$(".ctyes").click(function() {
+    pk=cpk;
+    $.ajax({
+        type:"GET",
+        url:"mycommentdelete/",
+        data:{'pk':pk},
+        success:function(response){
+            alert('댓글 삭제가 완료되었습니다.');
+            location.href="{% url 'user_update' %}"
+        },
+        error:function(response){
+            alert('fail4');
+        }
+    })
+});
+$(".ctno").click(function(){
+    $("#star").css({"background-color":"", "opacity":""});
+    $("#postmodal").css({"opacity":""});
+    $("#ctdialog").dialog("close");
+});
+$(".edityes").click(function(){
+    var comcontent=$('#commentbody').val();
+    $.ajax({
+      type:"POST",
+      url:"mycommentedit/",
+      data:{'pk':cpk, 'content': comcontent, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      success:function(response){
+        alert('댓글 수정이 완료되었습니다.');
+        location.href="{% url 'user_update' %}"
+      },
+      error:function(response){
+        alert('너도 제발 되면 안되겠니');
+      }
+    })
+});
+$(".editno").click(function(){
+    $("#star").css({"background-color":"", "opacity":""});
+    $("#postmodal").css({"opacity":""});
+    $("#commentmodal").css({"opacity":""});
+    $("#cteditdialog").dialog("close");
+});    
   
   
   </script>

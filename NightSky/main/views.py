@@ -199,7 +199,8 @@ def realmain(request):
         paginator=Paginator(posts, 100)
         page=request.GET.get('page')
         pages=paginator.get_page(page)
-        return render(request, 'main/realmain.html', {'posts':posts, 'pages':pages})
+        me=request.user
+        return render(request, 'main/realmain.html', {'posts':posts, 'pages':pages, 'me':me})
     else:
         today=todayemotion.objects.get(author=request.user)
         em=today.emotion
@@ -207,7 +208,8 @@ def realmain(request):
         paginator=Paginator(posts, 100)
         page=request.GET.get('page')
         pages=paginator.get_page(page)
-        return render(request, 'main/realmain.html', {'posts':posts, 'pages':pages})
+        me=request.user
+        return render(request, 'main/realmain.html', {'posts':posts, 'pages':pages, 'me':me})
 
 def user_update(request):
     user=get_object_or_404(User, username=request.user.username)
@@ -279,7 +281,8 @@ def mysearch(request):
         paginator=Paginator(post, 100)
         page=request.GET.get('page')
         pages=paginator.get_page(page)
-        return render(request, 'main/realmain.html', {'posts':post, 'pages':pages})
+        me=request.user
+        return render(request, 'main/realmain.html', {'posts':post, 'pages':pages,'me':me})
     else:
         sear=search.objects.get(author=request.user)
         word=sear.word
@@ -287,7 +290,8 @@ def mysearch(request):
         paginator=Paginator(post, 100)
         page=request.GET.get('page')
         pages=paginator.get_page(page)
-        return render(request, 'main/realmain.html', {'posts':post, 'pages':pages})
+        me=request.user
+        return render(request, 'main/realmain.html', {'posts':post, 'pages':pages,'me':me})
     
 
 """
@@ -326,6 +330,7 @@ def postdetail(request):
                 datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
                 data.append(time)
                 data.append(comment.writer)
+                data.append(comment.pk)
             context={'comments': data }
             return JsonResponse(context)
         elif request.method=="POST":
@@ -357,6 +362,27 @@ def otherdetail(request):
         post=get_object_or_404(Post, pk=pk)
         context={'body': post.body, 'date': post.pub_date, 'pk':pk}
         return JsonResponse(context)
+
+def mycommentdelete(request):
+     if request.method=="GET":
+        pk=request.GET['pk']
+        comment=get_object_or_404(Comment, pk=pk)
+        comment.delete()
+        return HttpResponse()
+
+def mycommentedit(request):
+    if request.method=="GET":
+        pk=request.GET['pk']
+        comment=get_object_or_404(Comment, pk=pk)
+        context={'body': comment.content}
+        return JsonResponse(context)
+    elif request.method=="POST":
+        pk=request.POST['pk']
+        comment=get_object_or_404(Comment, pk=pk)
+        comment.content=request.POST['content']
+        comment.save()
+        return HttpResponse()
+
 def subscribe(request):
     if request.method=="POST":
         pk=request.POST['pk']
