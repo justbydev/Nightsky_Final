@@ -1,87 +1,107 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-*:focus { outline:none; }
-@font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff');} 
-        
- body{ 
-                background-image: url(https://cdn.pixabay.com/photo/2017/08/10/08/26/stars-2619979_1280.jpg);
-                background-repeat: no-repeat;
-                background-size: cover;
-                color: white;
-                font-family: 'UhBeemysen';
-                }
-.register{
-        position: relative;
-        top: -50px;
-        text-align:center;
-        
-}
-input{
-  font-family: 'Noto Serif KR', serif;
-  position: absolute;
-  left: 700px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid white;
-  color: white;
-  font-size: 20px;
-  height: 20px;
-  width: 200px;
-}
-button{
-        background: transparent;
-        height: 40px;
-        width: 90px;
-        border: 1px solid white;
-        margin: 20px;
-        font-size: 18px;
-        color: white;
-        font-family: 'Noto Serif KR', serif;
-        cursor: pointer;
-}
-button:hover{
-        background-color: #2A2649;
-}
-span{
-        margin-top: 5px;
-        position: absolute;
-        left: 520px;
-        font-size: 20px;
-        font-family: 'Noto Serif KR', serif;
-}
-</style>
-</head>
-<body>
-<h2 style="text-align:center; font-size:80pt;">회원 가입</h2>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <style>
+    @font-face { font-family: 'Arita-buri-SemiBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff') format('woff'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'DOSGothic'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff'); font-weight: normal; font-style: normal; }
 
-<div class="register">
-<form action="{% url 'register' %}" method="POST">{% csrf_token %}
-        <span>아이디: </span><input name="username" placeholder='' type="text" value='{{username}}'  required>
-        <br><br>
-        {% if message2 %}
-                {{message2}}<br><br>
-        {% endif %}
-        <span>닉네임: </span><input name="nickname" placeholder='' type="text" value='{{nickname}}'  required>
-        <br><br>
-        <span>이메일: </span> <input name="email" placeholder='' type="text" value='{{email}}' required>
-        <br><br>
-        <span>비밀번호: </span> <input name="password1" id="pw" placeholder='' type="password" required>
-        <br><br>
-        <span>비밀번호 확인: </span> <input name="password2" id="checkpw" placeholder='' type="password" required>
-        <br><br>
-        {% if message1 %}
-                {{message1}}<br><br>
-        {% endif %}
+   /* style.css */
+   body{
+        background-image: url("/static/img/bg2.png");
+        font-family: 'DOSGothic';
+   }
+
+   /* title */
+   .title{
+      font-family: 'Arita-buri-SemiBold';
+      font-size: 4.5rem;
+      color:rgb(235, 230, 255);
+      margin-top: 10%;
+      text-align: center;
+    }
+
+    /* div contains form, buttons */
+   .register{
+        color:rgb(237, 232, 255);
+        background: rgba(56, 48, 85, 85%);
+        width: 24rem;
+        margin: 3% auto;
+        font-size: 1rem;
+        border: rgb(214, 191, 215) 1.5px solid;
         
-        <br>
-        <!--{{form.as_p}}-->
-        <button type="submit">가입하기</button>
-        <button type="button" onClick="location.href='{% url 'home' %}'" style="color:rgb(114, 114, 114)">뒤로가기</button>
-        
-        
-</form>
-</div>
+        padding: 2.5rem;
+    }
+
+    /* form form resgister */
+    input{
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid white;
+      color: white;
+      font-family: 'DOSGothic';
+      font-size: 1rem;
+      float: right;
+      width: 15rem;
+    }
+
+    /* buttons */
+    button{
+      background: transparent;
+      height: 40px;
+      width: 90px;
+      border: 1px solid white;
+      margin-top: 2rem;
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+      font-size: 18px;
+      color: white;
+      cursor: pointer;
+      font-family: 'DOSGothic';
+    }
+    button:hover{
+      background-color: rgb(109,95,160);
+    }   
+
+    /* back button */
+    #back{
+      color:rgb(178, 173, 194)
+    }
+
+    /* div which contains buttons */
+    .buttons{
+      text-align:  center;
+    }
+
+   </style>
+</head>
+
+<body>
+        <div class="title">회원 가입</div>
+
+        <div class="register">
+            <form action="{% url 'register' %}" method="POST">{% csrf_token %}
+                아이디:<input name="username" placeholder='' type="text" value='{{username}}'  required><br><br>
+                {% if message2 %}
+                        {{message2}}<br><br>
+                {% endif %}
+                닉네임:<input name="nickname" placeholder='' type="text" value='{{nickname}}'  required><br><br>
+                이메일:<input name="email" placeholder='' type="text" value='{{email}}' required><br><br>
+                비밀번호:<input name="password1" id="pw" placeholder='' type="password" required><br><br>
+                비밀번호 확인:<input name="password2" id="checkpw" placeholder='' type="password" required><br><br>
+
+                {% if message1 %}
+                        {{message1}}<br><br>
+                {% endif %}
+                
+                <!--{{form.as_p}}-->
+                <div class="buttons">
+                        <button type="submit">가입하기</button>
+                        <button id="back" type="button" onClick="location.href='{% url 'home' %}'">뒤로가기</button>
+                </div>
+            </form>
+        </div>
 </body>
 </html>
