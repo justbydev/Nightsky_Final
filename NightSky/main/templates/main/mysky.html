@@ -152,19 +152,7 @@
         cursor: pointer;
     }
     /****new post modal******/
-    #myModal{
-        height: 70vh;
-        top: 15%;
-        left: 25%;
-        text-align: center;
-    }
-    #new_emo{
-        height: 25vh;
-        width: 38vw;
-        font-size: 15px;
-        overflow-x: hidden;
-        overflow-y: scroll;
-    }
+   
 
     /* new post button */
     .new{
@@ -273,15 +261,38 @@
 
 <body>
     <div id="myuser" class="user_title" name="{{user.username}}">{{user.username}}님의 밤하늘</div>
+    <div id="nav">
+    <div>
+        <ul class="menu">
+        <div>
+            <li><a href="#">MENU</a>
+                <ul class="sub">
+                    <div><li><a href="{% url 'realmain' %}">모두의 하늘로</a></li></div>
+                    <div><li><a href="{% url 'user_update' %}">마이페이지</a></li></div>
+                    <div><li><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}">로그아웃</a></li></div>
+                </ul>
+            </li>
+        </div>
+        </ul>
+    </div>
+    </div>
     <div class="new">
         <input id = "myBtn" type = "button" onclick="get()" value="새로운 글">
     </div>
-    <div class="menu-main">
+    <!--<div class="menu-main">
         <div><a href="{% url 'realmain' %}">모두의 하늘로</a></div>
         <div id="myPageBt"><a href="{% url 'user_update' %}">마이페이지</a></div>
         <div id="logoutBt"><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}">로그아웃</a></div>
-    </div>
-
+    </div>-->
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#nav ul.sub").hide();
+            $("#nav ul.menu li").click(function(){
+                $("ul",this).slideToggle("fast");
+            });
+        });
+    </script>
     <div id ="star">
         {% for post in posts %}
         {% if post.image == "star" %}        
@@ -317,11 +328,15 @@
                 test();
             }
             function test(a){
-                var str1=Number({{post.lat}})-60;
-                var str2=Number({{post.lng}})-60;
+                //var str1=Number({{post.lat}})-60;
+                //var str2=Number({{post.lng}})-60;
+                var str1=Number({{post.lat}});
+                var str2=Number({{post.lng}});
                 var c=document.getElementById("1");
-                c.style.top=str1+'px';
-                c.style.left=str2+'px';
+                c.style.top=str1+'%';
+                c.style.left=str2+'%';
+                //c.style.top=str1+'px';
+                //c.style.left=str2+'px';
                 document.getElementById("1").setAttribute("id", "2");
                 //document.getElementById("1").setAttribute("class", "star");
             
@@ -331,12 +346,13 @@
 
     </div>
 
-    <div id="postmodal" class="modal">
+    <div id="postmodal">
         <div class="modal-content">
                 <span id="postclose" class="close">&times;</span>
                 <!--<form method="POST">{% csrf_token %}-->
                 <div class = "modalbody">
-                    <div class="left">
+                
+                    <!--<div class="left">-->
                         <textarea rows="17" id="textbody" value="" required></textarea>
                         <div class="edit">
                                 <div class="change">
@@ -346,13 +362,14 @@
                                     <input type="button" class="bt" value="삭제하기">
                                 </div>
                         </div>
+
+                            <span id="ct-title">공감의 말들</span>
+                            <div id="commentarea"></div>                    
+                        <span id="ct-title">--------------------</span>
                         <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea>
                         <input type="button" id="ctsave" value="공감하기">
-                    </div>
-                    <div class="right">
-                        <span id="ct-title">공감의 말들</span>
-                        <div id="commentarea"></div>                    
-                    </div>
+                    <!--</div>-->
+                    
                 </div>
                 <!--</form>-->
         </div>
@@ -506,11 +523,15 @@
     btn.onclick=function get(){
         alert('화면에 띄울 별이나 구름의 위치를 클릭해주세요');
         w=document.getElementById("star");
-        alert("dd");
         w.onclick=function(e){
             if(w){
                 pp1=e.pageX;
                 pp2=e.pageY;
+                var width=screen.availWidth;
+                var height=screen.availHeight;
+        
+                pp1=(pp1*100)/width;
+                pp2=(pp2*100)/height;
                 modal.style.display="block";
                 w=false;
             }

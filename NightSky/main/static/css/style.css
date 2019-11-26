@@ -55,22 +55,37 @@ a{
 
 
 /* modal for post */
+#myModal{
+  height: 70vh;
+  top: 15%;
+  text-align: center;
+}
+
 .modal {
   display: none; /* Hidden by default */
   position: absolute; /* Stay in place */
   z-index: 1; /* Sit on top */
   height: 75vh;
-  width: 55vw;
+  width: 100%;
+  margin:0;
 }
 /** Modal Content/Box **/
 .modal-content {
-  background-color: rgba(255,255,255,0.2);
-  padding: 20px;
+  background-color: rgba(56, 48, 85, 85%);
+  /*padding: 20px;*/
   border: 0;
-  width: 95%; /* Could be more or less, depending on screen size */
+  width: 100%; /* Could be more or less, depending on screen size */
   height: 95%;
-  border-radius:30pt;
+  margin:0;
   overflow-x: hidden;
+}
+
+#new_emo{
+  height: 25vh;
+  width: 87vw;
+  font-size: 15px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 /** writer **/
 #other{
@@ -91,13 +106,19 @@ textarea{
 
 /****read post********/
 #postmodal{
+  border:0;
   height: 72vh;
-  width: 65vw;
+  width: 100%;
   top: 18%;
-  left: 20%;
+  margin:0;
+  padding:0;
+  overflow: hidden;
+  display: none; /* Hidden by default */
+  position: absolute; /* Stay in place */
+  z-index: 1; /* Sit on top */
 }
 
-.modalbody{
+/*.modalbody{
   display: grid;
   grid-template: 1fr / 1fr 1fr;
   padding: 30px;
@@ -106,21 +127,29 @@ textarea{
 
 .right{
   margin-left: 20px;
-}
+}*/
 
 #textbody{
-  height: 25vh;
-  width: 90%;
+  padding:0;
+  margin:0;
+  height:25vh;
+  width:100vw;
 }
 
 /* new comment */
 /** new comment **/
-#ctcont{
+/*#ctcont{
   height: 10vh;
   width: 93%;
   padding: 15px;
   font-size: 18px;
   margin-top: 3vh;
+}*/
+#ctcont{
+  margin:0;
+  padding:0;
+  height:10vh;
+  width:100vw;
 }
 /** save button **/
 #ctsave{
@@ -141,10 +170,10 @@ textarea{
 #commentarea{
   overflow: scroll;
   color: black;
-  height: 40vh;
-  width: 95%;
+  height: 20vh;
+  width: 100vw;
   background-color: white;
-  padding: 20px;
+  /*padding: 20px;*/
   border-radius: 1rem;
   font-size: 18px;
   word-break:break-all;
@@ -155,7 +184,6 @@ textarea{
   font-size: 35px;
   font-family:'UhBeemysen';
   line-height: 50px;
-  border-top: 1px white dashed;
   margin-left: 10px;
 }
 
@@ -215,11 +243,15 @@ textarea{
 
 /* title */
 .user_title{
-  display: inline-block;
+  /*display: inline-block;
   position: absolute;
   left: 50px;
-  top: 30px;
+  top: 30px;*/
   color: white;
-  font-size: 40px;
+  font-size: 8vw;
   font-family: 'DOSGothic';
+  text-align:center;
 }
+#nav {float:right};
+#nav ul.menu li a:hover{ background:#eee; }
+#nav ul.menu li .sub a:hover{ background:#444; color:#fff; }
