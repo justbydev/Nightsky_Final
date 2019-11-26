@@ -24,6 +24,45 @@
     #commentarea{
         height: 40.5vh;
     }
+    #dialog, #ctdialog{
+        box-sizing: border-box;
+        z-index:9999999999; 
+        position:absolute;
+        font-size:28px;
+        background-color: rgb(255, 255, 255);
+        color:black;
+        width:100% !important;
+        text-align: center;
+        top: -100px; 
+        padding: 30px;
+        border-radius: 1rem;           
+        }
+        #cteditdialog{
+        box-sizing: border-box;
+        z-index:9999999999; 
+        position:absolute;
+        font-size:20px;
+        color:white;         
+        }
+
+    .dialogbtn{
+        margin: auto;
+    }
+    .yes, .no, .ctyes, .ctno{
+        font-size: 15px;
+        font-family: 'UhBeemysen';
+        border:none;
+        cursor: pointer;
+        margin:10px;
+        border-radius: 0.5rem;
+        background-color: #4e4e87;
+        color: white;
+        width: 50px;
+    }
+
+    .ctdelete{
+    cursor: pointer;
+    }
 
    </style>
     <script>
@@ -33,6 +72,7 @@
 </head>
 
 <body>
+<div id="my" name="{{me}}"></div>
 <div class="user_title">{{author}}님의 밤하늘</div>
 
 <div class="menu-main">
@@ -111,13 +151,90 @@
     </div>
 </div>
 
-
-
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $( function() {           
+        $("#dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height:100, 
+                show: {
+                effect: "blind",
+                duration: 100
+                },
+                hide: {
+                effect: "fade",
+                duration: 100
+                }
+        });                 
+    });
+    $( function() {           
+        $("#ctdialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height:100, 
+                show: {
+                effect: "blind",
+                duration: 100
+                },
+                hide: {
+                effect: "fade",
+                duration: 100
+                }
+        });                 
+    });
+    $( function() {           
+        $("#cteditdialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height:100, 
+                show: {
+                    effect: "blind",
+                    duration: 100
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 100
+                }
+        });                 
+    });
+    </script>
+<div id="dialog">
+    <div id="dialog-ctn">
+        이 글을 정말 삭제하시겠습니까?
+        <div class="dialogbtn">
+            <button type="button" class="yes"><b>네</b></button>
+            <button type="button" class="no"><b>아니오</b></button>
+        </div>
+    </div>
+</div>
+<div id="ctdialog">
+  <div id="dialog-ctn">
+      이 댓글을 정말 삭제하시겠습니까?
+      <div class="dialogbtn">
+          <button type="button" class="ctyes"><b>네</b></button>
+          <button type="button" class="ctno"><b>아니오</b></button>
+      </div>
+  </div>
+</div>
+<div id="cteditdialog">
+<div id="dialog-ctn">
+    <div class="dialogbtn">
+        <textarea id="commentbody" value=""></textarea><br>
+        수정하시겠습니까?<br>
+        <button type="button" class="edityes"><b>네</b></button>
+        <button type="button" class="editno"><b>아니오</b></button>
+    </div>
+  </div>
+</div>
 
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 
   /*글 수정 위한 modal*/
@@ -163,6 +280,7 @@ $(".bring").click(function(){
 /*댓글 가져오기 ajax*/
 $(".bring").click(function(){
     pk=$(this).attr('name');
+    me=$("#my").attr('name');
     $.ajax({
             type:"GET",
             url: "/postdetail/",
@@ -172,17 +290,22 @@ $(".bring").click(function(){
             success: function(comments){
                 $("#commentarea").text("");
                 var list=comments;
-                console.log(list);
                 //console.log(comments.length);
                 for(var i=0; i < list.comments.length;i++){
-                    console.log(i);
+                    //console.log(i);
                     //var j=i;
                     var commentct=list.comments[i];
                     var time=list.comments[++i];
-                    var writer=list.comments[++i];                    
-                    //console.log(comment);
+                    var writer=list.comments[++i];  
+                    var commentpk=list.comments[++i];
+                    console.log(me);                  
+                   
                     $("#commentarea").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
-                    $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
+                    if (writer == me){
+                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");
+                    }
+                    else
+                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'>"+commentct+"<hr>"+"</div>");                        
                 }
                 
             },
@@ -201,7 +324,7 @@ $(".bring").click(function(){
             url:"/postdetail/",
             data:{'postpk':pk, 'content': ctcont, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
             success:function(response){
-                
+                me=$("#my").attr('name');
                 //var postmod = document.getElementById('postmodal'); 
                 //postmod.style.display="none";
                 //location.href="{% url 'mysky' %}"
@@ -215,17 +338,23 @@ $(".bring").click(function(){
                         success: function(comments){
                             $("#commentarea").text("");
                             var list=comments;
-                            console.log(list);
                             //console.log(comments.length);
                             for(var i=0; i < list.comments.length;i++){
-                                console.log(i);
+                                //console.log(i);
                                 //var j=i;
                                 var commentct=list.comments[i];
-                                var writer=list.comments[++i];
-                                var time=list.comments[++i];                    
+                                var time=list.comments[++i];
+                                var writer=list.comments[++i]; 
+                                var commentpk=list.comments[++i];   
+                                console.log(me);                  
                                 //console.log(comment);
                                 $("#commentarea").append("<div class='info'>"+"<b>"+writer+"</b>"+"  ========  "+time+"</div>");
-                                $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");
+                                if (writer == me){
+                                    $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");
+                                }
+                                else
+                                    $("#commentarea").append("<div class='comment' style='color:#5870BC;'>"+commentct+"<hr>"+"</div>");                        
+                            
                             }
                             $("#ctcont").val("");
                             
@@ -241,7 +370,90 @@ $(".bring").click(function(){
             }
         })
     });
-
+/*댓글 삭제 ajax*/
+$( function() {         
+    $("#ctdialog").dialog({
+            autoOpen: false,
+            //modal: true,
+            height:100, 
+            show: {
+              effect: "blind",
+              duration: 100
+            },
+            hide: {
+              effect: "fade",
+              duration: 100
+            }
+    });                   
+});
+var cpk;
+$(document).on('click','.ctdelete', function(){
+    cpk=$(this).attr('name');
+    //alert('Clicked'+cpk);
+    $("#star").css({"background-color":"black", "opacity":"0.5"});
+    $("#postmodal").css({"opacity":"0.5"});
+    $("#ctdialog").dialog("open");
+});
+$(document).on('click', '.ctedit', function(){
+  cpk=$(this).attr('name');
+  $("#star").css({"background-color":"black", "opacity":"0.5"});
+  $("#postmodal").css({"opacity":"0.5"});
+  $("#commentmodal").css({"opacity":"0.5"});
+  $("#cteditdialog").dialog("open");
+  $.ajax({
+    type:"GET",
+    url:"/mycommentedit/",
+    data:{'pk':cpk},
+    success:function(response){
+      $("#commentbody").val(response['body']);
+    },
+    error:function(resposne){
+      alert("제발 안되겠니");
+    }
+  });
+});
+$(".ctyes").click(function() {
+    pk=cpk;
+    $.ajax({
+        type:"GET",
+        url:"/mycommentdelete/",
+        data:{'pk':pk},
+        success:function(response){
+            alert('댓글 삭제가 완료되었습니다.');
+            var url="{% url 'othersky' 123 %}".replace('123', {{otherpk}});
+            location.href=url;
+        },
+        error:function(response){
+            alert('fail4');
+        }
+    })
+});
+$(".ctno").click(function(){
+    $("#star").css({"background-color":"", "opacity":""});
+    $("#postmodal").css({"opacity":""});
+    $("#ctdialog").dialog("close");
+});
+$(".edityes").click(function(){
+    var comcontent=$('#commentbody').val();
+    $.ajax({
+      type:"POST",
+      url:"/mycommentedit/",
+      data:{'pk':cpk, 'content': comcontent, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      success:function(response){
+        alert('댓글 수정이 완료되었습니다.');
+        var url="{% url 'othersky' 123 %}".replace('123', {{otherpk}});
+        location.href=url;
+      },
+      error:function(response){
+        alert('너도 제발 되면 안되겠니');
+      }
+    })
+});
+$(".editno").click(function(){
+    $("#star").css({"background-color":"", "opacity":""});
+    $("#postmodal").css({"opacity":""});
+    $("#cteditdialog").dialog("close");
+});  
 
   /*별 반짝임과 별똥별 효과*/
   class Star{

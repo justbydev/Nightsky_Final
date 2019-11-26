@@ -345,16 +345,18 @@ def postdetail(request):
 
 
 def othersky(request, index):
+    me=request.user
     originpk=index
     post=get_object_or_404(Post, pk=index)
     author=post.author
     posts=Post.objects.filter(author=author)
-    return render(request, 'main/other_sky.html', {'posts':posts, 'author':author, 'otherpk':originpk})
+    return render(request, 'main/other_sky.html', {'posts':posts, 'author':author, 'otherpk':originpk, 'me':me})
 
 def commentothersky(request, index):
+    me=request.user
     originwriter=index
     posts=Post.objects.filter(writer=index)
-    return render(request, 'main/other_sky.html', {'posts':posts, 'author':originwriter})
+    return render(request, 'main/other_sky.html', {'posts':posts, 'author':originwriter, 'me':me})
     
 def otherdetail(request):
     if request.method=="GET":
@@ -398,4 +400,4 @@ def followsky(request, index):
     follow=get_object_or_404(Follow, pk=fpk)
     author=get_object_or_404(User, username=follow.name)
     posts=Post.objects.filter(author=author)
-    return render(request, 'main/followsky.html',{'posts':posts, 'author':author, 'me':me})
+    return render(request, 'main/followsky.html',{'posts':posts, 'author':author, 'me':me, 'fpk':fpk})
