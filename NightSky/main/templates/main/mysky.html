@@ -299,9 +299,9 @@
         <div class="star" id="1">
             <div class="update" name="{{post.id}}" >
                 {% if post.comments.count > 10 %}
-                    <img src="{% static 'img/star_yellow.png' %}" onclick="modalfunc();">
+                    <img src="{% static 'img/star_white.png' %}" onclick="modalfunc();">
                 {% elif post.comments.count > 5 %}
-                    <img src="{% static 'img/star_yellow.png' %}" onclick="modalfunc();">
+                    <img src="{% static 'img/star_pink.png' %}" onclick="modalfunc();">
                 {% elif post.comments.count >= 0 %}
                     <img src="{% static 'img/star_yellow.png' %}" onclick="modalfunc();">
                 {% endif %}
