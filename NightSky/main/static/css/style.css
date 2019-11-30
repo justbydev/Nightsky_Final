@@ -243,10 +243,9 @@ textarea{
 
 /* title */
 .user_title{
-  /*display: inline-block;
+  display: inline-block;
   position: absolute;
-  left: 50px;
-  top: 30px;*/
+  left: 20%;
   color: white;
   font-size: 8vw;
   font-family: 'DOSGothic';
@@ -255,3 +254,29 @@ textarea{
 #nav {float:right};
 #nav ul.menu li a:hover{ background:#eee; }
 #nav ul.menu li .sub a:hover{ background:#444; color:#fff; }
+
+
+#burger img{
+  width:10%;
+  height:10%;
+  top:0;
+}
+
+#aaa{
+  width:30%;
+  border:solid 1px red;
+  background-color: skyblue;
+  text-align:center;
+}
+#bbb{
+  width:30%;
+  border:solid 1px red;
+  background-color: skyblue;
+  text-align:center;
+}
+#ccc{
+  width:30%;
+  border:solid 1px red;
+  background-color: skyblue;
+  text-align:center;
+}

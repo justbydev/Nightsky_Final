@@ -261,21 +261,62 @@
 
 <body>
     <div id="myuser" class="user_title" name="{{user.username}}">{{user.username}}님의 밤하늘</div>
-    <div id="nav">
+    <!--<div id="nav">
     <div>
         <ul class="menu">
         <div>
             <li><a href="#">MENU</a>
                 <ul class="sub">
-                    <div><li><a href="{% url 'realmain' %}">모두의 하늘로</a></li></div>
-                    <div><li><a href="{% url 'user_update' %}">마이페이지</a></li></div>
-                    <div><li><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}">로그아웃</a></li></div>
+                    <div><a href="{% url 'realmain' %}">모두의 하늘로</a></div>
+                    <div><a href="{% url 'user_update' %}">마이페이지</a></div>
+                    <div><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}">로그아웃</a></div>
                 </ul>
             </li>
         </div>
         </ul>
     </div>
-    </div>
+    </div>-->
+    
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
+    
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            // hide the menu when the page load
+            $("#navigation-list").hide();
+            // when .menuBtn is clicked, do this
+            $(".menuBtn").click(function() {
+                // open the menu with slide effect
+                $("#navigation-list").slideToggle(300);
+            });
+        });
+        $(document).ready(function(){
+            $("#burger-container").on('click', function(){
+                $(this).toggleClass("open");
+            });
+        });
+    </script>
+        <span class="menuBtn">
+            <div id="burger-container">
+                <div id="burger">
+                    <img src="{% static 'img/hamburger.png' %}">
+                </div>
+            </div>
+        </span>
+        <div id="navigation-list">
+            
+                <div id="aaa"><a href="{% url 'realmain' %}">모두의 하늘로</a></div>
+                <div id="bbb"><a href="{% url 'user_update' %}">마이페이지</a></div>
+                <div id="ccc"><a href="{% url 'logout' %}">로그아웃</a></div>
+            
+        </div>
+        
+        
+    
     <div class="new">
         <input id = "myBtn" type = "button" onclick="get()" value="새로운 글">
     </div>
@@ -284,7 +325,7 @@
         <div id="myPageBt"><a href="{% url 'user_update' %}">마이페이지</a></div>
         <div id="logoutBt"><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}">로그아웃</a></div>
     </div>-->
-    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <!--<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script>
         $(document).ready(function(){
             $("#nav ul.sub").hide();
@@ -292,7 +333,7 @@
                 $("ul",this).slideToggle("fast");
             });
         });
-    </script>
+    </script>-->
     <div id ="star">
         {% for post in posts %}
         {% if post.image == "star" %}        
