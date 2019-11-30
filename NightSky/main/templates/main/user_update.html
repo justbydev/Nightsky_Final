@@ -18,36 +18,54 @@
       background-image: url("/static/img/bg2.png");
     }
 
-    .title{
-      color: white;
-      font-family: 'UhBeemysen'; 
-      font-size: 50pt; 
-      position:relative; 
-      left:750px; 
+    .user_title{
+      position: absolute;
+      top: 5%;
+      left: 37%;
+      font-size: 5vw;
+    }
+
+    .tabs-content{
+      position: absolute;
+      top: 20%;
+      left: 20%;
+      height: 90%;
+      width: 60%;
+    }
+
+    .tab-content{
+      padding: 1% 5%;
+      border: solid 1px white;
+      height: 60vh;
+      overflow: scroll;
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
     }
 
     .tab-content,.nav-item{
       color: white; 
-      font-family: 'UhBeemysen';
+      font-family: 'DOSGothic';
     }
 
-    .mypostlist{
-      font-size: 30px;
-      width: 200px;
+    .nav-item{
+      font-size: 2vh;
+    }
+
+    .mypostlist, .mycommentlist{
+      display: inline-block;
+      font-size: 2.5vh;
+      width: 100%;
+      margin-top: 2vh;
       text-overflow:ellipsis;
       white-space:nowrap;
       word-wrap:normal;
-      width:550px;
       overflow:hidden;
     }
 
-    .mycommentlist{
-      font-size: 25px;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      word-wrap:normal;
-      width:150px;
-      overflow:hidden;
+    .mypostdate{
+      color:rgb(172, 172, 172);
+      font-size: 2vh;
+      float: right;
     }
 
     #delete{
@@ -57,7 +75,7 @@
 
 
     button:hover:not(.yes , .no){
-          background-color: #2A2649;
+      background-color: #2A2649;
     }
       
     input{
@@ -65,9 +83,8 @@
       border: none;
       border-bottom: 1px solid white;
       color: white;
-      font-size: 25px;
-      margin-left: 10px;
-      font-family: 'UhBeemysen';
+      font-size: 2vh;
+      font-family: 'DOSGothic';
     }
     #commentmodal{
       height: 72vh;
@@ -75,37 +92,12 @@
       top: 18%;
       left: 20%;
     }
-
-    .tabs-content{
-      position: absolute;
-      top: 15%;
-      left: 20%;
-      height: 90%;
-      width: 60%;
-      padding: 20px;
-    }
-
-    .title{
-      position: absolute;
-      font-size: 60px;
-      left: 44%;
-      top: 5%;
-    }
-
-    .tab-content{
-      padding: 40px;
-    }
     
     .nav-link{
       color: white;
     }
     .nav-link:hover{
       color: white;
-    }
-
-    .password{
-      left: 210px;
-      margin-top: 10px;
     }
 
     a:hover{
@@ -117,7 +109,7 @@
     }
 
     .ui-dialog-titlebar{
-        display: none;
+      display: none;
     }
 
     .mypostlist, .mycommentlist{
@@ -127,11 +119,10 @@
     .Button{
       background: transparent;
       border: 1px solid white;
-      font-size: 12px;
+      font-size: 1.5vw;
       color: white;
-      font-family: 'Noto Serif KR', serif;
+      font-family: 'DOSGothic';
       cursor: pointer;
-      height: 30px;
     }
 
     .change, .delete{
@@ -171,22 +162,95 @@
       margin-top: 1rem;
     }
 
-    .tab-pane{
-      height: 50vh;
-      width: 100wh;
-      overflow: scroll;
+    .change{
+      margin-bottom: 3vh;
+      display: block;
     }
+
+    .t1{
+      font-size: 3vh;
+    }
+
+    .t2{
+      margin-left: 1vh;
+      margin-bottom: 1vh;
+    }
+
+    .bestemo{
+      font-size: 2.5vh;
+      margin-top: 2vh;
+    }
+
+    @media all and (orientation: portrait){
+      .menu-main{
+        position: fixed; 
+        width: 100%;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.6);
+        text-align: center;
+        z-index: 999;
+      }
+
+      .menu-main div{
+        margin-bottom: 1vh;
+        margin-top: 1vh;
+        width: 25vw;
+      }
+
+      .menu-main a{
+        color: rgb(40, 35, 56);
+        font-size: 3.5vw;
+      }
+
+      .tab-content{
+        height: 100%;
+        border: none;
+      }
+
+      .tabs-content{
+        width: 100%;
+        left:0px;
+        top: 14%;
+      }
+
+      .nav-item{
+        font-size: 2vw;
+      }
+
+      #mySkyBt img{
+        width: 10vw; 
+      }
+      #otherSkyBt img{
+        width: 10vw;
+      }
+      #logoutBt img{
+        width: 10vw; 
+      }
+
+      .t1{
+        font-size: 2.5vh;
+      }
+      .t2{
+        font-size: 1.5vh;
+      }
+
+      .Button{
+        font-size: 3vw;
+      }
+    }
+
   </style>
 </head>
 
 <body>
-  <div id="star">
-    <div class="user_title">마이페이지</div>
   <div class="menu-main">
-    <div id="mySkyBt"><a href="{% url 'mysky' %}"><img src="{% static 'img/myhome.png' %}">내 밤하늘로</a></div>
-    <div><a href="{% url 'realmain' %}">모두의 하늘로</a></div>
-    <div id="logoutBt"><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}">로그아웃</a></div>
+      <div id="mySkyBt"><a href="{% url 'mysky' %}"><img src="{% static 'img/myhome.png' %}">내 밤하늘로</a></div>
+      <div id="otherSkyBt"><a href="{% url 'realmain' %}"><img src="{% static 'img/othersky.png' %}">모두의 하늘로</a></div>
+      <div id="logoutBt"><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}">로그아웃</a></div>
   </div>
+  <div class="user_title">마이페이지</div>
+
+  <div id="star">
   {% if message %}
     <h2 style="color: red;">{{message}}</h2><br>
   {% endif %}
@@ -202,19 +266,19 @@
   <div class="tabs-content" id="back">
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#나의글" role="tab" aria-controls="writing" aria-selected="true"><h3>나의 글</h3></a>
+      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#나의글" role="tab" aria-controls="writing" aria-selected="true">나의 글</a>
     </li>
   <li class="nav-item">
-      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#나의공감" role="tab" aria-controls="gonggam" aria-selected="false"><h3>나의 공감</h3></a>
+      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#나의공감" role="tab" aria-controls="gonggam" aria-selected="false">나의 공감</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#나의감정" role="tab" aria-controls="emotion" aria-selected="false"><h3>나의 감정</h3></a>
+      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#나의감정" role="tab" aria-controls="emotion" aria-selected="false">나의 감정</a>
     </li>
   <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#개인정보변경" role="tab" aria-controls="privacy" aria-selected="false"><h3>개인정보변경</h3></a>
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#개인정보변경" role="tab" aria-controls="privacy" aria-selected="false">개인정보변경</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#구독목록" role="tab" aria-controls="subscribe" aria-selected="false"><h3>구독목록</h3></a>
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#구독목록" role="tab" aria-controls="subscribe" aria-selected="false">구독목록</a>
   </li>
   </ul>
   
@@ -224,34 +288,35 @@
       {% for post in posts %}
         
         <div class="mypostlist" name="{{post.id}}" onclick="modalfunc();" style="display: inline-block;">
-              {{post.body}} 
-        </div> <span style="color: rgb(172, 172, 172); margin-left: 10px; font-size: 20px;">{{post.pub_date}}</span><br>
+              {{post.body}} <div class="mypostdate">{{post.pub_date}}</div>
+        </div> 
       {% endfor %}
     
-  </div>
-  <div class="tab-pane fade" id="나의공감" role="tabpanel" aria-labelledby="profile-tab">
+    </div>
+   <div class="tab-pane fade" id="나의공감" role="tabpanel" aria-labelledby="profile-tab">
     
       {% for comment in comments %}
 
         <div class="mycommentlist" name="{{comment.post.id}}" onclick="modalfunc2();" style="display: inline-block;"> 
-              {{comment.content}}
-        </div> <span style="color: rgb(172, 172, 172); margin-left: 10px; font-size: 20px;">{{comment.created_at}}</span><br>
+              {{comment.content}} <div class="mypostdate">{{comment.created_at}}</div>
+        </div> 
       {% endfor %}
-  </div>
-  <div class="tab-pane fade" id="나의감정" role="tabpanel" aria-labelledby="home-tab">
-    {% if flag == 1 %}
-      {{user.username}}님이 최근에 가장 많이 느낀 감정은 '{{max}}'
-    {% else %}
-      {{max}}
-    {% endif %}  
+    </div>
+    <div class="tab-pane fade" id="나의감정" role="tabpanel" aria-labelledby="home-tab">
+      {% if flag == 1 %}
+        <div class="bestemo">{{user.username}}님이 최근에 가장 많이 느낀 감정은 '{{max}}'</div>
+      {% else %}
+        {{max}}
+     {% endif %}  
         
-</div>
+    </div>
 <div class="tab-pane fade" id="개인정보변경" role="tabpanel" aria-labelledby="profile-tab">
-  <h2>ID 변경</h2>
-    <form method="POST" action="{% url 'change_ID' %}">{% csrf_token %}
-        <span style="font-size: 35px; border-bottom: 1px white dashed;">현재 ID: {{user.username}}</span><br><br>
-        <h3>바꿀 ID: <input type="text" placeholder="" name="NEWID" required></h2><br>
-        <h2>현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required style="left:180px; width: 128px;"></h2><br>
+    <div class="change">
+    <span class="t1">ID 변경</span>
+      <form method="POST" action="{% url 'change_ID' %}">{% csrf_token %}
+        <div class="t2">현재 ID: {{user.username}}</div>
+        <div class="t2">바꿀 ID: <input type="text" placeholder="" name="NEWID" required></div>
+        <div class="t2">현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required></div>
         {% if message %}
           <h2 style="color: red;">{{message}}</h2><br>
         {% endif %}
@@ -259,27 +324,32 @@
         {% if message4 %}
             <h2 style="color: red;">{{message4}}</h2><br>
         {% endif %}
-        <button type="submit" class="Button">수정하기</button>            
-    </form>
-    <h2>EMAIL 변경</h2>
-    <span style="font-size: 35px; border-bottom: 1px white dashed;">현재 Email: {{user.email}}</span><br><br>
-    <form method="POST" action="{% url 'change_Email' %}">{% csrf_token %}
-        <h2>바꿀 Email: <input type="text" name="NEWEMAIL" placeholder= ""  required></h2><br>
-        <button type="submit" class="Button">수정하기</button>
-    </form>
-    <h2>비밀번호 변경</h2>
-    <form method="POST" action="{% url 'change_pw'%}">{% csrf_token %}
-        
-        <h2>현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required ></h2><br>
+        <button type="submit" class="Button">변경하기</button>           
+      </form>
+    </div>
+    <div class="change">
+        <div class="t1">EMAIL 변경</div>
+        <div class="t2">현재 Email: {{user.email}}</div>
+        <form method="POST" action="{% url 'change_Email' %}">{% csrf_token %}
+            <div class="t2">바꿀 Email: <input type="text" name="NEWEMAIL" placeholder= ""  required></div>
+            <button type="submit" class="Button">변경하기</button>
+        </form>
+    </div>
+     
+    <div class="change">
+        <div class="t1">비밀번호 변경</div>
+        <form method="POST" action="{% url 'change_pw'%}">{% csrf_token %}
+        <div class="t2">현재 비밀번호: <input class="password" type="password" name="origin" placeholder="" required ></div>
         {% if message %}
             <h2 style="color: red;">{{message}}</h2><br>
         {% endif %}
-        <h2>새 비밀번호: <input class="password" type="password" name="password1" placeholder="" required></h2><br>
-        <h2>새 비밀번호 확인: <input class="password" type="password" name="password2" placeholder="" required></h2><br>
+        <div class="t2">새 비밀번호: <input class="password" type="password" name="password1" placeholder="" required></div>
+        <div class="t2">새 비밀번호 확인: <input class="password" type="password" name="password2" placeholder="" required></div>
         {% if message2 %}
             <h2 style="color: red;">{{message2}}</h2><br>
         {% endif %}
-        <button type="submit" class="Button">수정하기</button>
+        <button type="submit" class="Button">변경하기</button>
+    </div>
     </form>
   </div>
   <div class="tab-pane fade" id="구독목록" role="tabpanel" aria-labelledby="profile-tab">

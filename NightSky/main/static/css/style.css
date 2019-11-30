@@ -205,40 +205,40 @@ textarea{
 /* menu buttons */
 .menu-main{
   float: right;
-  margin-top: 30px;
-  margin-right: 30px;
+  margin-top: 3vh;
+  margin-right: 3vw;
   font-family: 'DOSGothic';
-  font-size: 15px;
 }
 
 .menu-main a{
     color: white;
+    font-size: 1vw;
 }
 
 .menu-main div{
-    width: 100px;
-    margin-left: 10px;
     text-align: justify;
     text-align: center;
     display: inline-block;
+    margin: 1vw;
 }
 
 .menu-main div img{
     display: block;
     margin: auto;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
 /** menu images **/
 #mySkyBt img{
-  width: 40px; 
-  height: 45px;
+  width: 3vw; 
 }
 #myPageBt img{
-
+  width: 3vw; 
 }
 #logoutBt img{
-  width: 40px;
-  height: 45px;
+  width: 3vw; 
+}
+#otherSkyBt img{
+  width: 3vw;
 }
 
 /* title */
