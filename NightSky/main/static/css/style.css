@@ -263,20 +263,30 @@ textarea{
 }
 
 #aaa{
-  width:30%;
-  border:solid 1px red;
-  background-color: skyblue;
+  width:35%;
+  padding: 3vw;
+  color: white;
+  background-color: rgba(162, 153, 211, 0.6);
   text-align:center;
 }
 #bbb{
-  width:30%;
-  border:solid 1px red;
-  background-color: skyblue;
+  width:35%;
+  padding: 3vw;
+  color: white;
+  background-color: rgba(162, 153, 211, 0.6);
   text-align:center;
 }
 #ccc{
-  width:30%;
-  border:solid 1px red;
-  background-color: skyblue;
+  width:35%;
+  padding: 3vw;
+  color: white;
+  background-color: rgba(162, 153, 211, 0.6);
   text-align:center;
+}
+
+#aaa:hover, #bbb:hover, #ccc:hover{
+  border-right: 1px white solid;
+}
+#aaa a:hover, #bbb a:hover, #ccc a:hover{
+  color: white;
 }
