@@ -8,12 +8,13 @@
   <style>
     @font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff'); font-weight: normal; font-style: normal; }
     @font-face { font-family: 'DOSGothic'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff'); font-weight: normal; font-style: normal; }
-    
+  
     /* style.css */
+  
     body{
-            font-family: 'DOSGothic';
+        min-height:100%;
+        font-family: 'DOSGothic';    
     }
-
     /* modal for post */
     /** readonly text  style.css **/
     #textbody{
@@ -64,10 +65,242 @@
     cursor: pointer;
     }
 
+    @media only screen and (max-width : 480px) {
+        .user_title{
+            text-align: center;
+            margin-top: 5%;
+            left:0;
+            top: 0;
+            position: initial;
+            display: block;
+
+        }
+    }
+    /* Custom, iPhone Retina : ~ 320px */
+    @media only screen and (max-width : 320px) {
+        .user_title{
+            position: initial;
+            display: block;
+            text-align: center;
+            margin-top: 5%;
+            left:0;
+            top: 0;
+
+        }
+    }
+    @media only screen and (min-width:768px) {
+        #postmodal{
+  height: 72vh;
+  width: 65vw;
+  top: 18%;
+  left: 20%;
+}
+
+.modalbody{
+  display: grid;
+  grid-template: 1fr / 1fr 1fr;
+  padding: 30px;
+  grid-gap: 20px;
+}
+
+.right{
+  margin-left: 15px;
+}
+
+#textbody{
+  height: 25vh;
+  width: 90%;
+  height: 30vh;
+}
+
+#ctcont{
+  height: 10vh;
+  width: 84%;
+  padding: 15px;
+  font-size: 18px;
+  margin-top: 3vh;
+}
+
+#commentarea{
+  overflow: scroll;
+  color: black;
+  height: 40vh;
+  width: 95%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 1rem;
+  font-size: 18px;
+  word-break:break-all;
+  white-space:pre-wrap;
+}
+
+#ct-title{
+  color: white;
+  font-size: 35px;
+  font-family:'UhBeemysen';
+  line-height: 50px;
+  border-top: 1px white dashed;
+  margin-left: 10px;
+}
+.bt{
+  margin-top: 0.5rem;
+}
+
+#ctsave{
+  background: transparent;
+  border: 1px solid white;
+  font-size: 12px;
+  color: white;
+  font-family: 'Noto Serif KR', serif;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  height: 30px;
+}
+
+#ctsave:hover{
+  background-color: #2A2649;
+}
+.edit{
+    display: flex;
+}
+
+
+label input{
+    color: white;
+}
+
+#here{
+    background-color: white;
+    border-radius: 1rem;
+    height: 40px;
+    width: 60px;
+    color: black;
+    font-size: 30px;
+    font-family: 'UhBeemysen';
+    border: 0;
+    cursor: pointer;
+}
+
+#other{
+    font-size: 35px;
+    margin-bottom: 8px;
+}
+
+#commentarea{
+    height: 40.5vh;
+}
+
+ }
+
+/* Desktop Device */
+    @media only screen and (min-width:1025px) {
+        #postmodal{
+  height: 72vh;
+  width: 65vw;
+  top: 18%;
+  left: 20%;
+}
+
+.modalbody{
+  display: grid;
+  grid-template: 1fr / 1fr 1fr;
+  padding: 30px;
+  grid-gap: 20px;
+}
+
+.right{
+  margin-left: 15px;
+}
+
+#textbody{
+  height: 25vh;
+  width: 90%;
+  height: 30vh;
+}
+
+#ctcont{
+  height: 10vh;
+  width: 84%;
+  padding: 15px;
+  font-size: 18px;
+  margin-top: 3vh;
+}
+
+#commentarea{
+  overflow: scroll;
+  color: black;
+  height: 40vh;
+  width: 95%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 1rem;
+  font-size: 18px;
+  word-break:break-all;
+  white-space:pre-wrap;
+}
+
+#ct-title{
+  color: white;
+  font-size: 35px;
+  font-family:'UhBeemysen';
+  line-height: 50px;
+  border-top: 1px white dashed;
+  margin-left: 10px;
+}
+.bt{
+  margin-top: 0.5rem;
+}
+
+#ctsave{
+  background: transparent;
+  border: 1px solid white;
+  font-size: 12px;
+  color: white;
+  font-family: 'Noto Serif KR', serif;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  height: 30px;
+}
+
+#ctsave:hover{
+  background-color: #2A2649;
+}
+.edit{
+    display: flex;
+}
+
+
+label input{
+    color: white;
+}
+
+#here{
+    background-color: white;
+    border-radius: 1rem;
+    height: 40px;
+    width: 60px;
+    color: black;
+    font-size: 30px;
+    font-family: 'UhBeemysen';
+    border: 0;
+    cursor: pointer;
+}
+
+#other{
+    font-size: 35px;
+    margin-bottom: 8px;
+}
+
+#commentarea{
+    height: 40.5vh;
+}
+    
+    }
+    
    </style>
     <script>
-    var te=new Array();
-    var pk;
+        var te=new Array();
+        var pk;
     </script>
 </head>
 
@@ -75,11 +308,39 @@
 <div id="my" name="{{me}}"></div>
 <div class="user_title">{{author}}님의 밤하늘</div>
 
-<div class="menu-main">
-    <div id="mySkyBt"><a href="{% url 'mysky' %}"><img src="{% static 'img/myhome.png' %}" width="40px" height="40px">내 밤하늘로</a></div>
-    <div><a href="{% url 'realmain' %}">모두의 하늘로</a></div>
-    <div id="logoutBt"><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}" width="40px" height="45px">로그아웃</a></div>
-</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
+    
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        // hide the menu when the page load
+        $("#navigation-list").hide();
+        // when .menuBtn is clicked, do this
+        $(".menuBtn").click(function() {
+            // open the menu with slide effect
+            $("#navigation-list").slideToggle(300);
+        });
+    });
+    $(document).ready(function(){
+        $("#burger-container").on('click', function(){
+            $(this).toggleClass("open");
+        });
+    });
+</script>
+    <span class="menuBtn">
+        <div id="burger-container">
+            <div id="burger">
+                <img src="{% static 'img/hamburger.png' %}">
+            </div>
+        </div>
+    </span>
+    <div id="navigation-list">
+        
+            <div id="aaa"><a href="{% url 'realmain' %}">모두의 하늘로</a></div>
+            <div id="bbb"><a href="{% url 'user_update' %}">마이페이지</a></div>
+            <div id="ccc"><a href="{% url 'logout' %}">로그아웃</a></div>
+        
+    </div>
 
 <div id ="star">
     {% for post in posts %}
@@ -116,15 +377,14 @@
             test();
         }
         function test(a){
-            var str1=Number({{post.lat}})-60;
-            var str2=Number({{post.lng}})-60;
-            var c=document.getElementById("1");
-            c.style.top=str1+'px';
-            c.style.left=str2+'px';
-            document.getElementById("1").setAttribute("id", "2");
-            //document.getElementById("1").setAttribute("class", "star");
-        
-        }
+                var str1=Number({{post.lat}});
+                var str2=Number({{post.lng}});
+                var c=document.getElementById("1");
+                c.style.top=str1+'%';
+                c.style.left=str2+'%';
+               
+                document.getElementById("1").setAttribute("id", "2");
+            }
         </script>
     {% endfor %}
 
