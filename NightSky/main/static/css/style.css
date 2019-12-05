@@ -5,6 +5,11 @@ body{
   background-size: cover;
   color: white;
   overflow: hidden;
+  -ms-overflow-style: none;
+  }
+
+body::-webkit-scrollbar { 
+    display: none !important;
   }
 
 html {
