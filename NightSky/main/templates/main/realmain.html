@@ -4,6 +4,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
     <style>
@@ -24,9 +25,9 @@
         #reselect{
             display: inline-block;
             position: absolute;
-            top: 50px;
-            left: 40px;
-            font-size: 30px;
+            top: 5%;
+            left: 1%;
+            font-size: 16px;
             text-shadow: 0 0 5px #888;
             margin-top: 10px;
         }
@@ -36,6 +37,37 @@
         #reselect a{
             color: white;
         }
+        @media only screen and (max-width : 480px) {
+            #reselect{
+            display: inline-block;
+            position: absolute;
+            top: 5%;
+            left: 58%;
+            font-size: 16px;
+            text-shadow: 0 0 5px #888;
+            margin-top: 10px;
+        }
+        #reselect a{
+            text-align: end;
+        }
+    }
+    /* Custom, iPhone Retina : ~ 320px */
+    @media only screen and (max-width : 320px) {
+        #reselect{
+            display: inline-block;
+            position: fixed;
+            top: 5%;
+            left: 50%;
+            font-size: 16px;
+            text-shadow: 0 0 5px #888;
+            margin-top: 10px;
+        }
+        #reselect a{
+            text-align: end;
+        }
+    }
+        
+    }
 
         /* search posts */
         .option{
@@ -69,7 +101,7 @@
             width: 40px;
             border-radius: 1rem;
             font-family: 'UhBeemysen';
-            font-size: 20px;
+            font-size: 1rem;
         }
         #search-btn:hover{
             cursor: pointer;
@@ -390,11 +422,7 @@ label input{
 </head>
 
 <body>
-    <div class="menu-main">
-        <div id="mySkyBt"><a href="{% url 'mysky' %}"><img src="{% static 'img/myhome.png' %}">내 밤하늘로</a></div>
-        <div id="myPageBt"><a href="{% url 'user_update' %}"><img src="{% static 'img/mypage.png' %}">마이페이지</a></div>
-        <div id="logoutBt"><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}">로그아웃</a></div>
-    </div>
+   
 
     <div id="pagenate">
         <a href="?page=1">처음 밤하늘로</a>
@@ -412,12 +440,44 @@ label input{
 
         <div id="reselect"><a href="{% url 'main'%}">감정 다시선택하기</a></div>
 
-        <div class="option">
-            <form action="{% url 'mysearch' %}" method="POST">{% csrf_token %}
-                <input name="word" type="search" placeholder="글내용/감정/글쓴이" id="search">
-                <button type="submit" id="search-btn">검색</button>
-            </form>
-        </div>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
+    
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                // hide the menu when the page load
+                $("#navigation-list").hide();
+                // when .menuBtn is clicked, do this
+                $(".menuBtn").click(function() {
+                    // open the menu with slide effect
+                    $("#navigation-list").slideToggle(300);
+                });
+            });
+            $(document).ready(function(){
+                $("#burger-container").on('click', function(){
+                    $(this).toggleClass("open");
+                });
+            });
+        </script>
+            <span class="menuBtn">
+                <div id="burger-container">
+                    <div id="burger">
+                        <img src="{% static 'img/myhome.png' %}" style="transform: rotate(90deg); margin-left: 3vw; margin-top: 2vh;">
+                    </div>
+                </div>
+            </span>
+            <div id="navigation-list">
+                
+                    <div id="aaa"><a href="{% url 'mysky' %}">나의 하늘로</a></div>
+                    <div id="bbb"><a href="{% url 'user_update' %}">마이페이지</a></div>
+                    <div id="ccc"><a href="{% url 'logout' %}">로그아웃</a></div>
+                    <div id="ddd"><form action="{% url 'mysearch' %}" method="POST">{% csrf_token %}
+                        <input name="word" type="search" placeholder="글내용/감정/글쓴이" id="search">
+                        <button type="submit" id="search-btn">검색</button>
+                    </form></div>
+                
+            </div>
 
     <!--<div class=hi>
     <h3>반갑습니다, {{user.username}}님!</h3>
@@ -457,26 +517,28 @@ label input{
                 test();
             }
             function test(){
-                var str1 = Math.round(Math.random()*800);
-                var str2 = Math.round(Math.random()*1800);
                 var width=screen.availWidth;
                 var height=screen.availHeight;
+                var str1 = Math.round(Math.random()*height);
+                var str2 = Math.round(Math.random()*width);
+                
                 while(1){
-                    if(str2>width-200){
-                        str2=Math.round(Math.random()*1800);
+                    if(str2>width-width*0.1||str2<width*0.2){
+                        str2=Math.round(Math.random()*width);
                     }
                     else{
                         break;
                     }
                 }
                 while(1){
-                    if(str1>height-200||str1<100){
-                        str1=Math.round(Math.random()*800);
+                    if(str1>height-height*0.2||str1<height*0.3){
+                        str1=Math.round(Math.random()*height);
                     }
                     else{
                         break;
                     }
                 }
+                console.log(str2, str1);
                 document.getElementById("1").style.top = str1+'px';
                 document.getElementById("1").style.left = str2+'px';
                 document.getElementById("1").setAttribute("id", "2");
