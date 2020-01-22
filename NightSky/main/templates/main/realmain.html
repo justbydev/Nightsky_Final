@@ -138,7 +138,7 @@
         #pagenate{
             margin: 1rem;
         }
-        #dialog, #ctdialog{
+        #dialog, #ctdialog, #reportdialog{
         box-sizing: border-box;
         z-index:9999999999; 
         position:absolute;
@@ -417,6 +417,7 @@ label input{
     <script>
     var pk;
     var wr;
+    var reportpk;
     </script>
 
 </head>
@@ -555,6 +556,7 @@ label input{
                 <div class="left">
                     <span id="other" class="textwriter"></span>
                     <button type="button" class="subscribe"></button>
+                    <button class="report"></button>
                     <textarea rows="17" id="textbody" value="" readonly="readonly"></textarea>
                     <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea><br>
                     <input type="button" id="ctsave" value="댓글저장"> 
@@ -602,6 +604,21 @@ label input{
                 }
         });                 
     });
+     $( function() {           
+        $("#reportdialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height:100, 
+                show: {
+                effect: "blind",
+                duration: 100
+                },
+                hide: {
+                effect: "fade",
+                duration: 100
+                }
+        });                 
+    });
     </script>
 
     <div id="ctdialog">
@@ -620,6 +637,15 @@ label input{
                 수정하시겠습니까?<br>
                 <button type="button" class="edityes"><b>네</b></button>
                 <button type="button" class="editno"><b>아니오</b></button>
+            </div>
+        </div>
+    </div>
+    <div id="reportdialog">
+        <div id="dialog-ctn">
+            이 글을 정말 신고하시겠습니까?<br><br>
+            <div class="dialogbtn">
+                <button type="button" class="reportyes"><b>네</b></button>
+                <button type="button" class="reportno"><b>아니오</b></button>
             </div>
         </div>
     </div>
@@ -651,7 +677,7 @@ label input{
 
     $(".update").click(function(){
         pk=$(this).attr('name');
-
+        reportpk=pk;
         $.ajax({
             type:"GET",
             url: "post_total/",
@@ -667,6 +693,7 @@ label input{
             
                 $(".textwriter").append("님");
                 $(".subscribe").text("구독하기");
+                $(".report").text("신고하기");
                 //$("#textpk").val(msg['pk']);
                 //$("#textdate").val(msg['date']);
                 $(document).on('click', '#other', function(){
@@ -877,7 +904,20 @@ label input{
         $("#star").css({"background-color":"", "opacity":""});
         $("#postmodal").css({"opacity":""});
         $("#cteditdialog").dialog("close");
+    });  
+    $(document).on('click','.report', function(){
+        cpk=$(this).attr('name');
+        //alert('Clicked'+cpk);
+        $("#star").css({"background-color":"black", "opacity":"0.5"});
+        $("#postmodal").css({"opacity":"0.5"});
+        $("#reportdialog").dialog("open");
+
     });    
+    $(".reportno").click(function(){
+        $("#star").css({"background-color":"", "opacity":""});
+        $("#postmodal").css({"opacity":""});
+        $("#reportdialog").dialog("close");
+    });  
 
         /*별 반짝임과 별똥별 효과*/
     class Star{

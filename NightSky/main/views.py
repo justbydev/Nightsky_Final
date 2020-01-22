@@ -166,7 +166,8 @@ def mysky(request):
         image=request.POST['im']
         pub_date=timezone.now()
         writer=request.user
-        Post.objects.create(author=author, body=body, emotion=emotion, lng=lng, lat=lat, image=image, pub_date=pub_date, writer=writer)
+        report='0'
+        Post.objects.create(author=author, body=body, emotion=emotion, lng=lng, lat=lat, image=image, pub_date=pub_date, writer=writer, report=report)
         return redirect('mysky')
     else:
         return render(request, 'main/mysky.html', {'posts':posts})
@@ -401,3 +402,13 @@ def followsky(request, index):
     author=get_object_or_404(User, username=follow.name)
     posts=Post.objects.filter(author=author)
     return render(request, 'main/followsky.html',{'posts':posts, 'author':author, 'me':me, 'fpk':fpk})
+    
+def report(request):
+    if request.method=="GET":
+        pk=request.GET['pk']
+        post=get_object_or_404(Post, pk=pk)
+        nowreport=int(post.report)
+        nowreport=nowreport+1
+        post.report=str(nowreport)
+        post.save()
+        return HttpResponse()
