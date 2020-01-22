@@ -166,7 +166,8 @@ def mysky(request):
         image=request.POST['im']
         pub_date=timezone.now()
         writer=request.user
-        Post.objects.create(author=author, body=body, emotion=emotion, lng=lng, lat=lat, image=image, pub_date=pub_date, writer=writer)
+        report='0'
+        Post.objects.create(author=author, body=body, emotion=emotion, lng=lng, lat=lat, image=image, pub_date=pub_date, writer=writer, report=report)
         return redirect('mysky')
     else:
         return render(request, 'main/mysky.html', {'posts':posts})
