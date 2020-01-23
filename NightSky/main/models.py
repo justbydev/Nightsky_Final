@@ -18,6 +18,7 @@ class Post(models.Model):
     lat=models.TextField(default='')
     distinct=models.TextField(default='')
     report=models.TextField(default='0')
+    first=models.TextField(default='0')
     #lng = models.DecimalField(max_digits = 8, decimal_places = 3, default=Decimal(0))
     #lat = models.DecimalField(max_digits = 8, decimal_places = 3, default=Decimal(0))
 
@@ -41,6 +42,15 @@ class search(models.Model):
 class Follow(models.Model):
     author=models.ForeignKey('auth.User', on_delete=models.CASCADE)
     name=models.TextField(default='')
+
+class deletetoreport(models.Model):
+    report=models.TextField(default='')
+    body=models.TextField(default='')
+    writer=models.TextField(default='')
+    deletepk=models.TextField(default='')
+
+
+
     
 class CommentUpdate(UpdateView):
     model = Comment

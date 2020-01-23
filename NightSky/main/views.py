@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from .models import Post, todayemotion, Comment, search, Follow
+from .models import Post, todayemotion, Comment, search, Follow, deletetoreport
 from .forms import PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -409,6 +409,12 @@ def report(request):
         post=get_object_or_404(Post, pk=pk)
         nowreport=int(post.report)
         nowreport=nowreport+1
+        first=post.first
+        if nowreport>3 and first=='0':
+            reportbody=post.body
+            reportwriter=post.writer
+            deletetoreport.objects.create(report=str(nowreport), body=reportbody, writer=reportwriter, deletepk=pk)
+            post.first='1'
         post.report=str(nowreport)
         post.save()
         return HttpResponse()
