@@ -138,6 +138,7 @@
 
     .edit{
         display: flex;
+        justify-content: center;
     }
     
     #here{
@@ -254,7 +255,7 @@
     @media only screen and (min-width:768px) {
         #postmodal{
   height: 72vh;
-  width: 65vw;
+  width: 100%;
   top: 18%;
   left: 20%;
 }
@@ -271,9 +272,10 @@
 }
 
 #textbody{
-  height: 25vh;
-  width: 90%;
-  height: 30vh;
+height: 25vh;  
+  margin: 2%;
+  width: 95%;
+  position: initial;
 }
 
 #ctcont{
@@ -313,7 +315,7 @@
   background: transparent;
   border: 1px solid white;
   font-size: 12px;
-  color: white;
+  color: black;
   font-family: 'Noto Serif KR', serif;
   cursor: pointer;
   margin-top: 0.5rem;
@@ -325,6 +327,7 @@
 }
 .edit{
     display: flex;
+    justify-content: center;
 }
 
 
@@ -376,9 +379,10 @@ label input{
 }
 
 #textbody{
-  height: 25vh;
-  width: 90%;
-  height: 30vh;
+  height: 25vh;  
+  margin: 2%;
+  width: 95%;
+  position: initial;
 }
 
 #ctcont{
@@ -430,6 +434,7 @@ label input{
 }
 .edit{
     display: flex;
+    justify-content: center;
 }
 
 
@@ -467,7 +472,7 @@ label input{
 </head>
 
 <body>
-    <div id="myuser" class="user_title" name="{{user.username}}">{{user.username}}님의 밤하늘</div>
+    <div id="myuser" class="user_title" name="{{user.username}}"></div>
     <!--<div id="nav">
     <div>
         <ul class="menu">
@@ -484,10 +489,8 @@ label input{
     </div>
     </div>-->
     
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="css/reset.css">
-        <link rel="stylesheet" href="css/style.css">
+        
+        
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     
     
@@ -601,6 +604,7 @@ label input{
                 <div class = "modalbody">
                 
                     <!--<div class="left">-->
+                        <div>
                         <textarea rows="17" id="textbody" value="" required></textarea>
                         <div class="edit">
                                 <div class="change">
@@ -610,12 +614,14 @@ label input{
                                     <input type="button" class="bt" value="삭제하기">
                                 </div>
                         </div>
-
+                        <div>
+                        <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea>
+                        <input type="button" id="ctsave" value="공감하기"></div>
+                    </div>
+                    <div>
                             <span id="ct-title">공감의 말들</span>
                             <div id="commentarea"></div>                    
-                        <span id="ct-title">--------------------</span>
-                        <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea>
-                        <input type="button" id="ctsave" value="공감하기">
+                    </div>
                     <!--</div>-->
                     
                 </div>
@@ -861,12 +867,12 @@ label input{
                     var writer=list.comments[++i];
                     var commentpk=list.comments[++i];
                     $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
-                    $("#commentarea").append("<span class='time'> ========"+time+"</span>");
+                    $("#commentarea").append("<span class='time'>"+time+"</span>");
                     if (writer == me){
                         $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn' name="+commentpk+"><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete' name="+commentpk+">삭제</span><hr></div>");
                     }
                     else
-                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'>"+commentct+"<hr>"+"</div>");                        
+                        $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");                        
                 
                 }
                 
@@ -908,12 +914,12 @@ label input{
                                     var commentpk=list.comments[++i];                 
                                     //console.log(comment);
                                     $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a style='color:black;' href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
-                                    $("#commentarea").append("<span class='time'> ========"+time+"</span>");
+                                    $("#commentarea").append("<span class='time'>"+time+"</span>");
                                     if (writer == me){
                                         $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");
                                     }
                                     else
-                                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'>"+commentct+"<hr>"+"</div>");                        
+                                        $("#commentarea").append("<div class='comment'>"+commentct+"<hr>"+"</div>");                        
                                 }
                                 $("#ctcont").val("");
                                 

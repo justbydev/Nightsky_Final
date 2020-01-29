@@ -607,8 +607,11 @@ label input{
     </form>
   </div>
   <div class="tab-pane fade" id="구독목록" role="tabpanel" aria-labelledby="profile-tab">
-    {% for follow in myf %}
-      <div class ="follow" name="{{follow.pk}}">{{follow.name}}</div>
+
+    {% for post in feed_sorted %}    
+    <div class="mycommentlist" name="{{post.id}}" onclick="modalfunc2();" style="display: inline-block;"> 
+      <div class="fname">{{post.author}}</div>{{post.body}} <div class="mypostdate">{{post.pub_date}}</div>
+  </div>
     {%endfor%}
 </div>
   </div>

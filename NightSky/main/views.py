@@ -14,6 +14,7 @@ from datetime import datetime
 from django.template.loader import render_to_string
 from django.db.models import Count
 from datetime import datetime, timedelta
+from operator import attrgetter
 
 # Create your views here.
 writer="nothing"
@@ -217,6 +218,14 @@ def user_update(request):
     posts=Post.objects.filter(author=request.user)
     comments=Comment.objects.filter(author=request.user)
     myf=Follow.objects.filter(author=request.user)
+    myf=Follow.objects.filter(author=request.user) 
+    feed=[]
+    allposts=Post.objects.all()
+    for f in myf:
+        fposts=Post.objects.filter(writer=f.name)
+        for x in fposts:
+            feed.append(x)
+    feed_sorted=sorted(feed, key=attrgetter('pub_date'), reverse=True)
     one_week_ago = datetime.today() - timedelta(days=7)
     try:
         flag=1
@@ -224,7 +233,8 @@ def user_update(request):
     except IndexError:
         flag=0
         M="최근 1주일간 감정이 기록되지 않았습니다."
-    return render(request, 'main/user_update.html', {'user':user, 'posts':posts, 'comments':comments, 'max':M, 'myf':myf, 'flag':flag})
+    return render(request, 'main/user_update.html', {'user':user, 'posts':posts, 'comments':comments, 'max':M, 'myf':myf, 'flag':flag, 'feed_sorted':feed_sorted})
+
 def change_Email(request):
         if request.method=="POST":
                 newemail=request.POST['NEWEMAIL']
