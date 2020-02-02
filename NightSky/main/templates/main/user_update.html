@@ -21,16 +21,16 @@
     .user_title{
       position: absolute;
       top: 5%;
-      left: 37%;
-      font-size: 5vw;
+      left: 42%;
+      font-size: 3rem;
     }
 
     .tabs-content{
       position: absolute;
       top: 20%;
-      left: 20%;
       height: 85%;
-      width: 60%;
+      left: 10%;
+      width: 80%;
     }
 
     .upper{
@@ -42,8 +42,7 @@
 
     .tab-content{
       padding: 1% 5%;
-      border: solid 1px white;
-      height: 60vh;
+      height: 80vh;
       overflow: scroll;
       border-bottom-left-radius: 1rem;
       border-bottom-right-radius: 1rem;
@@ -93,12 +92,6 @@
       font-size: 2vh;
       font-family: 'DOSGothic';
     }
-    #commentmodal{
-      height: 72vh;
-      width: 65vw;
-      top: 18%;
-      left: 20%;
-    }
     
     .nav-link{
       color: white;
@@ -141,10 +134,10 @@
       background-color: #2A2649;
     }
 
-    #textbody{
+    /*#textbody{
       height: 40vh;
       width: 25vw;
-    }
+    }*/
     #textbody2{
       height: 25vh;
       width: 25vw;
@@ -154,17 +147,14 @@
     #commentarea2{
       overflow: scroll;
       color: black;
+      width:95%;
       height: 40vh;
       background-color: white;
       padding: 20px;
-      border-radius: 1rem;
       font-size: 18px;
     }
 
-    #ctcont{
-      width: 25vw;
-    }
-
+  
     #ctsave{
       margin-top: 1rem;
     }
@@ -288,35 +278,18 @@
     @media only screen and (min-width:768px) {
         #postmodal{
   height: 72vh;
-  width: 65vw;
-  top: 18%;
-  left: 20%;
+  width: 100%;
 }
 
-.modalbody{
-  display: grid;
-  grid-template: 1fr / 1fr 1fr;
-  padding: 30px;
-  grid-gap: 20px;
+
+
+#textbody, #textbody2{
+height: 25vh;  
+  margin: 2%;
+  width: 95%;
+  position: initial;
 }
 
-.right{
-  margin-left: 15px;
-}
-
-#textbody{
-  height: 25vh;
-  width: 90%;
-  height: 30vh;
-}
-
-#ctcont{
-  height: 10vh;
-  width: 84%;
-  padding: 15px;
-  font-size: 18px;
-  margin-top: 3vh;
-}
 
 #commentarea{
   overflow: scroll;
@@ -325,7 +298,6 @@
   width: 95%;
   background-color: white;
   padding: 20px;
-  border-radius: 1rem;
   font-size: 18px;
   word-break:break-all;
   white-space:pre-wrap;
@@ -333,11 +305,11 @@
 
 #ct-title{
   color: white;
-  font-size: 35px;
+  font-size: 4em;
   font-family:'UhBeemysen';
   line-height: 50px;
   border-top: 1px white dashed;
-  margin-left: 10px;
+  margin-left: 4%
 }
 .bt{
   margin-top: 0.5rem;
@@ -347,7 +319,7 @@
   background: transparent;
   border: 1px solid white;
   font-size: 12px;
-  color: white;
+  color: black;
   font-family: 'Noto Serif KR', serif;
   cursor: pointer;
   margin-top: 0.5rem;
@@ -359,6 +331,7 @@
 }
 .edit{
     display: flex;
+    justify-content: center;
 }
 
 
@@ -386,6 +359,13 @@ label input{
 #commentarea{
     height: 40.5vh;
 }
+
+#commentmodal{
+    min-height: 100%;
+      height: 72vh;
+      width: 100%;
+    }
+
     
     }
 
@@ -396,6 +376,7 @@ label input{
   width: 65vw;
   top: 18%;
   left: 20%;
+  min-height: auto;
 }
 
 .modalbody{
@@ -410,18 +391,16 @@ label input{
 }
 
 #textbody{
-  height: 25vh;
-  width: 90%;
-  height: 30vh;
+  height: 25vh;  
+  margin: 2%;
+  width: 95%;
+  position: initial;
 }
 
 #ctcont{
-  height: 10vh;
-  width: 84%;
-  padding: 15px;
-  font-size: 18px;
-  margin-top: 3vh;
-}
+  height: 15vh;
+  font-size: 2em;
+    }
 
 #commentarea{
   overflow: scroll;
@@ -464,6 +443,7 @@ label input{
 }
 .edit{
     display: flex;
+    justify-content: center;
 }
 
 
@@ -491,7 +471,32 @@ label input{
 #commentarea{
     height: 40.5vh;
 }
+
+#commentmodal{
+      height: 72vh;
+      width: 65vw;
+      top: 18%;
+      left: 20%;
+      min-height: auto;
     }
+
+    #textbody2{
+      height: 30vh;
+    }
+
+    }
+
+.nav-tabs {
+    border-bottom: 1px solid #3C3353;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: white;
+    background-color: #3C3353;
+    border-color: #3C3353;
+}
+
+  
 
   </style>
 </head>
@@ -502,7 +507,7 @@ label input{
       <div id="otherSkyBt"><a href="{% url 'realmain' %}"><img src="{% static 'img/othersky.png' %}">모두의 하늘로</a></div>
       <div id="logoutBt"><a href="{% url 'logout' %}"><img src="{% static 'img/door.png' %}">로그아웃</a></div>
   </div>
-  <div class="user_title">마이페이지</div>
+  <div class="user_title">MY PAGE</div>
 
   <div id="star">
   {% if message %}
@@ -542,7 +547,7 @@ label input{
       {% for post in posts %}
         
         <div class="mypostlist" name="{{post.id}}" onclick="modalfunc();" style="display: inline-block;">
-              {{post.body}} <div class="mypostdate">{{post.pub_date}}</div>
+              {{post.body}} <div class="mypostdate">{{post.pub_date}}</div><hr>
         </div> 
       {% endfor %}
     
@@ -552,7 +557,7 @@ label input{
       {% for comment in comments %}
 
         <div class="mycommentlist" name="{{comment.post.id}}" onclick="modalfunc2();" style="display: inline-block;"> 
-              {{comment.content}} <div class="mypostdate">{{comment.created_at}}</div>
+              {{comment.content}} <div class="mypostdate">{{comment.created_at}}</div><hr>
         </div> 
       {% endfor %}
     </div>
@@ -610,7 +615,7 @@ label input{
 
     {% for post in feed_sorted %}    
     <div class="mycommentlist" name="{{post.id}}" onclick="modalfunc2();" style="display: inline-block;"> 
-      <div class="fname">{{post.author}}</div>{{post.body}} <div class="mypostdate">{{post.pub_date}}</div>
+      <div class="fname">{{post.author}}</div>{{post.body}} <div class="mypostdate">{{post.pub_date}}</div><hr>
   </div>
     {%endfor%}
 </div>
@@ -622,7 +627,7 @@ label input{
             <span id="postclose" class="close" style="text-align: right;">&times;</span>
             <!--<form method="POST">{% csrf_token %}-->
             <div class = "modalbody">
-                <div class="left">
+                <div>
                     <textarea rows="17" id="textbody" value="" required></textarea>
                     <div class="edit">
                             <div class="change">
@@ -633,7 +638,7 @@ label input{
                             </div>
                     </div>
                 </div>
-                <div class="right">
+                <div>
                     <span id="ct-title">공감의 말들</span>
                     <div id="commentarea"></div>                           
                 </div>
@@ -641,7 +646,6 @@ label input{
             <!--</form>-->
     </div>
   </div>
-  
   
   <div id="commentmodal" class="modal">
     <div class="modal-content" >
@@ -812,6 +816,7 @@ $( function() {
               alert('글 수정이 완료되었습니다.');
               var postmod = document.getElementById('postmodal'); 
               postmod.style.display="none";
+              location.href="{% url 'user_update' %}"
           },
           error:function(response){
               alert('fail2');

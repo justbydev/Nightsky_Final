@@ -104,7 +104,7 @@ textarea{
   resize:none;
   font-family: 'UhBeemysen';
   padding: 20px;
-  font-size: 25px;
+  font-size: 3em;
   overflow: scroll;
 }
 
@@ -174,7 +174,7 @@ textarea{
 }
 
 /* comments section */
-#commentarea{
+#commentarea, #commentarea2{
   overflow: scroll;
   color: black;
   height: 20vh;
