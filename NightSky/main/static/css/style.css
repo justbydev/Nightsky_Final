@@ -265,7 +265,7 @@ textarea{
 
 
 #burger img{
-  width:10%;
+  width:15%;
   height:10%;
   top:0;
 }
@@ -304,14 +304,14 @@ textarea{
 #reselect{
   display: inline-block;
   position: absolute;
-  top: 5%;
+  top: 3.5%;
   left: 1%;
   font-size: 16px;
   text-shadow: 0 0 5px #888;
   margin-top: 10px;
 }
 #reselect:hover{
-  top: 47px;
+  color:black;
 }
 #reselect a{
   color: white;
@@ -320,7 +320,7 @@ textarea{
   #reselect{
     display: inline-block;
     position: absolute;
-    top: 5%;
+    top: 3.5%;
     left: 58%;
     font-size: 16px;
     text-shadow: 0 0 5px #888;
@@ -335,7 +335,7 @@ textarea{
   #reselect{
       display: inline-block;
       position: fixed;
-      top: 5%;
+      top: 3.5%;
       left: 50%;
       font-size: 16px;
       text-shadow: 0 0 5px #888;

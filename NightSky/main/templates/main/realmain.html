@@ -375,12 +375,12 @@
                 });
             });
         </script>
-            <span class="menuBtn">
-                <div id="burger-container">
-                    <div id="burger">
-                        <img src="{% static 'img/myhome.png' %}" style="transform: rotate(90deg); margin-left: 3vw; margin-top: 2vh;">
-                    </div>
-                </div>
+            <span  class="menuBtn">
+                <span id="burger-container">
+                    
+                    <img id="burger" src="{% static 'img/myhome.png' %}" style="transform: rotate(90deg); margin-left: 3vw; margin-top: 2vh; width:15%;">
+                    
+                </span>
             </span>
             <div id="navigation-list">
                 
@@ -454,8 +454,10 @@
                     }
                 }
                 console.log(str2, str1);
-                document.getElementById("1").style.top = str1+'px';
-                document.getElementById("1").style.left = str2+'px';
+                str1=(str1*100)/height;
+                str2=(str2*100)/width;
+                document.getElementById("1").style.top = str1+'%';
+                document.getElementById("1").style.left = str2+'%';
                 document.getElementById("1").setAttribute("id", "2");
             }
             
