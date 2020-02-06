@@ -46,6 +46,7 @@ urlpatterns = [
     path('realmain/post_total/', main.views.post_total, name="post_total"),
     path('realmain/subscribe/', main.views.subscribe, name="subscribe"),
     path('realmain/report/', main.views.report, name="report"),
+    path('realmain/ctreport/', main.views.ctreport, name="ctreport"),
     path('realmain/postdetail/', main.views.postdetail, name="postdetail"),
     path('realmain/mycommentdelete/', main.views.mycommentdelete, name="mycommentdelete"),
     path('realmain/mycommentedit/', main.views.mycommentedit, name="mycommentedit"),

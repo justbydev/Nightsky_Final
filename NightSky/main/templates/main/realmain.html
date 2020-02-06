@@ -56,7 +56,7 @@
         #pagenate{
             margin: 1rem;
         }
-        #dialog, #ctdialog, #reportdialog{
+        #dialog, #ctdialog, #reportdialog, #ctreportdialog{
             box-sizing: border-box;
             z-index:9999999999; 
             position:absolute;
@@ -377,9 +377,7 @@
         </script>
             <span  class="menuBtn">
                 <span id="burger-container">
-                    
                     <img id="burger" src="{% static 'img/myhome.png' %}" style="transform: rotate(90deg); margin-left: 3vw; margin-top: 2vh; width:15%;">
-                    
                 </span>
             </span>
             <div id="navigation-list">
@@ -535,6 +533,21 @@
                 }
         });                 
     });
+    $( function() {           
+        $("#ctreportdialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height:100, 
+                show: {
+                effect: "blind",
+                duration: 100
+                },
+                hide: {
+                effect: "fade",
+                duration: 100
+                }
+        });                 
+    });
     </script>
 
     <div id="ctdialog">
@@ -562,6 +575,15 @@
             <div class="dialogbtn">
                 <button type="button" class="reportyes"><b>네</b></button>
                 <button type="button" class="reportno"><b>아니오</b></button>
+            </div>
+        </div>
+    </div>
+    <div id="ctreportdialog">
+        <div id="dialog-ctn">
+            이 글을 정말 신고하시겠습니까?<br><br>
+            <div class="dialogbtn">
+                <button type="button" class="ctreportyes"><b>네</b></button>
+                <button type="button" class="ctreportno"><b>아니오</b></button>
             </div>
         </div>
     </div>
@@ -670,7 +692,7 @@
                         
                     }
                     else
-                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'>"+commentct+"<hr>"+"</div>");                        
+                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctrep'><span class='ctrep' name="+commentpk+">신고</span><hr></div>");                        
 
                 }
                 $("#ctcont").val("");        
@@ -720,7 +742,7 @@
                                         $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");
                                     }
                                     else
-                                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'>"+commentct+"<hr>"+"</div>");                        
+                                        $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctrep'><span class='ctrep' name="+commentpk+">신고</span><hr></div>");                        
                                 
                                 }
                                 $("#ctcont").val("");
@@ -759,6 +781,14 @@
         $("#star").css({"background-color":"black", "opacity":"0.5"});
         $("#postmodal").css({"opacity":"0.5"});
         $("#ctdialog").dialog("open");
+
+    });
+    $(document).on('click','.ctrep', function(){
+        cpk=$(this).attr('name');
+        //alert('Clicked'+cpk);
+        $("#star").css({"background-color":"black", "opacity":"0.5"});
+        $("#postmodal").css({"opacity":"0.5"});
+        $("#ctreportdialog").dialog("open");
 
     });
     $(document).on('click', '.ctedit', function(){
@@ -848,7 +878,27 @@
             }
         });
     });
-
+    $(".ctreportno").click(function(){ 
+        $("#star").css({"background-color":"", "opacity":""});
+        $("#postmodal").css({"opacity":""});
+        $("#ctreportdialog").dialog("close");
+    });
+    $(".ctreportyes").click(function(){
+        $.ajax({
+            type:"GET",
+            url:"ctreport/",
+            data:{'pk':cpk},
+            success:function(response){
+                alert('댓글 신고가 접수되었습니다.');
+                $("#star").css({"background-color":"", "opacity":""});
+                $("#postmodal").css({"opacity":""});
+                $("#ctreportdialog").dialog("close");
+            },
+            error:function(response){
+                alert('report fail');
+            }
+        });
+    });
         /*별 반짝임과 별똥별 효과*/
     class Star{
         constructor(targetStar){

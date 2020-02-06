@@ -28,6 +28,8 @@ class Comment(models.Model):
     author = models.ForeignKey('auth.user', on_delete=models.CASCADE, default='')
     writer = models.CharField(max_length=255, default='', blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
+    report=models.TextField(default='0')
+    first=models.TextField(default='0')
     #created_at = models.DateTimeField(default = timezone.now)
 
 class todayemotion(models.Model):
@@ -48,7 +50,11 @@ class deletetoreport(models.Model):
     body=models.TextField(default='')
     writer=models.TextField(default='')
     deletepk=models.TextField(default='')
-
+class commentreport(models.Model):
+    report=models.TextField(default='')
+    content=models.TextField(default='')
+    writer=models.TextField(default='')
+    deletepk=models.TextField(default='')
 
 
     
