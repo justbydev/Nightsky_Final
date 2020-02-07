@@ -615,6 +615,7 @@
 
     $(".update").click(function(){
         pk=$(this).attr('name');
+        me=$("#my").attr('name');
         reportpk=pk;
         $.ajax({
             type:"GET",
@@ -630,7 +631,10 @@
                 $(".textwriter").append(msg['writer']);
             
                 $(".textwriter").append("님");
-                $(".subscribe").text("구독하기");
+                if (msg['writer'] != me){
+                    $(".subscribe").text("구독하기");
+
+                }                
                 $(".report").text("신고하기");
                 //$("#textpk").val(msg['pk']);
                 //$("#textdate").val(msg['date']);

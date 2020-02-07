@@ -562,12 +562,17 @@ label input{
       {% endfor %}
     </div>
     <div class="tab-pane fade" id="나의감정" role="tabpanel" aria-labelledby="home-tab">
-      {% if flag == 1 %}
-        <div class="bestemo">{{user.username}}님이 최근에 가장 많이 느낀 감정은 '{{max}}'</div>
+      {% if flagw == 1 %}
+        <div class="bestemo">{{user.username}}님이 일주일간 가장 많이 느낀 감정은 '{{week}}'</div>
       {% else %}
-        {{max}}
+        {{week}}
      {% endif %}  
-        
+      
+     {% if flagm == 1 %}
+     <div class="bestemo">{{user.username}}님이 한 달간 가장 많이 느낀 감정은 '{{month}}'</div>
+    {% else %}
+      {{month}}
+    {% endif %}
     </div>
 <div class="tab-pane fade" id="개인정보변경" role="tabpanel" aria-labelledby="profile-tab">
     <div class="change">

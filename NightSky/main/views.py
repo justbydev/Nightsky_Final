@@ -226,14 +226,21 @@ def user_update(request):
         for x in fposts:
             feed.append(x)
     feed_sorted=sorted(feed, key=attrgetter('pub_date'), reverse=True)
-    one_week_ago = datetime.today() - timedelta(days=7)
+    one_week = datetime.today() - timedelta(days=7)
+    one_month = datetime.today() - timedelta(days=30)
     try:
-        flag=1
-        M=Post.objects.filter(author=request.user, pub_date__range=[one_week_ago, datetime.today()]).values_list('emotion').annotate(count=Count('emotion')).order_by('-count')[0][0]
+        flagw=1
+        week=Post.objects.filter(author=request.user, pub_date__range=[one_week, datetime.today()]).values_list('emotion').annotate(count=Count('emotion')).order_by('-count')[0][0]
     except IndexError:
-        flag=0
-        M="최근 1주일간 감정이 기록되지 않았습니다."
-    return render(request, 'main/user_update.html', {'user':user, 'posts':posts, 'comments':comments, 'max':M, 'myf':myf, 'flag':flag, 'feed_sorted':feed_sorted})
+        flagw=0
+        week="최근 1주일간 감정이 기록되지 않았습니다."
+    try:
+        flagm=1
+        month=Post.objects.filter(author=request.user, pub_date__range=[one_month, datetime.today()]).values_list('emotion').annotate(count=Count('emotion')).order_by('-count')[0][0]
+    except IndexError:
+        flagm=0
+        month="최근 한 달간 감정이 기록되지 않았습니다."
+    return render(request, 'main/user_update.html', {'user':user, 'posts':posts, 'comments':comments, 'week':week,'month':month, 'myf':myf, 'flagw':flagw,'flagm':flagm, 'feed_sorted':feed_sorted})
 
 def change_Email(request):
         if request.method=="POST":

@@ -270,21 +270,7 @@ textarea{
   top:0;
 }
 
-#aaa{
-  width:35%;
-  padding: 3vw;
-  color: white;
-  background-color: rgba(162, 153, 211, 0.6);
-  text-align:center;
-}
-#bbb{
-  width:35%;
-  padding: 3vw;
-  color: white;
-  background-color: rgba(162, 153, 211, 0.6);
-  text-align:center;
-}
-#ccc{
+#aaa, #bbb, #ccc, #ddd{
   width:35%;
   padding: 3vw;
   color: white;
@@ -292,10 +278,10 @@ textarea{
   text-align:center;
 }
 
-#aaa:hover, #bbb:hover, #ccc:hover{
+#aaa:hover, #bbb:hover, #ccc:hover, #ddd:hover{
   border-right: 1px white solid;
 }
-#aaa a:hover, #bbb a:hover, #ccc a:hover{
+#aaa a:hover, #bbb a:hover, #ccc a:hover, #ddd a:hover{
   color: white;
 }
 
@@ -354,7 +340,7 @@ textarea{
   top: 110px;
 }
 #search{
-  width: 8rem;
+  width: 7rem;
   height: 2rem;
   background: transparent;
   border: none;
