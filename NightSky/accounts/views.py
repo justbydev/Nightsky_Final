@@ -15,7 +15,7 @@ def register(request):
                 nickname=request.POST['nickname']
                 password=request.POST['password1']
                 email=request.POST['email']
-                User.objects.create_user(username=username,email= email, password=password, first_name=nickname)
+                User.objects.create_user(username=username,email= email, password=password, first_name=nickname, last_name="0")
                 return render(request, 'main/home.html')
     elif request.method=="GET":
         return render(request, 'register.html')

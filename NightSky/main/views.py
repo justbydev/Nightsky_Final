@@ -424,6 +424,7 @@ def report(request):
     if request.method=="GET":
         pk=request.GET['pk']
         post=get_object_or_404(Post, pk=pk)
+        user=get_object_or_404(User, username=post.writer)
         nowreport=int(post.report)
         nowreport=nowreport+1
         first=post.first
@@ -434,11 +435,30 @@ def report(request):
             post.first='1'
         post.report=str(nowreport)
         post.save()
+        userreport=int(user.last_name)
+        userreport=userreport+1
+        if userreport<3:
+            user.last_name=str(userreport)
+            user.save()
+        elif userreport==3:
+            now=datetime.now()
+            afterday=now+timedelta(days=3)
+            afterTuple=afterday.timetuple()
+            userreport=afterTuple.tm_mday
+            if userreport==3 or userreport==2:
+                userreport=4
+            elif userreport==1:
+                afterday=now+timedelta(days=2)
+                afterTuple=afterday.timetuple()
+                userreport=afterTuple.tm_day
+            user.last_name=str(userreport)
+            user.save()
         return HttpResponse()
 def ctreport(request):
     if request.method=="GET":
         pk=request.GET['pk']
         comment=get_object_or_404(Comment, pk=pk)
+        user=get_object_or_404(User, username=comment.writer)
         nowreport=int(comment.report)
         nowreport=nowreport+1
         first=comment.first
@@ -449,4 +469,60 @@ def ctreport(request):
             comment.first='1'
         comment.report=str(nowreport)
         comment.save()
+        userreport=int(user.last_name)
+        userreport=userreport+1
+        if userreport<3:
+            user.last_name=str(userreport)
+            user.save()
+        elif userreport==3:
+            now=datetime.now()
+            afterday=now+timedelta(days=3)
+            afterTuple=afterday.timetuple()
+            userreport=afterTuple.tm_mday
+            if userreport==3 or userreport==2:
+                userreport=4
+            elif userreport==1:
+                afterday=now+timedelta(days=2)
+                afterTuple=afterday.timetuple()
+                userreport=afterTuple.tm_day
+            user.last_name=str(userreport)
+            user.save()
         return HttpResponse()
+def check(request):
+    if request.method=="GET":
+        flag=0
+        user=get_object_or_404(User, username=request.user)
+        if int(user.last_name)>3:
+            now=datetime.now()
+            nowTuple=now.timetuple()
+            userreport=nowTuple.tm_mday
+            lt=int(user.last_name)
+            if lt==int(userreport):
+                flag=0
+                user.last_name=0
+                user.save()
+            else:
+                flag=1
+        else:
+            flag=0
+        context={'flag':flag}
+        return JsonResponse(context)
+def realcheck(request):
+    if request.method=="GET":
+        flag=0
+        user=get_object_or_404(User, username=request.user)
+        if int(user.last_name)>3:
+            now=datetime.now()
+            nowTuple=now.timetuple()
+            userreport=nowTuple.tm_mday
+            lt=int(user.last_name)
+            if lt==int(userreport):
+                flag=0
+                user.last_name=0
+                user.save()
+            else:
+                flag=1
+        else:
+            flag=0
+        context={'flag':flag}
+        return JsonResponse(context)

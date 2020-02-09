@@ -519,7 +519,7 @@ label input{
         
     
     <div class="new">
-        <input id = "myBtn" type = "button" onclick="get()" value="새로운 글">
+        <input id = "myBtn" type = "button" onclick="check()" value="새로운 글">
     </div>
     <!--<div class="menu-main">
         <div><a href="{% url 'realmain' %}">모두의 하늘로</a></div>
@@ -765,7 +765,28 @@ label input{
     var pp1;
     var pp2;
     var postmodal;
-    btn.onclick=function get(){
+    btn.onclick=function check(){
+        var flag=0
+        $.ajax({
+            type:"GET",
+            url:"{% url 'check' %}",
+            success:function(msg){
+                if(msg['flag']==1){
+                    flag=1
+                };
+                if (flag==1){
+                    alert('신고가 접수되어 3일동안 글쓰기가 제한되었습니다.');
+                }
+                else{
+                    get();
+                }
+            },
+            error:function(response){
+                alert('check error');
+            }
+        });
+    };
+    function get(){
         alert('화면에 띄울 별이나 구름의 위치를 클릭해주세요');
         w=document.getElementById("star");
         w.onclick=function(e){
