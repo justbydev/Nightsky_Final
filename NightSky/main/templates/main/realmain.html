@@ -469,7 +469,7 @@
             <div class = "modalbody">
                 <div class="left">
                     <span id="other" class="textwriter"></span>
-                    <button type="button" class="subscribe"></button>
+                    <span class="subscribe"></span>
                     <button class="report"></button>
                     <textarea rows="17" id="textbody" value="" readonly="readonly"></textarea>
                     <textarea rows="3" id="ctcont" name="commentcont" placeholder="공감의 말을 남겨주세요" required></textarea><br>
@@ -623,18 +623,22 @@
             data: {'pk': pk},
             dataType: "json",
             contentType: "json",
+
             success: function(msg){
-                wr=msg['writer'];
+                $(".subscribe").html("")
+                var wr=msg['writer'];
+                
+                if (wr != me){
+                    $(".subscribe").html("<button type='button'>구독하기</button>")
+                    } 
+                
                 $(".textwriter").text("");
                 $("#textbody").val(msg['body']);
         
                 $(".textwriter").append(msg['writer']);
-            
+                
                 $(".textwriter").append("님");
-                if (msg['writer'] != me){
-                    $(".subscribe").text("구독하기");
 
-                }                
                 $(".report").text("신고하기");
                 //$("#textpk").val(msg['pk']);
                 //$("#textdate").val(msg['date']);
