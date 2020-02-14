@@ -271,6 +271,14 @@
             
 
     /* shooting stars effect */
+    @media only screen and (max-width : 480px) {
+    .sky{
+      margin-bottom: 200px;
+    }
+}
+
+
+    
     .stars {
     z-index: 10;
     width: 1px;
@@ -404,6 +412,7 @@
   <div id="mycontent">
     <div id="envelope">
       <div id="flap"></div>
+      <div class= "test">
       <form method="POST" action="{% url 'realmain' %}" id="paper" class="paper">{% csrf_token %}
         <label class="fold"> <input type="radio"  class="checkbox1" name="emo" value="행복" required>
                   <span class="happy">  행복</span></label>
@@ -416,13 +425,14 @@
         <label class="fold">                <input type="radio" class="checkbox1" name="emo" value="스트레스" required>
                   <span class="stress">스트레스</span></label>
         <label class="fold"> <input type="radio"  class="checkbox1" name="emo" value="행복" required>
-                  <span class="happy">  기타</span></label>
+                  <span class="achieve">  성취감</span></label>
         <label class="fold"> <input type="radio"  class="checkbox1" name="emo" value="행복" required>
-                    <span class="happy">  기타2</span>          
+                    <span class="depressed"> 우울함 </span>          
                   <br>
                   <!--<span id="closeLetter" class="fold1"> 선택 완료</span></label>-->
                   <button type="submit" class="close11" onClick="close_pop();">확인</button></label>
         </form>
+        </div>
         <div id="front"></div>
     </div><!-- End #envelope -->
   </div>
