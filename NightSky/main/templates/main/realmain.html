@@ -15,7 +15,34 @@
     html{
       font-family: Cafe24Oneprettynight;
     }
+    /*햄버거*/
+    /*position으로 relative를 주고 z-index를 줘야 적용됨*/
+    #navigation-top{/*맨 아래 전체 까는 div*/
+        position:relative;
+        z-index:50;
+        background-color:rgba(0,0,0, 0.5);
+    }
+    #navigation-list{/*리스트 까는 div*/
+        position:relative;
+        z-index:100;
+        top:15%;
+    }
+    #aaa,#bbb,#ccc,#ddd{/*각각 3개의 리스트div*/
+        position:relative;
+        z-index:200;
+        background-color: rgba(162, 153, 211, 0.9);
+    }
 
+    body{
+        padding:0;
+        border:0;
+        position:fixed;
+        top:0;
+    }
+    #reselect{
+        position:absolute;
+        display:inline-block;
+    }
         /* style.css */
         
 
@@ -59,6 +86,8 @@
 
         #pagenate{
             padding: 1rem;
+            position:absolute;
+            display:inline-block;
         }
         #dialog, #ctdialog, #reportdialog, #ctreportdialog{
             box-sizing: border-box;
@@ -342,7 +371,16 @@
     
     
 }
-
+@media only screen and (max-width:800px){
+    #burger-container{
+        width:9%;
+    }
+}
+@media only screen and (min-width:801px){
+    #burger-container{
+        width:5%;
+    }
+}
 
     </style>
 
@@ -382,8 +420,9 @@
                 // hide the menu when the page load
                 $("#navigation-list").hide();
                 // when .menuBtn is clicked, do this
-                $(".menuBtn").click(function() {
+                $("#burger-container").click(function() {
                     // open the menu with slide effect
+                    $("#navigation-top").slideToggle(0);
                     $("#navigation-list").slideToggle(300);
                 });
             });
@@ -393,11 +432,11 @@
                 });
             });
         </script>
-            <span  class="menuBtn">
-                <span id="burger-container">
-                    <img id="burger" src="{% static 'img/myhome.png' %}">
-                </span>
-            </span>
+            
+            <img id="burger-container" src="{% static 'img/myhome.png' %}" style="transform: rotate(90deg); margin-left: 3vw; margin-top: 7vh; top:0; display: inline-block;
+    position: absolute; z-index:300;">
+        <div id="navigation-top" style="height:100%;width:100%; display:none; top:0;">
+    
             <div id="navigation-list">
                 
                     <div id="aaa"><a href="{% url 'mysky' %}">나의 하늘로</a></div>
@@ -409,7 +448,7 @@
                     </form></div>
                 
             </div>
-
+        </div>
     <!--<div class=hi>
     <h3>반갑습니다, {{user.username}}님!</h3>
     </div>-->

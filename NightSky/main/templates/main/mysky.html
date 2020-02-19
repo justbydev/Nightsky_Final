@@ -566,7 +566,7 @@ label input{
         
         
     
-    <div style="border:solid 2px red;" class="new">
+    <div class="new">
         <input id = "myBtn" type = "button" onclick="check()" value="새로운 글">
     </div>
     <!--<div class="menu-main">
@@ -586,8 +586,8 @@ label input{
     <div id ="star">
         {% for post in posts %}
         {% if post.image == "star" %}        
-        <div style="border:2px solid red;" class="star" id="1">
-            <div style="border: 2px solid black;" class="update" name="{{post.id}}" >
+        <div class="star" id="1">
+            <div class="update" name="{{post.id}}" >
                 {% if post.comments.count > 10 %}
                     <img src="{% static 'img/star_white.png' %}" onclick="modalfunc();">
                 {% elif post.comments.count > 5 %}
@@ -598,8 +598,8 @@ label input{
             </div>
         </div>
     {% else %}
-        <div style="border: 2px solid red;" class="cloud" id="1">
-            <div style="border:2px solid black;" class="update" name="{{post.id}}" >
+        <div class="cloud" id="1">
+            <div class="update" name="{{post.id}}" >
                 {% if post.comments.count > 10 %}
                     <img style="width:20vw; height:9vw;" src="{% static 'img/cloud_pixel.png' %}" onclick="modalfunc();">
                 {% elif post.comments.count > 5 %}
