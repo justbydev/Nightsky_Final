@@ -12,8 +12,37 @@
     /* style.css */
     body{
         font-family: 'DOSGothic';
+        padding:0;
+        border:0;
+        position:fixed;
+        top:0;
     }
-
+    /*햄버거*/
+    /*position으로 relative를 주고 z-index를 줘야 적용됨*/
+    #navigation-top{/*맨 아래 전체 까는 div*/
+        position:relative;
+        z-index:50;
+        background-color:rgba(0,0,0, 0.5);
+    }
+    #navigation-list{/*리스트 까는 div*/
+        position:relative;
+        z-index:100;
+        top:15%;
+    }
+    #aaa,#bbb,#ccc{/*각각 3개의 리스트div*/
+        position:relative;
+        z-index:200;
+        background-color: rgba(162, 153, 211, 0.9);
+    }
+    /*#myModaltop{
+        position:relative;
+        z-index:100;
+        border:2px solid red;
+    }*/
+    /*.modal{
+        position:relative;
+        z-index:100;
+    }*/
     /*Custom checkbox and radio button*/
     /** The container **/
     .rc-container {
@@ -453,12 +482,27 @@ label input{
 #commentarea{
     height: 40.5vh;
 }
+
     }
+@media only screen and (max-width:800px){
+    #burger-container{
+        width:15%;
+    }
+}
+@media only screen and (min-width:801px){
+    #burger-container{
+        width:7%;
+    }
+}
+    
     </style>
 
     <script>
     var te=new Array();
     var pk;
+    var str1;
+    var str2;
+    var c;
     </script>
 </head>
 
@@ -484,41 +528,41 @@ label input{
         
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     
-    
     <script type="text/javascript">
         jQuery(document).ready(function($) {
             // hide the menu when the page load
             $("#navigation-list").hide();
             // when .menuBtn is clicked, do this
-            $(".menuBtn").click(function() {
+            $("#burger-container").click(function() {
                 // open the menu with slide effect
+                $("#navigation-top").slideToggle(0);
                 $("#navigation-list").slideToggle(300);
+                //var navi=document.getElementById('navigation-list');
+                //navi.style.display="block";
+                
             });
         });
-        $(document).ready(function(){
-            $("#burger-container").on('click', function(){
-                $(this).toggleClass("open");
+       $(document).ready(function(){
+                $("#burger-container").on('click', function(){
+                    $(this).toggleClass("open");
+                });
             });
-        });
     </script>
-        <span class="menuBtn">
-            <div id="burger-container">
-                <div id="burger">
-                    <img src="{% static 'img/myhome.png' %}" style="transform: rotate(90deg); margin-left: 3vw; margin-top: 2vh;">
-                </div>
-            </div>
-        </span>
-        <div id="navigation-list">
+        
+        <img id="burger-container" src="{% static 'img/myhome.png' %}" style="transform: rotate(90deg); margin-left: 3vw; margin-top: 2vh; top:0; display: inline-block;
+    position: absolute; z-index:300;">
             
+        <div id="navigation-top" style="height:100%;width:100%; display:none; top:0;">
+            <div id="navigation-list">
                 <div id="aaa"><a href="{% url 'realmain' %}">모두의 하늘로</a></div>
                 <div id="bbb"><a href="{% url 'user_update' %}">마이페이지</a></div>
                 <div id="ccc"><a href="{% url 'logout' %}">로그아웃</a></div>
-            
+            </div>
         </div>
         
         
     
-    <div class="new">
+    <div style="border:solid 2px red;" class="new">
         <input id = "myBtn" type = "button" onclick="check()" value="새로운 글">
     </div>
     <!--<div class="menu-main">
@@ -538,8 +582,8 @@ label input{
     <div id ="star">
         {% for post in posts %}
         {% if post.image == "star" %}        
-        <div class="star" id="1">
-            <div class="update" name="{{post.id}}" >
+        <div style="border:2px solid red;" class="star" id="1">
+            <div style="border: 2px solid black;" class="update" name="{{post.id}}" >
                 {% if post.comments.count > 10 %}
                     <img src="{% static 'img/star_white.png' %}" onclick="modalfunc();">
                 {% elif post.comments.count > 5 %}
@@ -550,14 +594,14 @@ label input{
             </div>
         </div>
     {% else %}
-        <div class="cloud" id="1">
-            <div class="update" name="{{post.id}}" >
+        <div style="border: 2px solid red;" class="cloud" id="1">
+            <div style="border:2px solid black;" class="update" name="{{post.id}}" >
                 {% if post.comments.count > 10 %}
-                    <img src="{% static 'img/cloud_pixel.png' %}" onclick="modalfunc();">
+                    <img style="width:20vw; height:9vw;" src="{% static 'img/cloud_pixel.png' %}" onclick="modalfunc();">
                 {% elif post.comments.count > 5 %}
-                    <img src="{% static 'img/cloud_pixel.png' %}" onclick = "modalfunc();">
+                    <img style="width:20vw; height:9vw;"src="{% static 'img/cloud_pixel.png' %}" onclick = "modalfunc();">
                 {% elif post.comments.count >= 0 %}
-                    <img src="{% static 'img/cloud_pixel.png' %}" onclick = "modalfunc();">
+                    <img style="width:20vw; height:9vw;"src="{% static 'img/cloud_pixel.png' %}" onclick = "modalfunc();">
                 {% endif %}
             </div>
         </div>
@@ -572,9 +616,9 @@ label input{
             function test(a){
                 //var str1=Number({{post.lat}})-60;
                 //var str2=Number({{post.lng}})-60;
-                var str1=Number({{post.lat}});
-                var str2=Number({{post.lng}});
-                var c=document.getElementById("1");
+                str1=Number({{post.lat}});
+                str2=Number({{post.lng}});
+                c=document.getElementById("1");
                 c.style.top=str1+'%';
                 c.style.left=str2+'%';
                 //c.style.top=str1+'px';
@@ -587,7 +631,6 @@ label input{
         {% endfor %}
 
     </div>
-
     <div id="postmodal">
         <div class="modal-content">
                 <span id="postclose" class="close">&times;</span>
@@ -619,8 +662,7 @@ label input{
                 <!--</form>-->
         </div>
     </div>
-
-
+    <div id="myModaltop">
     <div id="myModal" class="modal">
     <div class="modal-content" id="new">
         <span id="close" class="close">&times;</span>
@@ -664,10 +706,7 @@ label input{
                     <input type="radio" name="emo" value="성취감" required>
                     <span class="guitar">성취감</span>
                 </label>
-                <label class="emotion">
-                    <input type="radio" name="emo" value="우울함" required>
-                    <span class="guitar">우울함</span>
-                </label>
+                
                 <br><br>
                 <input type="hidden" id="x" name="x" value="">
                 <input type="hidden" id="y" name="y" value="">
@@ -675,7 +714,7 @@ label input{
         </form> 
     </div>
     </div>
-
+    </div>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -762,6 +801,7 @@ label input{
 <script>
     /*글쓰기 위한 modal*/
     var modal = document.getElementById('myModal');
+    //var modal_top=document.getElementById('myModal-top');
     var btn = document.getElementById("myBtn");
     //var sp = document.getElementsByClassName("close")[0];
     var ssp=document.getElementById("close");
@@ -799,20 +839,50 @@ label input{
                 pp2=e.pageY;
                 var width=screen.availWidth;
                 var height=screen.availHeight;
-        
+
                 pp1=(pp1*100)/width;
+                if(pp1>=85 && pp1<87){
+                    pp1=pp1-3;
+                }
+                else if(pp1>=87 && pp1<88){
+                    pp1=pp1-2;
+                }
+                else if(pp1>=88 && pp1<90){
+                    pp1=86;
+                }
+                else if(pp1>=90 && pp1<95){
+                    pp1=pp1-10;
+                }
+                else if(pp1>=95){
+                    pp1=pp1-13;
+                }
                 pp2=(pp2*100)/height;
+                
+                if(pp2>=95 && pp2<97){
+                    pp2=pp2-5;
+                }
+                else if(pp2>=97 && pp2<98){
+                    pp2=pp2-6;
+                }
+                else if(pp2>=98){
+                    pp2=pp2-8;
+                }
+                
                 modal.style.display="block";
+                
+                //modal_top.style.display="block";
                 w=false;
             }
         };
     };
     ssp.onclick=function(){
         modal.style.display="none";
+        //modal_top.style.display="none";
     };
     window.onclick=function(event){
         if(event.target==modal){
             modal.style.display="none";
+            //modal_top.style.display="none";
         }
     };
     $("#here").click(function(){
