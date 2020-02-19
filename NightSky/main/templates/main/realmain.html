@@ -10,19 +10,23 @@
     <style>
         @font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff'); font-weight: normal; font-style: normal; }
         @font-face { font-family: 'DOSGothic'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'Cafe24Oneprettynight'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff'); font-weight: normal; font-style: normal; }
     
+    html{
+      font-family: Cafe24Oneprettynight;
+    }
+
         /* style.css */
-        body{
-            font-family: 'DOSGothic';
-        }
+        
 
         /* style.css */
         a{
             color: white;
         }
-
-
-        
+        #star{
+        width: 100%; 
+        height:100%;
+    }
 
         
 
@@ -54,7 +58,7 @@
         }
 
         #pagenate{
-            margin: 1rem;
+            padding: 1rem;
         }
         #dialog, #ctdialog, #reportdialog, #ctreportdialog{
             box-sizing: border-box;
@@ -82,7 +86,7 @@
 }
 .yes, .no, .ctyes, .ctno{
     font-size: 15px;
-    font-family: 'UhBeemysen';
+    font-family: Cafe24Oneprettynight;
     border:none;
     cursor: pointer;
     margin:10px;
@@ -91,10 +95,20 @@
     color: white;
     width: 50px;
 }
+.subscribe, .report{
+    font-family: Cafe24Oneprettynight;
+    }
 
 .ctdelete{
     cursor: pointer;
 }
+#burger{
+    transform: rotate(90deg); 
+    display: block;
+    width: 9%;
+    margin: 2%;
+}
+
 @media only screen and (max-width : 480px) {
     .user_title{
         text-align: center;
@@ -104,18 +118,14 @@
         position: initial;
         display: block;
     }
-}
-/* Custom, iPhone Retina : ~ 320px */
-@media only screen and (max-width : 320px) {
-    .user_title{
-        position: initial;
-        display: block;
-        text-align: center;
-        margin-top: 5%;
-        left:0;
-        top: 0;
+    #burger{
+        transform: rotate(90deg); 
+        margin-left: 3vw; 
+        margin-top: 2vh; 
+        width:15%;
     }
 }
+
 @media only screen and (min-width:768px) {
     #postmodal{
         height: 72vh;
@@ -166,7 +176,7 @@
     #ct-title{
         color: white;
         font-size: 35px;
-        font-family:'UhBeemysen';
+        font-family:Cafe24Oneprettynight;
         line-height: 50px;
         border-top: 1px white dashed;
         margin-left: 10px;
@@ -180,7 +190,7 @@
         border: 1px solid white;
         font-size: 12px;
         color: white;
-        font-family: 'Noto Serif KR', serif;
+        font-family: Cafe24Oneprettynight;
         cursor: pointer;
         margin-top: 0.5rem;
         height: 30px;
@@ -205,8 +215,7 @@
         width: 60px;
         color: black;
         font-size: 30px;
-        font-family: 'UhBeemysen';
-        border: 0;
+        font-family: Cafe24Oneprettynight;
         cursor: pointer;
     }
 
@@ -223,7 +232,8 @@
 /* Desktop Device */
 @media only screen and (min-width:1025px) {
     #postmodal{
-        height: 72vh;
+        min-height: 75%;
+        height: 50vh;
         width: 65vw;
         top: 18%;
         left: 20%;
@@ -270,8 +280,8 @@
 
     #ct-title{
         color: white;
-        font-size: 35px;
-        font-family:'UhBeemysen';
+        font-size: 2rem;
+        font-family:Cafe24Oneprettynight;
         line-height: 50px;
         border-top: 1px white dashed;
         margin-left: 10px;
@@ -285,7 +295,7 @@
         border: 1px solid white;
         font-size: 12px;
         color: white;
-        font-family: 'Noto Serif KR', serif;
+        font-family: Cafe24Oneprettynight;
         cursor: pointer;
         margin-top: 0.5rem;
         height: 30px;
@@ -310,7 +320,7 @@
         width: 60px;
         color: black;
         font-size: 30px;
-        font-family: 'UhBeemysen';
+        font-family: Cafe24Oneprettynight;
         border: 0;
         cursor: pointer;
     }
@@ -323,6 +333,14 @@
     #commentarea{
         height: 40.5vh;
     }
+    #burger{
+        transform: rotate(90deg); 
+        width:7%;
+        display: block;
+        margin:1rem;
+    }
+    
+    
 }
 
 
@@ -335,9 +353,9 @@
     </script>
 
 </head>
-
-<body>
-   
+<div id ="star">
+    
+<body>   
 
     <div id="pagenate">
         <a href="?page=1">처음 밤하늘로</a>
@@ -377,7 +395,7 @@
         </script>
             <span  class="menuBtn">
                 <span id="burger-container">
-                    <img id="burger" src="{% static 'img/myhome.png' %}" style="transform: rotate(90deg); margin-left: 3vw; margin-top: 2vh; width:15%;">
+                    <img id="burger" src="{% static 'img/myhome.png' %}">
                 </span>
             </span>
             <div id="navigation-list">
@@ -397,6 +415,7 @@
     </div>-->
     <div id="my" name="{{me}}"></div>
     <!--<div id="moon"><a href="{% url 'mysky' %}"><img src="{% static 'img/moon.png' %}" id="moon-img"></a></div>-->
+    
     {% for post in pages %}
         {% if post.image == "star" %}
     
@@ -462,10 +481,11 @@
         </script>
             
     {% endfor %}
+</div>
 
     <div id="postmodal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close">&times;x</span>
             <div class = "modalbody">
                 <div class="left">
                     <span id="other" class="textwriter"></span>
@@ -487,7 +507,6 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-
     $( function() {           
         $("#ctdialog").dialog({
                 autoOpen: false,
@@ -605,6 +624,7 @@
         var span = document.getElementsByClassName("close")[0];
         span.onclick = function() {
                     postmodal.style.display = "none";
+                    $("#star").css({"background-color":"", "opacity":""});
         };
         window.onclick = function(event) {
             if (event.target == postmodal) {
@@ -617,6 +637,7 @@
         pk=$(this).attr('name');
         me=$("#my").attr('name');
         reportpk=pk;
+       
         $.ajax({
             type:"GET",
             url: "post_total/",
@@ -625,11 +646,12 @@
             contentType: "json",
 
             success: function(msg){
+                $("#star").css({"background-color":"black", "opacity":"0.5"});
                 $(".subscribe").html("")
                 var wr=msg['writer'];
                 
                 if (wr != me){
-                    $(".subscribe").html("<button type='button'>구독하기</button>")
+                    $(".subscribe").html("<button type='button' style='font-family:Cafe24Oneprettynight;'>구독하기</button>")
                     } 
                 
                 $(".textwriter").text("");
@@ -694,7 +716,7 @@
                     var commentpk=list.comments[++i];   
                     console.log(comments); 
                     $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a style='color:black;' href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
-                    $("#commentarea").append("<span class='time'> ========"+time+"</span>");
+                    $("#commentarea").append("<span class='time'>| "+time+"</span>");
                     if (writer == me){
                         $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");
                         
@@ -757,7 +779,7 @@
                                                 var commentpk=list.comments[++i];                  
                                                 //console.log(comment);
                                                 $("#commentarea").append("<span id='toother' class='write'>"+"<b>"+"<a style='color:black;' href="+"/commentothersky/"+writer+">"+writer+"</a>"+"</b>"+"  </span>");
-                                                $("#commentarea").append("<span class='time'> ========"+time+"</span>");
+                                                $("#commentarea").append("<span class='time'>| "+time+"</span>");
                                                 if (writer == me){
                                                     $("#commentarea").append("<div class='comment' style='color:#5870BC;'><b>"+commentct+"</b></div><div id='myctbtn'><span class='ctedit' name="+commentpk+">수정</span> | <span class='ctdelete'  name="+commentpk+">삭제</span><hr></div>");
                                                 }

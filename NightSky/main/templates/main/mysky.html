@@ -8,14 +8,18 @@
 <style>
     @font-face { font-family: 'UhBeemysen'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff'); font-weight: normal; font-style: normal; }
     @font-face { font-family: 'DOSGothic'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Cafe24Oneprettynight'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff'); font-weight: normal; font-style: normal; }
+    
     
     /* style.css */
     body{
-        font-family: 'DOSGothic';
         padding:0;
         border:0;
         position:fixed;
         top:0;
+    }
+    html{
+      font-family: Cafe24Oneprettynight;
     }
     /*햄버거*/
     /*position으로 relative를 주고 z-index를 줘야 적용됨*/
@@ -177,7 +181,7 @@
         width: 60px;
         color: black;
         font-size: 18px;
-        font-family: 'DOSGothic';
+        font-family: Cafe24Oneprettynight;
         border: 0;
         cursor: pointer;
     }
@@ -199,8 +203,8 @@
         border: none;
         background: transparent;
         color: white;
-        font-family: 'UhBeemysen';
-        font-size: 40px;
+        font-family: Cafe24Oneprettynight;
+        font-size: 2rem;
         text-shadow: 0 0 5px rgb(255, 237, 188);
         transition: all 1000ms step;
     }
@@ -214,7 +218,7 @@
         border: 1px solid white;
         font-size: 12px;
         color: white;
-        font-family: 'DOSGothic';
+        font-family: Cafe24Oneprettynight;
         cursor: pointer;
         margin: 5px;
         height: 30px;
@@ -268,7 +272,7 @@
     }
     .yes, .no, .ctyes, .ctno{
         font-size: 15px;
-        font-family: 'UhBeemysen';
+        font-family: Cafe24Oneprettynight;
         border:none;
         cursor: pointer;
         margin:10px;
@@ -322,7 +326,7 @@ height: 25vh;
 #ct-title{
   color: white;
   font-size: 35px;
-  font-family:'UhBeemysen';
+  font-family:Cafe24Oneprettynight;
   line-height: 50px;
   border-top: 1px white dashed;
   margin-left: 10px;
@@ -336,7 +340,7 @@ height: 25vh;
   border: 1px solid white;
   font-size: 12px;
   color: black;
-  font-family: 'Noto Serif KR', serif;
+  font-family: Cafe24Oneprettynight;
   cursor: pointer;
   margin-top: 0.5rem;
   height: 30px;
@@ -362,7 +366,7 @@ label input{
     width: 60px;
     color: black;
     font-size: 30px;
-    font-family: 'UhBeemysen';
+    font-family: Cafe24Oneprettynight;
     border: 0;
     cursor: pointer;
 }
@@ -429,7 +433,7 @@ label input{
 #ct-title{
   color: white;
   font-size: 35px;
-  font-family:'UhBeemysen';
+  font-family:Cafe24Oneprettynight;
   line-height: 50px;
   border-top: 1px white dashed;
   margin-left: 10px;
@@ -443,7 +447,7 @@ label input{
   border: 1px solid white;
   font-size: 12px;
   color: white;
-  font-family: 'Noto Serif KR', serif;
+  font-family: Cafe24Oneprettynight;
   cursor: pointer;
   margin-top: 0.5rem;
   height: 30px;
@@ -469,7 +473,7 @@ label input{
     width: 60px;
     color: black;
     font-size: 30px;
-    font-family: 'UhBeemysen';
+    font-family:Cafe24Oneprettynight;
     border: 0;
     cursor: pointer;
 }
@@ -633,7 +637,7 @@ label input{
     </div>
     <div id="postmodal">
         <div class="modal-content">
-                <span id="postclose" class="close">&times;</span>
+                <span id="postclose" class="close">&times;x</span>
                 <!--<form method="POST">{% csrf_token %}-->
                 <div class = "modalbody">
                 
@@ -665,7 +669,7 @@ label input{
     <div id="myModaltop">
     <div id="myModal" class="modal">
     <div class="modal-content" id="new">
-        <span id="close" class="close">&times;</span>
+        <span id="close" class="close">&times;x</span>
         <form method="POST" action="{% url 'mysky' %}" id="newText">
                 {% csrf_token %}
                 <br>
